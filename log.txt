@@ -1,0 +1,2527 @@
+HEAD 現在位於 f1586f4f09 Update prediction data on 2025-01-23 22:56:02
+共有 751 個有效氣象站
+Traceback (most recent call last):
+  File "ERA5_current_download_cron.py", line 56, in <module>
+    weather_df_archive = fetch_openmeteo_archive(lat=lat, lon=lon, start=past_days_start, end=past_days_end)
+  File "ERA5_current_download_cron.py", line 11, in fetch_openmeteo_archive
+    df = pd.read_json(url)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 760, in read_json
+    json_reader = JsonReader(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 861, in __init__
+    data = self._get_data_from_filepath(filepath_or_buffer)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 901, in _get_data_from_filepath
+    self.handles = get_handle(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 368, in _get_filepath_or_buffer
+    with urlopen(req_info) as req:
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 270, in urlopen
+    return urllib.request.urlopen(*args, **kwargs)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 531, in open
+    response = meth(req, response)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 640, in http_response
+    response = self.parent.error(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 569, in error
+    return self._call_chain(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 502, in _call_chain
+    result = func(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 649, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+2025-01-24 05:00:05.376923: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-24 05:00:05.496181: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2025-01-24 05:00:05.496256: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2025-01-24 05:00:05.521498: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-24 05:00:06.130908: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2025-01-24 05:00:06.131017: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2025-01-24 05:00:06.131036: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2025-01-24 05:00:06.860850: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2025-01-24 05:00:06.860917: W tensorflow/stream_executor/cuda/cuda_driver.cc:263] failed call to cuInit: UNKNOWN ERROR (303)
+2025-01-24 05:00:06.860934: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (raingel-NUC8i3PNB): /proc/driver/nvidia/version does not exist
+2025-01-24 05:00:06.861140: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Processing C0R710_龍磐_21.931672_120.838942.csv
+Processing C1F9D1_白毛台_24.158325_120.886933.csv
+Processing C0G940_竹塘_23.848253_120.386764.csv
+Processing 467590_恆春_22.003897_120.746339.csv
+Processing C1O850_環湖_23.148617_120.418633.csv
+Processing C0U710_太平山_24.505486_121.525656.csv
+Processing C0E820_獅潭_24.539133_120.920042.csv
+Processing C0V880_興達_22.8778_120.2127.csv
+Processing C0S890_關山_23.0395_121.175017.csv
+Processing K2F750_種苗繁殖_24.225972_120.800917.csv
+Processing C1Z130_銅門_23.965694_121.492842.csv
+Processing C0AD40_土城_24.973208_121.445169.csv
+Processing CAN140_六官養殖協會_23.22881_120.29962.csv
+Processing C0X180_山上_23.0757_120.363253.csv
+Processing C0F9Z0_雪山東峰_24.388792_121.268675.csv
+Processing C1M480_獨立山_23.537022_120.607797.csv
+Processing C0X220_學甲_23.230367_120.182187.csv
+Processing C0R170_屏東_22.660269_120.494072.csv
+Processing 467650_日月潭_23.881325_120.90805.csv
+Processing C0K600_箔子寮_23.6197_120.14.csv
+Processing C0G830_埤頭_23.866003_120.452806.csv
+Processing C0S950_七塊厝_22.954453_121.229922.csv
+Processing 467110_金門_24.407306_118.289281.csv
+Processing C0AH80_深坑_25.002703_121.628328.csv
+Processing 467990_馬祖_26.169269_119.923419.csv
+Processing C0A970_三貂角_25.007606_122.002058.csv
+Processing C0K430_褒忠_23.690938_120.303634.csv
+Processing 467480_嘉義_23.495925_120.432906.csv
+Processing C2E540_後龍_24.606489_120.783933.csv
+Processing C0V400_阿公店_22.804194_120.355528.csv
+Processing C0R440_大漢山_22.405264_120.753181.csv
+Processing C0K280_四湖_23.630414_120.227125.csv
+Processing C1F9B1_桐林_24.066172_120.735194.csv
+Processing C0K390_土庫_23.679029_120.395574.csv
+Processing C1I450_望鄉山_23.594153_120.944286.csv
+Processing C0E910_海埔_24.648767_120.772435.csv
+Processing B2E890_畜試北區分所_24.527806_120.770972.csv
+Processing C0R750_四林格山_22.076989_120.802439.csv
+Processing C0F0C0_中坑_24.248517_120.903319.csv
+Processing C1I121_大鞍_23.678381_120.760017.csv
+Processing 72U480_花改蘭陽分場_24.686306_121.716583.csv
+Processing C0A770_科教館_25.096356_121.516507.csv
+Processing C0AJ60_六塊厝_25.24_121.4481.csv
+Processing C0R620_墾雷_21.900836_120.855269.csv
+Processing 467420_永康_23.038386_120.2367.csv
+Processing 467300_東吉島_23.25695_119.667467.csv
+Processing C0I410_名間_23.837053_120.701447.csv
+Processing A2C560_農工中心_24.985917_121.239833.csv
+Processing C0V740_旗山_22.888614_120.483597.csv
+Processing C0Z061_玉里_23.3215_121.339656.csv
+Processing C0S840_南田_22.279725_120.889208.csv
+Processing C1I470_杉林溪_23.639517_120.786444.csv
+Processing C1X040_東原_23.291597_120.463822.csv
+Processing C0R660_枋寮_22.367722_120.590647.csv
+Processing C1R120_上德文_22.763272_120.704442.csv
+Processing C0K450_大埤_23.646074_120.431537.csv
+Processing C0UA00_土場_24.576533_121.495333.csv
+Processing 467080_宜蘭_24.763975_121.756528.csv
+Processing C0N030_四草_23.0235_120.1116.csv
+Processing C0V650_彌陀_22.783806_120.246361.csv
+Processing C0D660_新竹市東區_24.798681_120.986942.csv
+Processing 82S580_茶改東部分場_22.907694_121.130139.csv
+Processing C0C710_大溪永福_24.892936_121.324975.csv
+Processing C0FA20_溫寮_24.372177_120.583125.csv
+Processing C0V640_湖內_22.887139_120.2445.csv
+Processing C0R910_下寮_22.3929_120.5548.csv
+Processing C0Z020_明里_23.208717_121.262342.csv
+Processing C0M770_嘉義梅山_23.585398_120.555587.csv
+Processing G2F820_農業試驗所_24.031261_120.688133.csv
+Processing C0C660_楊梅_24.912375_121.143047.csv
+Processing C1E511_新開_24.347703_120.827019.csv
+Processing G2F820_農試所(霧峰)_24.031261_120.688133.csv
+Processing C1I070_和社_23.591131_120.888861.csv
+Processing C2F000_大肚_24.15295_120.572117.csv
+Processing C1S850_豐南_23.122139_121.262389.csv
+Processing C2A920_富貴角_25.263783_121.565258.csv
+Processing CAH030_茶改場竹圍站_23.860083_120.637528.csv
+Processing C0T960_光復_23.660694_121.424964.csv
+Processing C0F9M0_豐原_24.254322_120.720692.csv
+Processing C0R720_旭海_22.205403_120.887614.csv
+Processing C0V710_苓雅_22.622742_120.330669.csv
+Processing C0C740_觀音工業區_25.064764_121.114856.csv
+Processing CAC040_拉拉山_24.699317_121.427133.csv
+Processing C0V790_萬山_22.905944_120.688056.csv
+Processing U2HA30_臺大和社_23.590856_120.888864.csv
+Processing C0AJ90_澳底_25.0552_121.9253.csv
+Processing C0Z100_東華_23.89525_121.549833.csv
+Processing C0G970_三豐_23.882_120.2895.csv
+Processing V2K610_大庄合作社_23.8068_120.367939.csv
+Processing C0V900_汕尾_22.4782_120.4151.csv
+Processing C1R630_龍泉_22.66701_120.59091.csv
+Processing C1AC50_關渡_25.133486_121.469331.csv
+Processing C0F9I0_神岡_24.272481_120.658314.csv
+Processing C0K460_斗南_23.678734_120.478359.csv
+Processing 467410_臺南_22.993239_120.204772.csv
+Processing C2O810_曾文_23.219681_120.497328.csv
+Processing 467280_後龍_24.648563_120.831834.csv
+Processing C1F9J1_清水林_24.071242_120.820419.csv
+Processing C2A650_火燒寮_25.002719_121.742892.csv
+Processing 466930_竹子湖_25.162078_121.544547.csv
+Processing C1I220_樟湖_23.905333_120.846983.csv
+Processing C0I390_仁愛_24.022122_121.132206.csv
+Processing C0Z300_東里_23.26853_121.30547.csv
+Processing C0V310_美濃_22.898742_120.519153.csv
+Processing C1V590_新發_23.057019_120.646064.csv
+Processing C0K510_水林_23.572924_120.24597.csv
+Processing 72S590_東改賓朗果園_22.813889_121.071278.csv
+Processing 82A750_茶改北部分場_24.955778_121.631222.csv
+Processing C1A750_石碇服務區_25.00872_121.646242.csv
+Processing C0X300_鹿寮_23.386047_120.477331.csv
+Processing G2AI50_關渡_25.11575_121.492.csv
+Processing C0K590_雲林東勢_23.674192_120.255721.csv
+Processing C0A570_桶後_24.848222_121.597992.csv
+Processing C1S800_華源_22.657883_121.02325.csv
+Processing C0G720_溪州_23.851589_120.499093.csv
+Processing C1V160_達卡努瓦_23.279811_120.705319.csv
+Processing C2M410_馬頭山_23.324361_120.582017.csv
+Processing C0V850_蚵仔寮_22.7256_120.2527.csv
+Processing C0S740_池上_23.119628_121.209469.csv
+Processing C1V390_尖山_22.813153_120.367789.csv
+Processing C0AH70_松山_25.04871_121.55042.csv
+Processing C0N010_鯤鯓國小_23.1879_120.0889.csv
+Processing C0R550_新埤_22.467947_120.582894.csv
+Processing C0SA60_知本（水試所）_22.702394_121.082761.csv
+Processing C0T9I0_豐濱_23.583897_121.514806.csv
+Processing C0UB00_淡江大學蘭陽校園_24.823239_121.730383.csv
+Processing C0T9N0_富里_23.171639_121.249378.csv
+Processing U2HA50_臺大竹山_23.756972_120.681556.csv
+Processing C0V840_鳳鼻頭_22.5083_120.3591.csv
+Processing C0X140_西港_23.125608_120.203108.csv
+Processing 72D080_桃改五峰分場_24.612194_121.157167.csv
+Processing C0V530_阿蓮_22.883208_120.327508.csv
+Processing C1O880_關山_23.173397_120.594092.csv
+Processing C0E791_卓蘭_24.3126_120.8244.csv
+Processing C1I030_武界_23.913225_121.052483.csv
+Processing C0R520_崁頂_22.514781_120.506914.csv
+Processing C0R341_牡丹_22.130036_120.792639.csv
+Processing C0R930_萬丹_22.5885_120.4851.csv
+Processing C0S760_紅石_23.069131_121.126219.csv
+Processing C1M610_石磐龍_23.496606_120.663506.csv
+Processing C0UA10_鴛鴦湖_24.590269_121.412228.csv
+Processing V2C260_八德蔬果_24.978508_121.281819.csv
+Processing C0R800_丹路_22.204481_120.750989.csv
+Processing C0G920_永靖_23.924703_120.547533.csv
+Processing C1A630_下盆_24.771003_121.538622.csv
+Processing B2N890_畜產試驗所_23.058972_120.336406.csv
+Processing C0UA30_白嶺_24.527819_121.519031.csv
+Processing C1V580_溪南(特生中心)_23.084972_120.788475.csv
+Processing C1T970_大農_23.615233_121.413331.csv
+Processing E2S960_林試太麻里2_22.598014_120.989761.csv
+Processing C0R650_竹田_22.58486_120.54344.csv
+Processing C1H900_清流_24.080775_120.962997.csv
+Processing C1C510_水尾_24.940081_121.087161.csv
+Processing C0F9X0_大雅(中科園區)_24.21528_120.62445.csv
+Processing C0O970_虎頭埤_23.021375_120.347878.csv
+Processing C0C730_中大臨海站_24.966126_121.008581.csv
+Processing C0X250_新營_23.310689_120.316681.csv
+Processing C0V700_三民_22.645017_120.311233.csv
+Processing C0U870_大礁溪_24.791042_121.675047.csv
+Processing C0E870_高鐵苗栗_24.60725_120.826094.csv
+Processing A2K570_古坑花卉中心_23.63353_120.55239.csv
+Processing C0M860_新美_23.338017_120.683169.csv
+Processing C1E701_八卦_24.491756_120.927619.csv
+Processing C0I420_國姓_24.037803_120.855072.csv
+Processing C0S960_香蘭_22.587569_120.993375.csv
+Processing C0R260_春日_22.370361_120.628306.csv
+Processing 72G600_臺中農改場_24.003028_120.534389.csv
+Processing C0Z210_瑞穗_23.5239_121.39021.csv
+Processing C0M820_達邦_23.453994_120.749517.csv
+Processing C0V860_南寮_22.7616_120.2339.csv
+Processing C0G740_大城_23.852487_120.320935.csv
+Processing C0R920_塭仔_22.4169_120.5197.csv
+Processing C0R470_高樹_22.826389_120.600806.csv
+Processing C0R680_佳樂水_21.993578_120.861633.csv
+Processing C1O870_大棟山_23.31157_120.52226.csv
+Processing C0D360_梅花_24.678347_121.208558.csv
+Processing C0Z190_富世_24.14743_121.6297.csv
+Processing C0AI10_屈尺_24.92184_121.54475.csv
+Processing B2U990_畜試東區分所_24.669039_121.832561.csv
+Processing C0R240_來義_22.527306_120.625111.csv
+Processing C1R610_西大武山_22.617719_120.7322.csv
+Processing C0G900_線西_24.143358_120.443536.csv
+Processing C0M700_竹崎_23.526178_120.555508.csv
+Processing C2E880_三義_24.405478_120.749819.csv
+Processing C0C720_竹圍_25.112692_121.239824.csv
+Processing C0F9P0_清水_24.312297_120.562242.csv
+Processing C0Z150_吉安光華_23.930925_121.595153.csv
+Processing C1D640_外坪(五指山)_24.644447_121.090961.csv
+Processing C0F9O0_潭子_24.213106_120.703933.csv
+Processing 72T250_花蓮農改場_23.975222_121.563889.csv
+Processing C0E780_銅鑼_24.489681_120.790853.csv
+Processing C1T950_太安_23.666719_121.370128.csv
+Processing C0E830_苑裡_24.439714_120.653053.csv
+Processing 467270_田中_23.873803_120.581286.csv
+Processing C0SA10_檳榔四格山_22.810031_121.109308.csv
+Processing C1T830_布洛灣_24.17184_121.57127.csv
+Processing C0F970_大坑_24.173142_120.722289.csv
+Processing C1U920_思源_24.393125_121.347214.csv
+Processing C0A931_三和_25.233153_121.595236.csv
+Processing C0I010_廬山_24.033311_121.181808.csv
+Processing C0R860_鼻頭_22.1043_120.8979.csv
+Processing C0UB20_壯圍_24.7359_121.8163.csv
+Processing C0R790_九棚_22.14195_120.889281.csv
+Processing C0W110_東莒_25.9652_119.98069.csv
+Processing C1U930_粉鳥林_24.497088_121.842479.csv
+Processing C1I211_蘆竹湳_23.934019_120.811994.csv
+Processing C0S830_長濱_23.286817_121.411975.csv
+Processing C1F9F1_伯公龍_24.272392_120.849047.csv
+Processing C0E810_西湖_24.562947_120.7485.csv
+Processing C1I440_新高口_23.478744_120.878939.csv
+Processing C0O840_王爺宮_23.222064_120.40085.csv
+Processing C0T9G0_鳳林山_23.735269_121.420131.csv
+Processing C0X080_佳里_23.173039_120.145086.csv
+Processing C0Z310_清水斷崖_24.218294_121.689142.csv
+Processing C0M680_太保_23.455062_120.331455.csv
+Processing C1S820_金峰_22.590969_120.933236.csv
+Processing C0AD10_八里_25.150211_121.403947.csv
+Processing C2K240_草嶺_23.59555_120.693461.csv
+Processing C1SA70_都蘭_22.87794_121.226881.csv
+Processing C0K440_二崙_23.772797_120.408944.csv
+Processing C1A760_坪林交控_24.94284_121.713442.csv
+Processing C0F9N0_大里_24.092464_120.701378.csv
+Processing C0SA90_達仁林場_22.264347_120.823972.csv
+Processing C1R290_石門山_22.112611_120.756597.csv
+Processing 42HA10_萬大發電廠_23.978875_121.139639.csv
+Processing C0R890_山海_21.9878_120.7091.csv
+Processing C0T9A0_月眉山_23.809928_121.539828.csv
+Processing C0AC70_信義_25.037822_121.564597.csv
+Processing C0K560_棋山_23.68645_120.603417.csv
+Processing C1Z240_中平林道_23.42115_121.26763.csv
+Processing U2H480_溪頭_23.670306_120.798194.csv
+Processing C0M880_好美里_23.3364_120.138.csv
+Processing C0T9E0_大坑_23.880628_121.581981.csv
+Processing C0K530_臺西_23.701547_120.197559.csv
+Processing C1E900_國一N128K_24.560997_120.844186.csv
+Processing C0AJ50_水湳洞_25.123695_121.862238.csv
+Processing C0AI20_白沙灣_25.283128_121.519058.csv
+Processing C0A860_大坪_25.165914_121.632969.csv
+Processing C1U850_觀音海岸_24.38319_121.77856.csv
+Processing C0U950_鶯子嶺_24.89754_121.79244.csv
+Processing C0O900_善化_23.112883_120.297219.csv
+Processing C0K550_蔦松_23.514319_120.229736.csv
+Processing E2P980_林試六龜中心_22.991703_120.645722.csv
+Processing C0E590_通霄_24.471892_120.704622.csv
+Processing C1I310_西巒_23.754486_120.883956.csv
+Processing C0A550_泰平_24.971197_121.823711.csv
+Processing C0I360_水里_23.812553_120.849792.csv
+Processing C0R830_高士_22.121825_120.836781.csv
+Processing C1I101_溪頭_23.661789_120.807647.csv
+Processing C0AJ20_野柳_25.20703_121.690021.csv
+Processing C0B060_暖暖_25.0957_121.7403.csv
+Processing C1H920_長豐_24.102039_120.879897.csv
+Processing C0V360_內門_22.975481_120.466769.csv
+Processing C0R850_林邊_22.4634_120.5339.csv
+Processing C0E930_龍鳳_24.700034_120.859125.csv
+Processing C0U910_冬山_24.63373_121.7937.csv
+Processing C1E721_泰安_24.489017_120.968036.csv
+Processing 82H320_茶改中部分場_23.875611_120.913583.csv
+Processing C0M750_布袋_23.380878_120.167789.csv
+Processing C1S860_利嘉_22.809417_121.050528.csv
+Processing 72C440_桃園農改_24.950944_121.030583.csv
+Processing E2S980_林試太麻里1_22.598922_120.980044.csv
+Processing C0X170_關廟_22.963017_120.327797.csv
+Processing C0V720_林園_22.507747_120.394511.csv
+Processing C1I510_線浸林道_23.761508_120.832956.csv
+Processing C0D690_外湖_24.917735_120.968711.csv
+Processing C0C750_新興坑尾_25.0061_121.0971.csv
+Processing B2Q810_畜試南區分所_21.945583_120.802167.csv
+Processing C0S790_金崙_22.538122_120.966875.csv
+Processing C0AH90_福山植物園_24.760717_121.58135.csv
+Processing C0I540_奇萊稜線_24.109231_121.326456.csv
+Processing C0M850_表湖_23.24186_120.64166.csv
+Processing C0S770_大溪山_22.478475_120.943325.csv
+Processing C0AG80_中和_24.991622_121.491792.csv
+Processing C0T790_大禹嶺_24.186117_121.316086.csv
+Processing C0T9B0_水源_23.991861_121.537169.csv
+Processing C0R840_牡丹池山_22.168389_120.841225.csv
+Processing C1I131_桶頭_23.641944_120.654117.csv
+Processing CAL110_布袋國中_23.35893_120.18026.csv
+Processing 467571_新竹_24.827853_121.014219.csv
+Processing C0Z290_赤柯山_23.36893_121.38293.csv
+Processing C0X280_將軍_23.214999_120.13577.csv
+Processing C0S690_太麻里_22.60902_120.98533.csv
+Processing C0U880_北關_24.9072_121.8734.csv
+Processing C1H860_瑞岩_24.123772_121.18345.csv
+Processing C0G810_埔心_23.947633_120.525456.csv
+Processing C0U970_大福_24.80064_121.81389.csv
+Processing C1E670_南礦_24.538278_121.002836.csv
+Processing C0M520_東後寮_23.369908_120.248065.csv
+Processing C1E461_松安_24.397972_120.986022.csv
+Processing 72G600_臺中農改_24.003028_120.534389.csv
+Processing C2N160_西拉雅風管處_23.189481_120.335297.csv
+Processing C0A640_石碇_24.993969_121.662917.csv
+Processing E2S960_林試太麻里2_22.598_120.99775.csv
+Processing C0F9Y0_桃山_24.432739_121.303808.csv
+Processing C1I020_萬大_23.979817_121.132261.csv
+Processing C0U940_羅東_24.68184_121.74934.csv
+Processing C0M650_朴子_23.43463_120.23902.csv
+Processing C1I500_大尖山_23.858572_120.994889.csv
+Processing C0G820_田尾_23.901669_120.509389.csv
+Processing E2K600_四湖植物園_23.676986_120.163433.csv
+Processing C0S730_綠島_22.6672_121.47533.csv
+Processing 12Q970_東港工作站_22.479997_120.466058.csv
+Processing C0E430_南庄_24.601775_121.000214.csv
+Processing C1TA00_太魯閣_24.15773_121.6236.csv
+Processing 466920_臺北_25.037658_121.514853.csv
+Processing C0R600_舊泰武_22.588194_120.664944.csv
+Processing C1I260_北坑_23.9246_121.006903.csv
+Processing 466910_鞍部_25.182586_121.529731.csv
+Processing C1I230_九份二山_23.961944_120.845.csv
+Processing C2A660_瑞芳_25.113169_121.801147.csv
+Processing C0R270_琉球嶼_22.332244_120.362236.csv
+Processing C1T990_高寮_23.394239_121.356808.csv
+Processing C0G620_芬園_24.015678_120.6213.csv
+Processing C1Z140_荖溪_23.890575_121.45964.csv
+Processing C1I201_中心崙_23.728722_120.712097.csv
+Processing C1I400_凌霄_24.018778_121.004456.csv
+Processing C1M640_十字_23.492153_120.753683.csv
+Processing G2P820_農試鳳山分所_22.646611_120.356083.csv
+Processing C0Z270_蕃薯寮_23.73835_121.540108.csv
+Processing C0F9Q0_外埔_24.347817_120.705686.csv
+Processing C0K580_高鐵雲林_23.737456_120.417944.csv
+Processing C2I090_鳳凰_23.728081_120.787347.csv
+Processing C0U990_員山_24.74435_121.72247.csv
+Processing C0V770_大社_22.730306_120.346639.csv
+Processing C0X120_麻豆_23.183289_120.248611.csv
+Processing C0C670_龍潭_24.870056_121.221389.csv
+Processing C0D680_香山濕地_24.783581_120.914988.csv
+Processing C0S980_勝林山_22.430439_120.8938.csv
+Processing C0V730_大寮_22.605614_120.395717.csv
+Processing C0R570_麟洛_22.65078_120.52719.csv
+Processing CAG100_王功漁港_23.96824_120.32586.csv
+Processing C0X290_北門_23.267772_120.125481.csv
+Processing C2F930_大甲_24.347667_120.640403.csv
+Processing C0D650_湖口_24.904794_121.043628.csv
+Processing C0E420_竹南_24.708978_120.888897.csv
+Processing C0U780_五結_24.68637_121.79794.csv
+Processing C1I250_鯉潭_23.961922_120.991131.csv
+Processing C0R130_阿禮_22.742908_120.743678.csv
+Processing C0X100_臺南市北區_23.010394_120.194228.csv
+Processing C0S920_金峰嘉蘭_22.594789_120.960825.csv
+Processing C0V490_新興_22.627422_120.298803.csv
+Processing C0F9K0_大安_24.345061_120.588025.csv
+Processing 72N100_臺南農改_23.0605_120.342194.csv
+Processing 467290_古坑_23.633639_120.551889.csv
+Processing C0V440_鳳山_22.646653_120.356122.csv
+Processing C1T940_大觀_23.714206_121.373133.csv
+Processing 72T250_花蓮農改_23.975222_121.563889.csv
+Processing C0E740_造橋_24.637056_120.864778.csv
+Processing C0R100_尾寮山_22.833111_120.683889.csv
+Processing A2K630_臺大雲林校區_23.730628_120.423903.csv
+Processing C0D580_寶山_24.735006_121.025192.csv
+Processing E2P990_林試扇平站_22.9677_120.6857.csv
+Processing C0AI30_三重_25.057328_121.500629.csv
+Processing C0AH00_汐止_25.066881_121.658778.csv
+Processing C1Z040_立山_23.443356_121.327375.csv
+Processing C0W130_花嶼_23.40007_119.32276.csv
+Processing C0A950_鼻頭角_25.129036_121.923372.csv
+Processing C0K470_林內_23.748675_120.609642.csv
+Processing 82C160_茶改場_24.908472_121.185333.csv
+Processing C0Z320_清水林道_23.27125_121.188272.csv
+Processing C0R760_南仁湖_22.084681_120.863353.csv
+Processing C0M670_大林_23.600616_120.45841.csv
+Processing C0M800_茶山_23.299075_120.664767.csv
+Processing C0A9C0_天母_25.117494_121.537169.csv
+Processing 72K220_南改斗南分場_23.634556_120.477333.csv
+Processing 72AI40_桃改樹林分場_24.944503_121.386972.csv
+Processing C0S910_蘭嶼燈塔_22.081197_121.503117.csv
+Processing C0B050_八斗子_25.144754_121.79167.csv
+Processing C0U900_內城_24.71813_121.68766.csv
+Processing C0X320_柳營_23.253328_120.375253.csv
+Processing C0M790_新港_23.553269_120.345728.csv
+Processing C0F9T0_西屯_24.179494_120.641275.csv
+Processing C0SA30_都歷_23.020333_121.323642.csv
+Processing C0C620_蘆竹_25.084275_121.265767.csv
+Processing C0R730_大坪頂_22.024633_120.69355.csv
+Processing C0AJ40_石門_25.273672_121.601198.csv
+Processing C0E750_苗栗_24.564569_120.824575.csv
+Processing C0T870_鯉魚潭_23.935639_121.508944.csv
+Processing C1V170_排雲_23.463619_120.954147.csv
+Processing C2H950_中寮_23.884447_120.766406.csv
+Processing C0R350_貓鼻頭_21.921774_120.7358.csv
+Processing C0V660_岡山_22.797078_120.294958.csv
+Processing C1H941_雙冬_23.967378_120.802189.csv
+Processing C0AJ70_田寮_25.2698_121.4886.csv
+Processing C0AI00_五股_25.07445_121.42728.csv
+Processing C0Z280_德武_23.47426_121.41071.csv
+Processing C0R700_枋山_22.246844_120.661086.csv
+Processing C0C460_復興_24.820208_121.352281.csv
+Processing E2H360_蓮華池_23.918333_120.885278.csv
+Processing C0M640_中埔_23.42538_120.5229.csv
+Processing C0W140_金沙_24.488292_118.408778.csv
+Processing C2A540_四堵_24.8926_121.745736.csv
+Processing C0ACA0_新莊_25.051478_121.446756.csv
+Processing C0R220_潮州_22.534361_120.54.csv
+Processing U2HA40_臺大內茅埔_23.689722_120.851117.csv
+Processing 467490_臺中_24.145736_120.684075.csv
+Processing C0U960_翠峰湖_24.510856_121.608044.csv
+Processing E2HA20_林試畢祿溪站_24.226944_121.308522.csv
+Processing C0V890_前鎮_22.5718_120.3117.csv
+Processing 467620_蘭嶼_22.036969_121.558339.csv
+Processing C1F941_雪嶺_24.280586_121.026642.csv
+Processing C0AC80_文山_25.00235_121.575728.csv
+Processing C0F9R0_龍井_24.184536_120.528972.csv
+Processing C0M760_民雄_23.551754_120.428457.csv
+Processing C0UA40_西德山_24.560647_121.752608.csv
+Processing C1T920_中興_23.769503_121.498653.csv
+Processing C0D550_雪霸_24.526972_121.11605.csv
+Processing C2F860_梨山_24.247522_121.243669.csv
+Processing C0R320_車城_22.0744_120.716247.csv
+Processing C1S870_南美山_23.15025_121.382333.csv
+Processing C0B020_基隆嶼_25.19141_121.78391.csv
+Processing C1U501_牛鬥_24.637836_121.573656.csv
+Processing C0M730_嘉義市東區_23.457673_120.460531.csv
+Processing C0S700_知本_22.684866_121.005642.csv
+Processing C1N001_沙崙_22.935472_120.309406.csv
+Processing C0V760_橋頭_22.757806_120.30575.csv
+Processing C0G960_福寶_24.0443_120.3814.csv
+Processing C0X210_白河_23.347466_120.414427.csv
+Processing C0S810_東河_22.972672_121.303986.csv
+Processing C0R670_楓港_22.190131_120.692156.csv
+Processing C0FA50_霧峰_24.0419_120.6995.csv
+Processing C0UB10_蘇澳_24.5969_121.8571.csv
+Processing C0G950_防潮門_24.1835_120.4871.csv
+Processing C0M740_六腳_23.492871_120.290625.csv
+Processing C1R250_力里_22.428117_120.629228.csv
+Processing C0K330_虎尾_23.719183_120.442036.csv
+Processing C2FA00_烏石坑_24.273503_120.947617.csv
+Processing C0V620_永安_22.82315_120.236856.csv
+Processing C1I330_楓樹林_23.986803_121.076117.csv
+Processing C0W200_湖西_23.596314_119.67275.csv
+Processing 72Q010_高雄農改場_22.709333_120.525889.csv
+Processing C0SA40_瑞和_22.974361_121.156697.csv
+Processing C0C680_龜山_25.02846_121.38656.csv
+Processing C2V260_月眉_22.971003_120.539853.csv
+Processing C0V450_鳳森_22.545064_120.392592.csv
+Processing C0U720_南山_24.43742_121.38167.csv
+Processing A2N290_臺南蘭花園區_23.340258_120.379661.csv
+Processing C0R560_新園_22.5434_120.461558.csv
+Processing C0U890_三星_24.66812_121.65302.csv
+Processing C1V300_御油山_23.001983_120.715364.csv
+Processing C0U600_礁溪_24.817539_121.765608.csv
+Processing C1T980_龍澗_24.023289_121.411328.csv
+Processing C0D670_海天一線_24.831986_120.914438.csv
+Processing C0SA00_歷坵_22.520969_120.89185.csv
+Processing C0M710_東石_23.458927_120.15385.csv
+Processing C0M780_鹿草_23.41134_120.30835.csv
+Processing C0U520_雙連埤_24.753033_121.641303.csv
+Processing C0B010_七堵_25.094819_121.71713.csv
+Processing C0R480_長治_22.693128_120.542622.csv
+Processing C1V830_國三S383K_22.781967_120.426475.csv
+Processing 12Q980_恆春工作站_22.079678_120.714425.csv
+Processing C1O940_東山服務區_23.286016_120.398472.csv
+Processing C1U840_東澳嶺_24.5378_121.8485.csv
+Processing C1D630_飛鳳山_24.766464_121.119178.csv
+Processing C0S940_石寧山_23.223772_121.406639.csv
+Processing C0K410_北港_23.573957_120.292802.csv
+Processing C2M620_瑞里_23.545133_120.675197.csv
+Processing C2O950_安南_23.076694_120.144861.csv
+Processing C0F0E0_南湖圈谷_24.363714_121.444667.csv
+Processing 467610_成功_23.097486_121.373428.csv
+Processing C0G890_伸港_24.148933_120.484403.csv
+Processing C2E540_龍溪_24.606489_120.783933.csv
+Processing C1V200_梅山_23.268447_120.823556.csv
+Processing C0T9H0_加路蘭山_23.682947_121.5274.csv
+Processing C2O930_玉井_23.126042_120.46055.csv
+Processing C1F911_新伯公_24.221361_120.841069.csv
+Processing C0R490_九如_22.7405_120.490503.csv
+Processing C0X200_左鎮_23.056758_120.408522.csv
+Processing C1F891_稍來_24.265689_121.001142.csv
+Processing 72N240_七股研究中心_23.081672_120.062894.csv
+Processing C0C700_中壢_24.977661_121.256375.csv
+Processing C0M690_水上_23.419734_120.388909.csv
+Processing C0V690_鼓山_22.623325_120.275575.csv
+Processing C0O860_大內_23.11885_120.36083.csv
+Processing C0Z200_萬榮_23.709219_121.420106.csv
+Processing C0T9D0_和中_24.26676_121.74103.csv
+Processing C1O921_楠西_23.183511_120.484083.csv
+Processing C0AJ30_淡水觀海_25.184591_121.408616.csv
+Processing C0V810_左營_22.67491_120.28491.csv
+Processing C0UA70_桃源谷_24.962606_121.888875.csv
+Processing C0X130_官田_23.193217_120.315422.csv
+Processing C1H000_翠峰_24.109397_121.205211.csv
+Processing C0UA90_石城_24.980444_121.951214.csv
+Processing C1E681_南勢山_24.421669_120.923831.csv
+Processing C0A9F0_內湖_25.079422_121.57545.csv
+Processing C0K291_宜梧_23.536281_120.169329.csv
+Processing C1K540_口湖_23.585344_120.180517.csv
+Processing C0R780_滿州_22.024403_120.839892.csv
+Processing C0V870_文安_22.8025_120.2164.csv
+Processing C0U650_玉蘭_24.675286_121.587061.csv
+Processing C0R640_東港_22.46247_120.44074.csv
+Processing K2E360_苗栗農改_24.495722_120.829111.csv
+Processing C0AJ80_板橋_25.0107_121.4489.csv
+Processing C0S660_下馬_23.150427_121.070312.csv
+Processing C1H9B1_阿眉_24.1263_120.994672.csv
+Processing C0UA20_多加屯_24.368614_121.373189.csv
+Processing C0E730_頭份_24.688247_120.912206.csv
+Processing 72V140_高改旗南分場_22.857861_120.516667.csv
+Processing C0K480_莿桐_23.761192_120.502372.csv
+Processing C0U980_坪林石牌_24.86478_121.77396.csv
+Processing C0T900_西林_23.8119_121.441458.csv
+Processing C1I150_青雲_23.793361_120.949378.csv
+Processing 467350_澎湖_23.565503_119.563094.csv
+Processing C0G800_埔鹽_24.000394_120.431683.csv
+Processing C0H960_草屯_23.973672_120.68085.csv
+Processing C1V780_多納林道_22.888028_120.737917.csv
+Processing C0E920_通霄漁港_24.498589_120.673876.csv
+Processing C0Z330_安通山_23.290728_121.348528.csv
+Processing C0AH10_永和_25.01125_121.508111.csv
+Processing C2G640_鹿港_24.0753_120.430481.csv
+Processing C1E890_國三N149K_24.463414_120.680019.csv
+Processing C1R110_口社_22.770111_120.645222.csv
+Processing C1M870_國三N285K_23.550319_120.505833.csv
+Processing 467050_新屋_25.006744_121.047486.csv
+Processing C1E480_鳳美_24.554803_121.034747.csv
+Processing C0M530_奮起湖_23.493903_120.699253.csv
+Processing C0C590_觀音_25.027072_121.153317.csv
+Processing C0T9M0_靜浦_23.455167_121.495028.csv
+Processing C0AI40_石牌_25.115597_121.513139.csv
+Processing C1F871_上谷關_24.203483_121.018644.csv
+Processing C0G880_二水_23.810742_120.6173.csv
+Processing C0R940_加祿堂_22.3363_120.6217.csv
+Processing C0W220_北竿_26.220358_119.974881.csv
+Processing C0O960_崎頂_22.959547_120.369317.csv
+Processing C0S750_向陽_23.248397_120.986133.csv
+Processing C0T9F0_水璉_23.797131_121.542514.csv
+Processing C1M600_頭凍_23.406364_120.603339.csv
+Processing 467660_臺東_22.752211_121.154586.csv
+Processing C1D380_新埔_24.84745_121.03834.csv
+Processing C0V750_路竹_22.854997_120.259439.csv
+Processing C0N050_蚵寮_23.301_120.1104.csv
+Processing 72M700_南改鹿草分場_23.416869_120.283061.csv
+Processing C1SA50_利嘉林道_22.82325_121.009389.csv
+Processing 467550_玉山_23.487614_120.959522.csv
+Processing C0A940_金山_25.223628_121.643967.csv
+Processing C1V340_大津_22.888322_120.645986.csv
+Processing C0W180_七美_23.219333_119.444892.csv
+Processing C1F9C1_白冷_24.182844_120.929889.csv
+Processing K2E710_苗改生物防治研究中心_24.422861_120.871833.csv
+Processing C0N040_蘆竹溝_23.2344_120.0961.csv
+Processing C2W230_畜試所澎湖_23.628342_119.513206.csv
+Processing C0R880_後壁湖_21.9457_120.7457.csv
+Processing C1I280_埔中_23.820778_120.642594.csv
+Processing 467790_墾丁雷達站_21.948235_120.808028.csv
+Processing C0W190_望安_23.380564_119.494075.csv
+Processing 466881_新北_24.9593_121.52.csv
+Processing C0Z170_卓溪_23.3443_121.3029.csv
+Processing C0F850_東勢_24.246428_120.833047.csv
+Processing 466900_淡水_25.164889_121.448906.csv
+Processing C0I370_魚池_23.895703_120.94135.csv
+Processing C0C630_大溪_24.882853_121.265547.csv
+Processing C0A520_山佳_24.974944_121.402008.csv
+Processing C0I110_竹山_23.761225_120.688156.csv
+Processing 82H840_茶改南部分場_23.762528_120.7405.csv
+Processing C0G660_溪湖_23.94835_120.479122.csv
+Processing C1T800_洛韶_24.204558_121.453956.csv
+Processing C1T810_慈恩_24.192044_121.388386.csv
+Processing C1E451_象鼻_24.368617_120.940228.csv
+Processing C0AC60_三峽_24.939025_121.369728.csv
+Processing C0I490_萬大林道_23.928228_121.091411.csv
+Processing C1I290_豐丘_23.668178_120.887417.csv
+Processing C1I320_奧萬大_23.952956_121.178556.csv
+Processing C0U770_南澳_24.44935_121.81022.csv
+Processing C0A980_社子_25.109508_121.469681.csv
+Processing C0V800_六龜_22.997889_120.633583.csv
+Processing C1G9D0_國一S218K_23.890641_120.493253.csv
+Processing C2F9A0_中竹林_24.103556_120.751061.csv
+Processing C0FA40_臺中電廠_24.2146_120.4907.csv
+Processing C0H9C0_合歡山_24.143442_121.272547.csv
+Processing C0X060_下營_23.22695_120.256261.csv
+Processing G2M350_農試溪口農場_23.58565_120.408111.csv
+Processing C0U860_頭城_24.85323_121.8308.csv
+Processing C0R580_南州_22.48591_120.50274.csv
+Processing C0D430_峨眉_24.6905_121.017189.csv
+Processing C0G780_秀水_24.03405_120.503869.csv
+Processing 72N100_臺南農改場_23.0605_120.342194.csv
+Processing C0S900_蘭嶼高中_22.04909_121.51214.csv
+Processing 467540_大武_22.355675_120.903789.csv
+Processing C1F9W0_德基_24.254783_121.190261.csv
+Processing C1Z120_壽豐_23.870853_121.508081.csv
+Processing C0W160_烏坵_24.9944_119.44956.csv
+Processing C1I240_外大坪_23.958697_120.917931.csv
+Processing C1I550_國六W023K_23.979067_120.867742.csv
+Processing C0R870_興海_21.9752_120.8439.csv
+Processing C0R140_瑪家_22.682903_120.686639.csv
+Processing C0A530_坪林_24.938183_121.70975.csv
+Processing C0X260_後壁_23.366358_120.362326.csv
+Processing C0Z230_和平_24.30717_121.77007.csv
+Processing C0G770_福興_24.041289_120.437669.csv
+Processing C0H9A0_神木村_23.532742_120.843667.csv
+Processing C0I460_南投_23.911469_120.687331.csv
+Processing C0I480_梅峰_24.085272_121.173572.csv
+Processing C1V570_吉東_22.85422_120.5454.csv
+Processing C2A560_福山_24.776203_121.502811.csv
+Processing C0AH30_五分山_25.07125_121.780794.csv
+Processing C0FA10_松柏_24.429115_120.617482.csv
+Processing 72S200_東改班鳩分場_22.829528_121.077694.csv
+Processing 72HA00_中改埔里分場_23.903208_120.963364.csv
+Processing C0C650_平鎮_24.897503_121.214636.csv
+Processing C0S930_延平_22.902581_121.084058.csv
+Processing C0UA60_樟樹山_24.41393_121.78325.csv
+Processing C1S670_摩天_23.199503_121.027.csv
+Processing C0V630_茄萣_22.906642_120.182608.csv
+Processing 466940_基隆_25.133314_121.740475.csv
+Processing C0X050_東河_23.296598_120.385608.csv
+Processing C0R770_保力_22.071122_120.764111.csv
+Processing G2L020_農試嘉義分所_23.485028_120.473806.csv
+Processing C0X240_關子嶺_23.331169_120.508025.csv
+Processing C0I380_集集_23.828206_120.801467.csv
+Processing 466990_花蓮_23.975128_121.613275.csv
+Processing C1V220_小關山_23.154217_120.813603.csv
+Processing C1F9G1_慶福山_24.180853_120.848378.csv
+Processing C0Z250_瑞穗林道_23.49284_121.30688.csv
+Processing C0D590_新豐_24.87068_120.97721.csv
+Processing C0A870_五指山_25.132153_121.608692.csv
+Processing C0UA50_西帽山_24.555361_121.802628.csv
+Processing C0X160_仁德_22.968258_120.257689.csv
+Processing C1H971_六分寮_23.92507_120.6378.csv
+Processing C0W120_西嶼_23.5626_119.468436.csv
+Processing C0G650_員林_23.946503_120.585597.csv
+Processing C0AD50_鶯歌_24.951533_121.346294.csv
+Processing C0S990_山豬窟_22.318619_120.857372.csv
+Processing 72Q010_高雄農改_22.709333_120.525889.csv
+Processing C0X190_安平_22.993161_120.152181.csv
+Processing C0K400_斗六_23.720583_120.541127.csv
+Processing 12J990_口湖工作站_23.589978_120.180394.csv
+Processing C0O830_北寮_23.079561_120.495008.csv
+Processing C1D410_白蘭_24.579364_121.079947.csv
+Processing C0S970_加津林_22.416211_120.926942.csv
+Processing C0D700_關西_24.7977_121.1732.csv
+Processing C0M810_里佳_23.389125_120.716647.csv
+Processing C0U750_龜山島_24.841667_121.953133.csv
+Processing C0R810_內獅_22.305064_120.642986.csv
+Processing C1M390_龍美_23.406728_120.654417.csv
+Processing C1H840_國三N238K_23.841008_120.707711.csv
+Processing CAQ030_崎峰國小_22.42565_120.49521.csv
+Processing C2E520_大湖_24.414939_120.870872.csv
+Processing 467530_阿里山_23.508208_120.813242.csv
+Processing C1E691_南湖_24.40135_120.837533.csv
+Processing C0FA30_梧棲_24.256003_120.523381.csv
+Processing C1V231_高中_23.134911_120.716711.csv
+Processing C0F9V0_新社_24.200172_120.815806.csv
+Processing C0H890_埔里_23.972169_120.952425.csv
+Processing C0R690_墾丁_21.966756_120.810269.csv
+Processing C0F0D0_審馬陣_24.381675_121.4203.csv
+Processing C0R820_白鷺_22.454275_120.666219.csv
+Processing U2H480_臺大溪頭_23.670306_120.798194.csv
+Processing C1V190_南天池_23.27403_120.91176.csv
+Processing K2E360_苗栗農改場_24.495722_120.829111.csv
+Processing CAJ050_海口故事園區_23.57543_120.14121.csv
+Processing C0O990_媽廟_22.99175_120.293525.csv
+Processing C0D480_打鐵坑_24.849664_121.150789.csv
+Processing C0Z220_和平林道_24.343922_121.656317.csv
+Processing 72C440_桃園農改場_24.950944_121.030583.csv
+Processing C1E711_馬拉邦山_24.367306_120.901656.csv
+Processing C0D560_竹東_24.767147_121.057881.csv
+Processing C0F9U0_南屯_24.137006_120.637969.csv
+Processing C0M720_番路_23.464657_120.554156.csv
+Processing C0F0A0_雪山圈谷_24.388594_121.236339.csv
+Processing C1A9N0_四十份_24.934158_121.593283.csv
+Processing C0U760_東澳_24.52196_121.83318.csv
+Processing C0X230_鹽水_23.272621_120.247641.csv
+Processing C0V370_古亭坑_22.893178_120.401947.csv
+Processing C1I340_新興橋_23.563333_120.868728.csv
+Processing C0SA80_土坂_22.453108_120.887572.csv
+Processing C0R160_鹽埔_22.739558_120.530778.csv
+Processing C0AC40_大屯山_25.175675_121.522408.csv
+Processing 466850_五分山雷達站_25.071182_121.781205.csv
+Processing C1AI50_國三N016K_25.034164_121.619664.csv
+Processing C1V600_藤枝_23.071961_120.757042.csv
+Processing C1E601_南勢_24.572486_120.734842.csv
+Processing C0Z180_新城_24.03946_121.60454.csv
+Processing C0O980_新市_23.061614_120.298197.csv
+Processing C0K420_西螺_23.800407_120.467394.csv
+Processing C0Z050_佳心_23.34567_121.21316.csv
+Processing C0AD30_蘆洲_25.086594_121.472331.csv
+Processing C0V610_梓官_22.760558_120.267211.csv
+Processing K2F750_種苗改良場_24.225972_120.800917.csv
+Processing C0UA80_大溪漁港_24.941801_121.902955.csv
+Processing C1AI60_國一39K邊坡_25.064361_121.383836.csv
+Processing C0W150_金寧_24.457703_118.328989.csv
+Processing V2C250_八德合作社_24.93775_121.266389.csv
+Processing C0AH40_平等_25.129142_121.577086.csv
+Processing C0R540_佳冬_22.419456_120.552375.csv
+Processing 466950_彭佳嶼_25.627975_122.079744.csv
+Processing C0A890_雙溪_25.036003_121.864242.csv
+Processing C0C480_桃園_24.992425_121.323172.csv
+Processing C0AH50_林口_25.072181_121.38084.csv
+Processing A2K360_水試臺西試驗場_23.717231_120.190522.csv
+Processing B2N890_畜試所_23.058972_120.336406.csv
+Processing C0F9S0_烏日_24.107058_120.624103.csv
+Processing C0C490_八德_24.928708_121.283289.csv
+Processing C0R190_赤山_22.592333_120.614306.csv
+Processing C0T820_天祥_24.179597_121.495639.csv
+Processing C1F9E1_龍安_24.1605_120.831961.csv
+Processing C0V820_小林_23.148408_120.63325.csv
+Processing C2G870_芳苑_23.922303_120.320025.csv
+Processing C0E850_大河_24.618069_120.948578.csv
+Processing C1U670_寒溪_24.634_121.71691.csv
+Processing C0N020_城西_23.0568_120.0956.csv
+Processing C1Z110_三棧_24.11557_121.60501.csv
+Processing C0R280_檳榔_22.076078_120.836777.csv
+Processing C0F9L0_后里_24.310436_120.729725.csv
+Processing C0D540_橫山_24.71116_121.11693.csv
+Processing C1D420_太閣南_24.632808_121.160575.csv
+Processing C1E770_公館_24.526914_120.830806.csv
+Processing CAN130_水試所海水繁養殖中心_23.120802_120.07968.csv
+Processing C1I430_翠華_24.191961_121.224339.csv
+Processing C1M400_菜瓜坪_23.251928_120.576103.csv
+Processing C0G730_二林_23.903325_120.376081.csv
+Processing 72M360_南改義竹分場_23.360694_120.279361.csv
+Processing V2K620_麥寮合作社_23.753836_120.294783.csv
+Processing C0Z070_舞鶴_23.46811_121.37407.csv
+Processing C0B040_大武崙_25.166676_121.706993.csv
+Processing C1Z030_紅葉_23.493119_121.338806.csv
+Processing C1I050_丹大_23.753747_121.141147.csv
+Processing C0I080_信義_23.689694_120.851036.csv
+Processing C2A880_福隆_25.017842_121.942083.csv
+Processing C0Z160_鳳林_23.746114_121.453411.csv
+Processing C0V210_復興_23.222403_120.806089.csv
+Processing C0H990_昆陽_24.121322_121.273642.csv
+Processing C0R741_獅子_22.202308_120.705236.csv
+Processing C0S710_鹿野_22.917711_121.122994.csv
+Processing C0I530_小奇萊_24.131764_121.295717.csv
+Processing C0Z080_富源_23.587642_121.378225.csv
+Processing 467441_高雄_22.7304_120.3125.csv
+Processing C1I140_卡奈托灣_23.754364_121.087872.csv
+Processing C0I520_玉山風口_23.470489_120.955994.csv
+Processing C1G691_下水埔_23.816114_120.5676.csv
+Processing C0X110_臺南市南區_22.961189_120.188378.csv
+Processing C0V680_仁武_22.701083_120.347722.csv
+Processing C2G840_北斗_23.877586_120.514222.csv
+Processing C0R900_竹坑_22.1385_120.7022.csv
+Processing C0K250_崙背_23.75555_120.318925.csv
+Processing C0G860_社頭_23.897647_120.5862.csv
+Processing C0X150_安定_23.102614_120.227839.csv
+Processing C0R590_里港_22.77919_120.49459.csv
+Processing C0E610_馬都安_24.451272_120.930192.csv
+Processing C0E550_明德_24.583486_120.885411.csv
+Processing C0R150_三地門_22.709889_120.639944.csv
+Processing C0G910_花壇_24.032076_120.549461.csv
+Processing C1D400_鳥嘴山_24.71909_121.28387.csv
+Processing C0K500_元長_23.64981_120.315024.csv
+Processing C0F0B0_石岡_24.276061_120.777644.csv
+Processing C2V250_甲仙_23.080106_120.591758.csv
+Processing C0SA20_金崙山_22.567419_120.959667.csv
+Processing C0V350_溪埔_22.738578_120.446797.csv
+Processing C0M660_溪口_23.604131_120.403569.csv
+Processing C1S880_壽卡_22.238911_120.858903.csv
+Processing 72D680_桃改新埔分場_24.834444_121.066111.csv
+   1/1104 [..............................] - ETA: 11:30   9/1104 [..............................] - ETA: 6s     18/1104 [..............................] - ETA: 6s  26/1104 [..............................] - ETA: 6s  35/1104 [..............................] - ETA: 6s  44/1104 [>.............................] - ETA: 6s  53/1104 [>.............................] - ETA: 6s  62/1104 [>.............................] - ETA: 6s  71/1104 [>.............................] - ETA: 6s  80/1104 [=>............................] - ETA: 6s  89/1104 [=>............................] - ETA: 6s  98/1104 [=>............................] - ETA: 6s 107/1104 [=>............................] - ETA: 6s 116/1104 [==>...........................] - ETA: 6s 125/1104 [==>...........................] - ETA: 5s 134/1104 [==>...........................] - ETA: 5s 143/1104 [==>...........................] - ETA: 5s 152/1104 [===>..........................] - ETA: 5s 161/1104 [===>..........................] - ETA: 5s 170/1104 [===>..........................] - ETA: 5s 179/1104 [===>..........................] - ETA: 5s 188/1104 [====>.........................] - ETA: 5s 197/1104 [====>.........................] - ETA: 5s 206/1104 [====>.........................] - ETA: 5s 215/1104 [====>.........................] - ETA: 5s 224/1104 [=====>........................] - ETA: 5s 233/1104 [=====>........................] - ETA: 5s 242/1104 [=====>........................] - ETA: 5s 251/1104 [=====>........................] - ETA: 5s 260/1104 [======>.......................] - ETA: 5s 269/1104 [======>.......................] - ETA: 5s 278/1104 [======>.......................] - ETA: 5s 287/1104 [======>.......................] - ETA: 4s 296/1104 [=======>......................] - ETA: 4s 305/1104 [=======>......................] - ETA: 4s 314/1104 [=======>......................] - ETA: 4s 323/1104 [=======>......................] - ETA: 4s 332/1104 [========>.....................] - ETA: 4s 341/1104 [========>.....................] - ETA: 4s 350/1104 [========>.....................] - ETA: 4s 359/1104 [========>.....................] - ETA: 4s 368/1104 [=========>....................] - ETA: 4s 377/1104 [=========>....................] - ETA: 4s 386/1104 [=========>....................] - ETA: 4s 395/1104 [=========>....................] - ETA: 4s 404/1104 [=========>....................] - ETA: 4s 413/1104 [==========>...................] - ETA: 4s 422/1104 [==========>...................] - ETA: 4s 431/1104 [==========>...................] - ETA: 4s 440/1104 [==========>...................] - ETA: 4s 449/1104 [===========>..................] - ETA: 3s 458/1104 [===========>..................] - ETA: 3s 467/1104 [===========>..................] - ETA: 3s 476/1104 [===========>..................] - ETA: 3s 485/1104 [============>.................] - ETA: 3s 494/1104 [============>.................] - ETA: 3s 503/1104 [============>.................] - ETA: 3s 512/1104 [============>.................] - ETA: 3s 521/1104 [=============>................] - ETA: 3s 530/1104 [=============>................] - ETA: 3s 539/1104 [=============>................] - ETA: 3s 548/1104 [=============>................] - ETA: 3s 557/1104 [==============>...............] - ETA: 3s 566/1104 [==============>...............] - ETA: 3s 575/1104 [==============>...............] - ETA: 3s 584/1104 [==============>...............] - ETA: 3s 593/1104 [===============>..............] - ETA: 3s 602/1104 [===============>..............] - ETA: 3s 611/1104 [===============>..............] - ETA: 2s 620/1104 [===============>..............] - ETA: 2s 629/1104 [================>.............] - ETA: 2s 638/1104 [================>.............] - ETA: 2s 647/1104 [================>.............] - ETA: 2s 656/1104 [================>.............] - ETA: 2s 665/1104 [=================>............] - ETA: 2s 674/1104 [=================>............] - ETA: 2s 683/1104 [=================>............] - ETA: 2s 692/1104 [=================>............] - ETA: 2s 701/1104 [==================>...........] - ETA: 2s 710/1104 [==================>...........] - ETA: 2s 719/1104 [==================>...........] - ETA: 2s 728/1104 [==================>...........] - ETA: 2s 737/1104 [===================>..........] - ETA: 2s 746/1104 [===================>..........] - ETA: 2s 755/1104 [===================>..........] - ETA: 2s 764/1104 [===================>..........] - ETA: 2s 773/1104 [====================>.........] - ETA: 2s 782/1104 [====================>.........] - ETA: 1s 790/1104 [====================>.........] - ETA: 1s 799/1104 [====================>.........] - ETA: 1s 808/1104 [====================>.........] - ETA: 1s 817/1104 [=====================>........] - ETA: 1s 826/1104 [=====================>........] - ETA: 1s 835/1104 [=====================>........] - ETA: 1s 844/1104 [=====================>........] - ETA: 1s 853/1104 [======================>.......] - ETA: 1s 862/1104 [======================>.......] - ETA: 1s 871/1104 [======================>.......] - ETA: 1s 880/1104 [======================>.......] - ETA: 1s 889/1104 [=======================>......] - ETA: 1s 898/1104 [=======================>......] - ETA: 1s 907/1104 [=======================>......] - ETA: 1s 916/1104 [=======================>......] - ETA: 1s 925/1104 [========================>.....] - ETA: 1s 934/1104 [========================>.....] - ETA: 1s 943/1104 [========================>.....] - ETA: 0s 952/1104 [========================>.....] - ETA: 0s 961/1104 [=========================>....] - ETA: 0s 970/1104 [=========================>....] - ETA: 0s 979/1104 [=========================>....] - ETA: 0s 988/1104 [=========================>....] - ETA: 0s 997/1104 [==========================>...] - ETA: 0s1006/1104 [==========================>...] - ETA: 0s1015/1104 [==========================>...] - ETA: 0s1024/1104 [==========================>...] - ETA: 0s1033/1104 [===========================>..] - ETA: 0s1042/1104 [===========================>..] - ETA: 0s1051/1104 [===========================>..] - ETA: 0s1060/1104 [===========================>..] - ETA: 0s1069/1104 [============================>.] - ETA: 0s1078/1104 [============================>.] - ETA: 0s1087/1104 [============================>.] - ETA: 0s1096/1104 [============================>.] - ETA: 0s1104/1104 [==============================] - 7s 6ms/step
+來自 https://github.com/Raingel/rice_blast_prediction
+ * branch                  master     -> FETCH_HEAD
+已經是最新的。
+[master b3e0aa7bca] Update prediction data on 2025-01-24 05:06:01
+ 17 files changed, 19 insertions(+)
+To https://github.com/Raingel/rice_blast_prediction.git
+   f1586f4f09..b3e0aa7bca  master -> master
+來自 https://github.com/Raingel/rice_blast_prediction
+   b3e0aa7bca..cb0b7e4c48  master     -> origin/master
+HEAD 現在位於 cb0b7e4c48 update prediction
+共有 751 個有效氣象站
+Traceback (most recent call last):
+  File "ERA5_current_download_cron.py", line 56, in <module>
+    weather_df_archive = fetch_openmeteo_archive(lat=lat, lon=lon, start=past_days_start, end=past_days_end)
+  File "ERA5_current_download_cron.py", line 11, in fetch_openmeteo_archive
+    df = pd.read_json(url)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 760, in read_json
+    json_reader = JsonReader(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 861, in __init__
+    data = self._get_data_from_filepath(filepath_or_buffer)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 901, in _get_data_from_filepath
+    self.handles = get_handle(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 368, in _get_filepath_or_buffer
+    with urlopen(req_info) as req:
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 270, in urlopen
+    return urllib.request.urlopen(*args, **kwargs)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 531, in open
+    response = meth(req, response)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 640, in http_response
+    response = self.parent.error(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 569, in error
+    return self._call_chain(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 502, in _call_chain
+    result = func(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 649, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+2025-01-25 05:00:06.420486: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-25 05:00:06.549453: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2025-01-25 05:00:06.549491: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2025-01-25 05:00:06.577178: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-25 05:00:07.277492: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2025-01-25 05:00:07.277592: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2025-01-25 05:00:07.277606: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2025-01-25 05:00:08.085795: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2025-01-25 05:00:08.085937: W tensorflow/stream_executor/cuda/cuda_driver.cc:263] failed call to cuInit: UNKNOWN ERROR (303)
+2025-01-25 05:00:08.085977: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (raingel-NUC8i3PNB): /proc/driver/nvidia/version does not exist
+2025-01-25 05:00:08.086340: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Processing C0R710_龍磐_21.931672_120.838942.csv
+Processing C1F9D1_白毛台_24.158325_120.886933.csv
+Processing C0G940_竹塘_23.848253_120.386764.csv
+Processing 467590_恆春_22.003897_120.746339.csv
+Processing C1O850_環湖_23.148617_120.418633.csv
+Processing C0U710_太平山_24.505486_121.525656.csv
+Processing C0E820_獅潭_24.539133_120.920042.csv
+Processing C0V880_興達_22.8778_120.2127.csv
+Processing C0S890_關山_23.0395_121.175017.csv
+Processing K2F750_種苗繁殖_24.225972_120.800917.csv
+Processing C1Z130_銅門_23.965694_121.492842.csv
+Processing C0AD40_土城_24.973208_121.445169.csv
+Processing CAN140_六官養殖協會_23.22881_120.29962.csv
+Processing C0X180_山上_23.0757_120.363253.csv
+Processing C0F9Z0_雪山東峰_24.388792_121.268675.csv
+Processing C1M480_獨立山_23.537022_120.607797.csv
+Processing C0X220_學甲_23.230367_120.182187.csv
+Processing C0R170_屏東_22.660269_120.494072.csv
+Processing 467650_日月潭_23.881325_120.90805.csv
+Processing C0K600_箔子寮_23.6197_120.14.csv
+Processing C0G830_埤頭_23.866003_120.452806.csv
+Processing C0S950_七塊厝_22.954453_121.229922.csv
+Processing 467110_金門_24.407306_118.289281.csv
+Processing C0AH80_深坑_25.002703_121.628328.csv
+Processing 467990_馬祖_26.169269_119.923419.csv
+Processing C0A970_三貂角_25.007606_122.002058.csv
+Processing C0K430_褒忠_23.690938_120.303634.csv
+Processing 467480_嘉義_23.495925_120.432906.csv
+Processing C2E540_後龍_24.606489_120.783933.csv
+Processing C0V400_阿公店_22.804194_120.355528.csv
+Processing C0R440_大漢山_22.405264_120.753181.csv
+Processing C0K280_四湖_23.630414_120.227125.csv
+Processing C1F9B1_桐林_24.066172_120.735194.csv
+Processing C0K390_土庫_23.679029_120.395574.csv
+Processing C1I450_望鄉山_23.594153_120.944286.csv
+Processing C0E910_海埔_24.648767_120.772435.csv
+Processing B2E890_畜試北區分所_24.527806_120.770972.csv
+Processing C0R750_四林格山_22.076989_120.802439.csv
+Processing C0F0C0_中坑_24.248517_120.903319.csv
+Processing C1I121_大鞍_23.678381_120.760017.csv
+Processing 72U480_花改蘭陽分場_24.686306_121.716583.csv
+Processing C0A770_科教館_25.096356_121.516507.csv
+Processing C0AJ60_六塊厝_25.24_121.4481.csv
+Processing C0R620_墾雷_21.900836_120.855269.csv
+Processing 467420_永康_23.038386_120.2367.csv
+Processing 467300_東吉島_23.25695_119.667467.csv
+Processing C0I410_名間_23.837053_120.701447.csv
+Processing A2C560_農工中心_24.985917_121.239833.csv
+Processing C0V740_旗山_22.888614_120.483597.csv
+Processing C0Z061_玉里_23.3215_121.339656.csv
+Processing C0S840_南田_22.279725_120.889208.csv
+Processing C1I470_杉林溪_23.639517_120.786444.csv
+Processing C1X040_東原_23.291597_120.463822.csv
+Processing C0R660_枋寮_22.367722_120.590647.csv
+Processing C1R120_上德文_22.763272_120.704442.csv
+Processing C0K450_大埤_23.646074_120.431537.csv
+Processing C0UA00_土場_24.576533_121.495333.csv
+Processing 467080_宜蘭_24.763975_121.756528.csv
+Processing C0N030_四草_23.0235_120.1116.csv
+Processing C0V650_彌陀_22.783806_120.246361.csv
+Processing C0D660_新竹市東區_24.798681_120.986942.csv
+Processing 82S580_茶改東部分場_22.907694_121.130139.csv
+Processing C0C710_大溪永福_24.892936_121.324975.csv
+Processing C0FA20_溫寮_24.372177_120.583125.csv
+Processing C0V640_湖內_22.887139_120.2445.csv
+Processing C0R910_下寮_22.3929_120.5548.csv
+Processing C0Z020_明里_23.208717_121.262342.csv
+Processing C0M770_嘉義梅山_23.585398_120.555587.csv
+Processing G2F820_農業試驗所_24.031261_120.688133.csv
+Processing C0C660_楊梅_24.912375_121.143047.csv
+Processing C1E511_新開_24.347703_120.827019.csv
+Processing G2F820_農試所(霧峰)_24.031261_120.688133.csv
+Processing C1I070_和社_23.591131_120.888861.csv
+Processing C2F000_大肚_24.15295_120.572117.csv
+Processing C1S850_豐南_23.122139_121.262389.csv
+Processing C2A920_富貴角_25.263783_121.565258.csv
+Processing CAH030_茶改場竹圍站_23.860083_120.637528.csv
+Processing C0T960_光復_23.660694_121.424964.csv
+Processing C0F9M0_豐原_24.254322_120.720692.csv
+Processing C0R720_旭海_22.205403_120.887614.csv
+Processing C0V710_苓雅_22.622742_120.330669.csv
+Processing C0C740_觀音工業區_25.064764_121.114856.csv
+Processing CAC040_拉拉山_24.699317_121.427133.csv
+Processing C0V790_萬山_22.905944_120.688056.csv
+Processing U2HA30_臺大和社_23.590856_120.888864.csv
+Processing C0AJ90_澳底_25.0552_121.9253.csv
+Processing C0Z100_東華_23.89525_121.549833.csv
+Processing C0G970_三豐_23.882_120.2895.csv
+Processing V2K610_大庄合作社_23.8068_120.367939.csv
+Processing C0V900_汕尾_22.4782_120.4151.csv
+Processing C1R630_龍泉_22.66701_120.59091.csv
+Processing C1AC50_關渡_25.133486_121.469331.csv
+Processing C0F9I0_神岡_24.272481_120.658314.csv
+Processing C0K460_斗南_23.678734_120.478359.csv
+Processing 467410_臺南_22.993239_120.204772.csv
+Processing C2O810_曾文_23.219681_120.497328.csv
+Processing 467280_後龍_24.648563_120.831834.csv
+Processing C1F9J1_清水林_24.071242_120.820419.csv
+Processing C2A650_火燒寮_25.002719_121.742892.csv
+Processing 466930_竹子湖_25.162078_121.544547.csv
+Processing C1I220_樟湖_23.905333_120.846983.csv
+Processing C0I390_仁愛_24.022122_121.132206.csv
+Processing C0Z300_東里_23.26853_121.30547.csv
+Processing C0V310_美濃_22.898742_120.519153.csv
+Processing C1V590_新發_23.057019_120.646064.csv
+Processing C0K510_水林_23.572924_120.24597.csv
+Processing 72S590_東改賓朗果園_22.813889_121.071278.csv
+Processing 82A750_茶改北部分場_24.955778_121.631222.csv
+Processing C1A750_石碇服務區_25.00872_121.646242.csv
+Processing C0X300_鹿寮_23.386047_120.477331.csv
+Processing G2AI50_關渡_25.11575_121.492.csv
+Processing C0K590_雲林東勢_23.674192_120.255721.csv
+Processing C0A570_桶後_24.848222_121.597992.csv
+Processing C1S800_華源_22.657883_121.02325.csv
+Processing C0G720_溪州_23.851589_120.499093.csv
+Processing C1V160_達卡努瓦_23.279811_120.705319.csv
+Processing C2M410_馬頭山_23.324361_120.582017.csv
+Processing C0V850_蚵仔寮_22.7256_120.2527.csv
+Processing C0S740_池上_23.119628_121.209469.csv
+Processing C1V390_尖山_22.813153_120.367789.csv
+Processing C0AH70_松山_25.04871_121.55042.csv
+Processing C0N010_鯤鯓國小_23.1879_120.0889.csv
+Processing C0R550_新埤_22.467947_120.582894.csv
+Processing C0SA60_知本（水試所）_22.702394_121.082761.csv
+Processing C0T9I0_豐濱_23.583897_121.514806.csv
+Processing C0UB00_淡江大學蘭陽校園_24.823239_121.730383.csv
+Processing C0T9N0_富里_23.171639_121.249378.csv
+Processing U2HA50_臺大竹山_23.756972_120.681556.csv
+Processing C0V840_鳳鼻頭_22.5083_120.3591.csv
+Processing C0X140_西港_23.125608_120.203108.csv
+Processing 72D080_桃改五峰分場_24.612194_121.157167.csv
+Processing C0V530_阿蓮_22.883208_120.327508.csv
+Processing C1O880_關山_23.173397_120.594092.csv
+Processing C0E791_卓蘭_24.3126_120.8244.csv
+Processing C1I030_武界_23.913225_121.052483.csv
+Processing C0R520_崁頂_22.514781_120.506914.csv
+Processing C0R341_牡丹_22.130036_120.792639.csv
+Processing C0R930_萬丹_22.5885_120.4851.csv
+Processing C0S760_紅石_23.069131_121.126219.csv
+Processing C1M610_石磐龍_23.496606_120.663506.csv
+Processing C0UA10_鴛鴦湖_24.590269_121.412228.csv
+Processing V2C260_八德蔬果_24.978508_121.281819.csv
+Processing C0R800_丹路_22.204481_120.750989.csv
+Processing C0G920_永靖_23.924703_120.547533.csv
+Processing C1A630_下盆_24.771003_121.538622.csv
+Processing B2N890_畜產試驗所_23.058972_120.336406.csv
+Processing C0UA30_白嶺_24.527819_121.519031.csv
+Processing C1V580_溪南(特生中心)_23.084972_120.788475.csv
+Processing C1T970_大農_23.615233_121.413331.csv
+Processing E2S960_林試太麻里2_22.598014_120.989761.csv
+Processing C0R650_竹田_22.58486_120.54344.csv
+Processing C1H900_清流_24.080775_120.962997.csv
+Processing C1C510_水尾_24.940081_121.087161.csv
+Processing C0F9X0_大雅(中科園區)_24.21528_120.62445.csv
+Processing C0O970_虎頭埤_23.021375_120.347878.csv
+Processing C0C730_中大臨海站_24.966126_121.008581.csv
+Processing C0X250_新營_23.310689_120.316681.csv
+Processing C0V700_三民_22.645017_120.311233.csv
+Processing C0U870_大礁溪_24.791042_121.675047.csv
+Processing C0E870_高鐵苗栗_24.60725_120.826094.csv
+Processing A2K570_古坑花卉中心_23.63353_120.55239.csv
+Processing C0M860_新美_23.338017_120.683169.csv
+Processing C1E701_八卦_24.491756_120.927619.csv
+Processing C0I420_國姓_24.037803_120.855072.csv
+Processing C0S960_香蘭_22.587569_120.993375.csv
+Processing C0R260_春日_22.370361_120.628306.csv
+Processing 72G600_臺中農改場_24.003028_120.534389.csv
+Processing C0Z210_瑞穗_23.5239_121.39021.csv
+Processing C0M820_達邦_23.453994_120.749517.csv
+Processing C0V860_南寮_22.7616_120.2339.csv
+Processing C0G740_大城_23.852487_120.320935.csv
+Processing C0R920_塭仔_22.4169_120.5197.csv
+Processing C0R470_高樹_22.826389_120.600806.csv
+Processing C0R680_佳樂水_21.993578_120.861633.csv
+Processing C1O870_大棟山_23.31157_120.52226.csv
+Processing C0D360_梅花_24.678347_121.208558.csv
+Processing C0Z190_富世_24.14743_121.6297.csv
+Processing C0AI10_屈尺_24.92184_121.54475.csv
+Processing B2U990_畜試東區分所_24.669039_121.832561.csv
+Processing C0R240_來義_22.527306_120.625111.csv
+Processing C1R610_西大武山_22.617719_120.7322.csv
+Processing C0G900_線西_24.143358_120.443536.csv
+Processing C0M700_竹崎_23.526178_120.555508.csv
+Processing C2E880_三義_24.405478_120.749819.csv
+Processing C0C720_竹圍_25.112692_121.239824.csv
+Processing C0F9P0_清水_24.312297_120.562242.csv
+Processing C0Z150_吉安光華_23.930925_121.595153.csv
+Processing C1D640_外坪(五指山)_24.644447_121.090961.csv
+Processing C0F9O0_潭子_24.213106_120.703933.csv
+Processing 72T250_花蓮農改場_23.975222_121.563889.csv
+Processing C0E780_銅鑼_24.489681_120.790853.csv
+Processing C1T950_太安_23.666719_121.370128.csv
+Processing C0E830_苑裡_24.439714_120.653053.csv
+Processing 467270_田中_23.873803_120.581286.csv
+Processing C0SA10_檳榔四格山_22.810031_121.109308.csv
+Processing C1T830_布洛灣_24.17184_121.57127.csv
+Processing C0F970_大坑_24.173142_120.722289.csv
+Processing C1U920_思源_24.393125_121.347214.csv
+Processing C0A931_三和_25.233153_121.595236.csv
+Processing C0I010_廬山_24.033311_121.181808.csv
+Processing C0R860_鼻頭_22.1043_120.8979.csv
+Processing C0UB20_壯圍_24.7359_121.8163.csv
+Processing C0R790_九棚_22.14195_120.889281.csv
+Processing C0W110_東莒_25.9652_119.98069.csv
+Processing C1U930_粉鳥林_24.497088_121.842479.csv
+Processing C1I211_蘆竹湳_23.934019_120.811994.csv
+Processing C0S830_長濱_23.286817_121.411975.csv
+Processing C1F9F1_伯公龍_24.272392_120.849047.csv
+Processing C0E810_西湖_24.562947_120.7485.csv
+Processing C1I440_新高口_23.478744_120.878939.csv
+Processing C0O840_王爺宮_23.222064_120.40085.csv
+Processing C0T9G0_鳳林山_23.735269_121.420131.csv
+Processing C0X080_佳里_23.173039_120.145086.csv
+Processing C0Z310_清水斷崖_24.218294_121.689142.csv
+Processing C0M680_太保_23.455062_120.331455.csv
+Processing C1S820_金峰_22.590969_120.933236.csv
+Processing C0AD10_八里_25.150211_121.403947.csv
+Processing C2K240_草嶺_23.59555_120.693461.csv
+Processing C1SA70_都蘭_22.87794_121.226881.csv
+Processing C0K440_二崙_23.772797_120.408944.csv
+Processing C1A760_坪林交控_24.94284_121.713442.csv
+Processing C0F9N0_大里_24.092464_120.701378.csv
+Processing C0SA90_達仁林場_22.264347_120.823972.csv
+Processing C1R290_石門山_22.112611_120.756597.csv
+Processing 42HA10_萬大發電廠_23.978875_121.139639.csv
+Processing C0R890_山海_21.9878_120.7091.csv
+Processing C0T9A0_月眉山_23.809928_121.539828.csv
+Processing C0AC70_信義_25.037822_121.564597.csv
+Processing C0K560_棋山_23.68645_120.603417.csv
+Processing C1Z240_中平林道_23.42115_121.26763.csv
+Processing U2H480_溪頭_23.670306_120.798194.csv
+Processing C0M880_好美里_23.3364_120.138.csv
+Processing C0T9E0_大坑_23.880628_121.581981.csv
+Processing C0K530_臺西_23.701547_120.197559.csv
+Processing C1E900_國一N128K_24.560997_120.844186.csv
+Processing C0AJ50_水湳洞_25.123695_121.862238.csv
+Processing C0AI20_白沙灣_25.283128_121.519058.csv
+Processing C0A860_大坪_25.165914_121.632969.csv
+Processing C1U850_觀音海岸_24.38319_121.77856.csv
+Processing C0U950_鶯子嶺_24.89754_121.79244.csv
+Processing C0O900_善化_23.112883_120.297219.csv
+Processing C0K550_蔦松_23.514319_120.229736.csv
+Processing E2P980_林試六龜中心_22.991703_120.645722.csv
+Processing C0E590_通霄_24.471892_120.704622.csv
+Processing C1I310_西巒_23.754486_120.883956.csv
+Processing C0A550_泰平_24.971197_121.823711.csv
+Processing C0I360_水里_23.812553_120.849792.csv
+Processing C0R830_高士_22.121825_120.836781.csv
+Processing C1I101_溪頭_23.661789_120.807647.csv
+Processing C0AJ20_野柳_25.20703_121.690021.csv
+Processing C0B060_暖暖_25.0957_121.7403.csv
+Processing C1H920_長豐_24.102039_120.879897.csv
+Processing C0V360_內門_22.975481_120.466769.csv
+Processing C0R850_林邊_22.4634_120.5339.csv
+Processing C0E930_龍鳳_24.700034_120.859125.csv
+Processing C0U910_冬山_24.63373_121.7937.csv
+Processing C1E721_泰安_24.489017_120.968036.csv
+Processing 82H320_茶改中部分場_23.875611_120.913583.csv
+Processing C0M750_布袋_23.380878_120.167789.csv
+Processing C1S860_利嘉_22.809417_121.050528.csv
+Processing 72C440_桃園農改_24.950944_121.030583.csv
+Processing E2S980_林試太麻里1_22.598922_120.980044.csv
+Processing C0X170_關廟_22.963017_120.327797.csv
+Processing C0V720_林園_22.507747_120.394511.csv
+Processing C1I510_線浸林道_23.761508_120.832956.csv
+Processing C0D690_外湖_24.917735_120.968711.csv
+Processing C0C750_新興坑尾_25.0061_121.0971.csv
+Processing B2Q810_畜試南區分所_21.945583_120.802167.csv
+Processing C0S790_金崙_22.538122_120.966875.csv
+Processing C0AH90_福山植物園_24.760717_121.58135.csv
+Processing C0I540_奇萊稜線_24.109231_121.326456.csv
+Processing C0M850_表湖_23.24186_120.64166.csv
+Processing C0S770_大溪山_22.478475_120.943325.csv
+Processing C0AG80_中和_24.991622_121.491792.csv
+Processing C0T790_大禹嶺_24.186117_121.316086.csv
+Processing C0T9B0_水源_23.991861_121.537169.csv
+Processing C0R840_牡丹池山_22.168389_120.841225.csv
+Processing C1I131_桶頭_23.641944_120.654117.csv
+Processing CAL110_布袋國中_23.35893_120.18026.csv
+Processing 467571_新竹_24.827853_121.014219.csv
+Processing C0Z290_赤柯山_23.36893_121.38293.csv
+Processing C0X280_將軍_23.214999_120.13577.csv
+Processing C0S690_太麻里_22.60902_120.98533.csv
+Processing C0U880_北關_24.9072_121.8734.csv
+Processing C1H860_瑞岩_24.123772_121.18345.csv
+Processing C0G810_埔心_23.947633_120.525456.csv
+Processing C0U970_大福_24.80064_121.81389.csv
+Processing C1E670_南礦_24.538278_121.002836.csv
+Processing C0M520_東後寮_23.369908_120.248065.csv
+Processing C1E461_松安_24.397972_120.986022.csv
+Processing 72G600_臺中農改_24.003028_120.534389.csv
+Processing C2N160_西拉雅風管處_23.189481_120.335297.csv
+Processing C0A640_石碇_24.993969_121.662917.csv
+Processing E2S960_林試太麻里2_22.598_120.99775.csv
+Processing C0F9Y0_桃山_24.432739_121.303808.csv
+Processing C1I020_萬大_23.979817_121.132261.csv
+Processing C0U940_羅東_24.68184_121.74934.csv
+Processing C0M650_朴子_23.43463_120.23902.csv
+Processing C1I500_大尖山_23.858572_120.994889.csv
+Processing C0G820_田尾_23.901669_120.509389.csv
+Processing E2K600_四湖植物園_23.676986_120.163433.csv
+Processing C0S730_綠島_22.6672_121.47533.csv
+Processing 12Q970_東港工作站_22.479997_120.466058.csv
+Processing C0E430_南庄_24.601775_121.000214.csv
+Processing C1TA00_太魯閣_24.15773_121.6236.csv
+Processing 466920_臺北_25.037658_121.514853.csv
+Processing C0R600_舊泰武_22.588194_120.664944.csv
+Processing C1I260_北坑_23.9246_121.006903.csv
+Processing 466910_鞍部_25.182586_121.529731.csv
+Processing C1I230_九份二山_23.961944_120.845.csv
+Processing C2A660_瑞芳_25.113169_121.801147.csv
+Processing C0R270_琉球嶼_22.332244_120.362236.csv
+Processing C1T990_高寮_23.394239_121.356808.csv
+Processing C0G620_芬園_24.015678_120.6213.csv
+Processing C1Z140_荖溪_23.890575_121.45964.csv
+Processing C1I201_中心崙_23.728722_120.712097.csv
+Processing C1I400_凌霄_24.018778_121.004456.csv
+Processing C1M640_十字_23.492153_120.753683.csv
+Processing G2P820_農試鳳山分所_22.646611_120.356083.csv
+Processing C0Z270_蕃薯寮_23.73835_121.540108.csv
+Processing C0F9Q0_外埔_24.347817_120.705686.csv
+Processing C0K580_高鐵雲林_23.737456_120.417944.csv
+Processing C2I090_鳳凰_23.728081_120.787347.csv
+Processing C0U990_員山_24.74435_121.72247.csv
+Processing C0V770_大社_22.730306_120.346639.csv
+Processing C0X120_麻豆_23.183289_120.248611.csv
+Processing C0C670_龍潭_24.870056_121.221389.csv
+Processing C0D680_香山濕地_24.783581_120.914988.csv
+Processing C0S980_勝林山_22.430439_120.8938.csv
+Processing C0V730_大寮_22.605614_120.395717.csv
+Processing C0R570_麟洛_22.65078_120.52719.csv
+Processing CAG100_王功漁港_23.96824_120.32586.csv
+Processing C0X290_北門_23.267772_120.125481.csv
+Processing C2F930_大甲_24.347667_120.640403.csv
+Processing C0D650_湖口_24.904794_121.043628.csv
+Processing C0E420_竹南_24.708978_120.888897.csv
+Processing C0U780_五結_24.68637_121.79794.csv
+Processing C1I250_鯉潭_23.961922_120.991131.csv
+Processing C0R130_阿禮_22.742908_120.743678.csv
+Processing C0X100_臺南市北區_23.010394_120.194228.csv
+Processing C0S920_金峰嘉蘭_22.594789_120.960825.csv
+Processing C0V490_新興_22.627422_120.298803.csv
+Processing C0F9K0_大安_24.345061_120.588025.csv
+Processing 72N100_臺南農改_23.0605_120.342194.csv
+Processing 467290_古坑_23.633639_120.551889.csv
+Processing C0V440_鳳山_22.646653_120.356122.csv
+Processing C1T940_大觀_23.714206_121.373133.csv
+Processing 72T250_花蓮農改_23.975222_121.563889.csv
+Processing C0E740_造橋_24.637056_120.864778.csv
+Processing C0R100_尾寮山_22.833111_120.683889.csv
+Processing A2K630_臺大雲林校區_23.730628_120.423903.csv
+Processing C0D580_寶山_24.735006_121.025192.csv
+Processing E2P990_林試扇平站_22.9677_120.6857.csv
+Processing C0AI30_三重_25.057328_121.500629.csv
+Processing C0AH00_汐止_25.066881_121.658778.csv
+Processing C1Z040_立山_23.443356_121.327375.csv
+Processing C0W130_花嶼_23.40007_119.32276.csv
+Processing C0A950_鼻頭角_25.129036_121.923372.csv
+Processing C0K470_林內_23.748675_120.609642.csv
+Processing 82C160_茶改場_24.908472_121.185333.csv
+Processing C0Z320_清水林道_23.27125_121.188272.csv
+Processing C0R760_南仁湖_22.084681_120.863353.csv
+Processing C0M670_大林_23.600616_120.45841.csv
+Processing C0M800_茶山_23.299075_120.664767.csv
+Processing C0A9C0_天母_25.117494_121.537169.csv
+Processing 72K220_南改斗南分場_23.634556_120.477333.csv
+Processing 72AI40_桃改樹林分場_24.944503_121.386972.csv
+Processing C0S910_蘭嶼燈塔_22.081197_121.503117.csv
+Processing C0B050_八斗子_25.144754_121.79167.csv
+Processing C0U900_內城_24.71813_121.68766.csv
+Processing C0X320_柳營_23.253328_120.375253.csv
+Processing C0M790_新港_23.553269_120.345728.csv
+Processing C0F9T0_西屯_24.179494_120.641275.csv
+Processing C0SA30_都歷_23.020333_121.323642.csv
+Processing C0C620_蘆竹_25.084275_121.265767.csv
+Processing C0R730_大坪頂_22.024633_120.69355.csv
+Processing C0AJ40_石門_25.273672_121.601198.csv
+Processing C0E750_苗栗_24.564569_120.824575.csv
+Processing C0T870_鯉魚潭_23.935639_121.508944.csv
+Processing C1V170_排雲_23.463619_120.954147.csv
+Processing C2H950_中寮_23.884447_120.766406.csv
+Processing C0R350_貓鼻頭_21.921774_120.7358.csv
+Processing C0V660_岡山_22.797078_120.294958.csv
+Processing C1H941_雙冬_23.967378_120.802189.csv
+Processing C0AJ70_田寮_25.2698_121.4886.csv
+Processing C0AI00_五股_25.07445_121.42728.csv
+Processing C0Z280_德武_23.47426_121.41071.csv
+Processing C0R700_枋山_22.246844_120.661086.csv
+Processing C0C460_復興_24.820208_121.352281.csv
+Processing E2H360_蓮華池_23.918333_120.885278.csv
+Processing C0M640_中埔_23.42538_120.5229.csv
+Processing C0W140_金沙_24.488292_118.408778.csv
+Processing C2A540_四堵_24.8926_121.745736.csv
+Processing C0ACA0_新莊_25.051478_121.446756.csv
+Processing C0R220_潮州_22.534361_120.54.csv
+Processing U2HA40_臺大內茅埔_23.689722_120.851117.csv
+Processing 467490_臺中_24.145736_120.684075.csv
+Processing C0U960_翠峰湖_24.510856_121.608044.csv
+Processing E2HA20_林試畢祿溪站_24.226944_121.308522.csv
+Processing C0V890_前鎮_22.5718_120.3117.csv
+Processing 467620_蘭嶼_22.036969_121.558339.csv
+Processing C1F941_雪嶺_24.280586_121.026642.csv
+Processing C0AC80_文山_25.00235_121.575728.csv
+Processing C0F9R0_龍井_24.184536_120.528972.csv
+Processing C0M760_民雄_23.551754_120.428457.csv
+Processing C0UA40_西德山_24.560647_121.752608.csv
+Processing C1T920_中興_23.769503_121.498653.csv
+Processing C0D550_雪霸_24.526972_121.11605.csv
+Processing C2F860_梨山_24.247522_121.243669.csv
+Processing C0R320_車城_22.0744_120.716247.csv
+Processing C1S870_南美山_23.15025_121.382333.csv
+Processing C0B020_基隆嶼_25.19141_121.78391.csv
+Processing C1U501_牛鬥_24.637836_121.573656.csv
+Processing C0M730_嘉義市東區_23.457673_120.460531.csv
+Processing C0S700_知本_22.684866_121.005642.csv
+Processing C1N001_沙崙_22.935472_120.309406.csv
+Processing C0V760_橋頭_22.757806_120.30575.csv
+Processing C0G960_福寶_24.0443_120.3814.csv
+Processing C0X210_白河_23.347466_120.414427.csv
+Processing C0S810_東河_22.972672_121.303986.csv
+Processing C0R670_楓港_22.190131_120.692156.csv
+Processing C0FA50_霧峰_24.0419_120.6995.csv
+Processing C0UB10_蘇澳_24.5969_121.8571.csv
+Processing C0G950_防潮門_24.1835_120.4871.csv
+Processing C0M740_六腳_23.492871_120.290625.csv
+Processing C1R250_力里_22.428117_120.629228.csv
+Processing C0K330_虎尾_23.719183_120.442036.csv
+Processing C2FA00_烏石坑_24.273503_120.947617.csv
+Processing C0V620_永安_22.82315_120.236856.csv
+Processing C1I330_楓樹林_23.986803_121.076117.csv
+Processing C0W200_湖西_23.596314_119.67275.csv
+Processing 72Q010_高雄農改場_22.709333_120.525889.csv
+Processing C0SA40_瑞和_22.974361_121.156697.csv
+Processing C0C680_龜山_25.02846_121.38656.csv
+Processing C2V260_月眉_22.971003_120.539853.csv
+Processing C0V450_鳳森_22.545064_120.392592.csv
+Processing C0U720_南山_24.43742_121.38167.csv
+Processing A2N290_臺南蘭花園區_23.340258_120.379661.csv
+Processing C0R560_新園_22.5434_120.461558.csv
+Processing C0U890_三星_24.66812_121.65302.csv
+Processing C1V300_御油山_23.001983_120.715364.csv
+Processing C0U600_礁溪_24.817539_121.765608.csv
+Processing C1T980_龍澗_24.023289_121.411328.csv
+Processing C0D670_海天一線_24.831986_120.914438.csv
+Processing C0SA00_歷坵_22.520969_120.89185.csv
+Processing C0M710_東石_23.458927_120.15385.csv
+Processing C0M780_鹿草_23.41134_120.30835.csv
+Processing C0U520_雙連埤_24.753033_121.641303.csv
+Processing C0B010_七堵_25.094819_121.71713.csv
+Processing C0R480_長治_22.693128_120.542622.csv
+Processing C1V830_國三S383K_22.781967_120.426475.csv
+Processing 12Q980_恆春工作站_22.079678_120.714425.csv
+Processing C1O940_東山服務區_23.286016_120.398472.csv
+Processing C1U840_東澳嶺_24.5378_121.8485.csv
+Processing C1D630_飛鳳山_24.766464_121.119178.csv
+Processing C0S940_石寧山_23.223772_121.406639.csv
+Processing C0K410_北港_23.573957_120.292802.csv
+Processing C2M620_瑞里_23.545133_120.675197.csv
+Processing C2O950_安南_23.076694_120.144861.csv
+Processing C0F0E0_南湖圈谷_24.363714_121.444667.csv
+Processing 467610_成功_23.097486_121.373428.csv
+Processing C0G890_伸港_24.148933_120.484403.csv
+Processing C2E540_龍溪_24.606489_120.783933.csv
+Processing C1V200_梅山_23.268447_120.823556.csv
+Processing C0T9H0_加路蘭山_23.682947_121.5274.csv
+Processing C2O930_玉井_23.126042_120.46055.csv
+Processing C1F911_新伯公_24.221361_120.841069.csv
+Processing C0R490_九如_22.7405_120.490503.csv
+Processing C0X200_左鎮_23.056758_120.408522.csv
+Processing C1F891_稍來_24.265689_121.001142.csv
+Processing 72N240_七股研究中心_23.081672_120.062894.csv
+Processing C0C700_中壢_24.977661_121.256375.csv
+Processing C0M690_水上_23.419734_120.388909.csv
+Processing C0V690_鼓山_22.623325_120.275575.csv
+Processing C0O860_大內_23.11885_120.36083.csv
+Processing C0Z200_萬榮_23.709219_121.420106.csv
+Processing C0T9D0_和中_24.26676_121.74103.csv
+Processing C1O921_楠西_23.183511_120.484083.csv
+Processing C0AJ30_淡水觀海_25.184591_121.408616.csv
+Processing C0V810_左營_22.67491_120.28491.csv
+Processing C0UA70_桃源谷_24.962606_121.888875.csv
+Processing C0X130_官田_23.193217_120.315422.csv
+Processing C1H000_翠峰_24.109397_121.205211.csv
+Processing C0UA90_石城_24.980444_121.951214.csv
+Processing C1E681_南勢山_24.421669_120.923831.csv
+Processing C0A9F0_內湖_25.079422_121.57545.csv
+Processing C0K291_宜梧_23.536281_120.169329.csv
+Processing C1K540_口湖_23.585344_120.180517.csv
+Processing C0R780_滿州_22.024403_120.839892.csv
+Processing C0V870_文安_22.8025_120.2164.csv
+Processing C0U650_玉蘭_24.675286_121.587061.csv
+Processing C0R640_東港_22.46247_120.44074.csv
+Processing K2E360_苗栗農改_24.495722_120.829111.csv
+Processing C0AJ80_板橋_25.0107_121.4489.csv
+Processing C0S660_下馬_23.150427_121.070312.csv
+Processing C1H9B1_阿眉_24.1263_120.994672.csv
+Processing C0UA20_多加屯_24.368614_121.373189.csv
+Processing C0E730_頭份_24.688247_120.912206.csv
+Processing 72V140_高改旗南分場_22.857861_120.516667.csv
+Processing C0K480_莿桐_23.761192_120.502372.csv
+Processing C0U980_坪林石牌_24.86478_121.77396.csv
+Processing C0T900_西林_23.8119_121.441458.csv
+Processing C1I150_青雲_23.793361_120.949378.csv
+Processing 467350_澎湖_23.565503_119.563094.csv
+Processing C0G800_埔鹽_24.000394_120.431683.csv
+Processing C0H960_草屯_23.973672_120.68085.csv
+Processing C1V780_多納林道_22.888028_120.737917.csv
+Processing C0E920_通霄漁港_24.498589_120.673876.csv
+Processing C0Z330_安通山_23.290728_121.348528.csv
+Processing C0AH10_永和_25.01125_121.508111.csv
+Processing C2G640_鹿港_24.0753_120.430481.csv
+Processing C1E890_國三N149K_24.463414_120.680019.csv
+Processing C1R110_口社_22.770111_120.645222.csv
+Processing C1M870_國三N285K_23.550319_120.505833.csv
+Processing 467050_新屋_25.006744_121.047486.csv
+Processing C1E480_鳳美_24.554803_121.034747.csv
+Processing C0M530_奮起湖_23.493903_120.699253.csv
+Processing C0C590_觀音_25.027072_121.153317.csv
+Processing C0T9M0_靜浦_23.455167_121.495028.csv
+Processing C0AI40_石牌_25.115597_121.513139.csv
+Processing C1F871_上谷關_24.203483_121.018644.csv
+Processing C0G880_二水_23.810742_120.6173.csv
+Processing C0R940_加祿堂_22.3363_120.6217.csv
+Processing C0W220_北竿_26.220358_119.974881.csv
+Processing C0O960_崎頂_22.959547_120.369317.csv
+Processing C0S750_向陽_23.248397_120.986133.csv
+Processing C0T9F0_水璉_23.797131_121.542514.csv
+Processing C1M600_頭凍_23.406364_120.603339.csv
+Processing 467660_臺東_22.752211_121.154586.csv
+Processing C1D380_新埔_24.84745_121.03834.csv
+Processing C0V750_路竹_22.854997_120.259439.csv
+Processing C0N050_蚵寮_23.301_120.1104.csv
+Processing 72M700_南改鹿草分場_23.416869_120.283061.csv
+Processing C1SA50_利嘉林道_22.82325_121.009389.csv
+Processing 467550_玉山_23.487614_120.959522.csv
+Processing C0A940_金山_25.223628_121.643967.csv
+Processing C1V340_大津_22.888322_120.645986.csv
+Processing C0W180_七美_23.219333_119.444892.csv
+Processing C1F9C1_白冷_24.182844_120.929889.csv
+Processing K2E710_苗改生物防治研究中心_24.422861_120.871833.csv
+Processing C0N040_蘆竹溝_23.2344_120.0961.csv
+Processing C2W230_畜試所澎湖_23.628342_119.513206.csv
+Processing C0R880_後壁湖_21.9457_120.7457.csv
+Processing C1I280_埔中_23.820778_120.642594.csv
+Processing 467790_墾丁雷達站_21.948235_120.808028.csv
+Processing C0W190_望安_23.380564_119.494075.csv
+Processing 466881_新北_24.9593_121.52.csv
+Processing C0Z170_卓溪_23.3443_121.3029.csv
+Processing C0F850_東勢_24.246428_120.833047.csv
+Processing 466900_淡水_25.164889_121.448906.csv
+Processing C0I370_魚池_23.895703_120.94135.csv
+Processing C0C630_大溪_24.882853_121.265547.csv
+Processing C0A520_山佳_24.974944_121.402008.csv
+Processing C0I110_竹山_23.761225_120.688156.csv
+Processing 82H840_茶改南部分場_23.762528_120.7405.csv
+Processing C0G660_溪湖_23.94835_120.479122.csv
+Processing C1T800_洛韶_24.204558_121.453956.csv
+Processing C1T810_慈恩_24.192044_121.388386.csv
+Processing C1E451_象鼻_24.368617_120.940228.csv
+Processing C0AC60_三峽_24.939025_121.369728.csv
+Processing C0I490_萬大林道_23.928228_121.091411.csv
+Processing C1I290_豐丘_23.668178_120.887417.csv
+Processing C1I320_奧萬大_23.952956_121.178556.csv
+Processing C0U770_南澳_24.44935_121.81022.csv
+Processing C0A980_社子_25.109508_121.469681.csv
+Processing C0V800_六龜_22.997889_120.633583.csv
+Processing C1G9D0_國一S218K_23.890641_120.493253.csv
+Processing C2F9A0_中竹林_24.103556_120.751061.csv
+Processing C0FA40_臺中電廠_24.2146_120.4907.csv
+Processing C0H9C0_合歡山_24.143442_121.272547.csv
+Processing C0X060_下營_23.22695_120.256261.csv
+Processing G2M350_農試溪口農場_23.58565_120.408111.csv
+Processing C0U860_頭城_24.85323_121.8308.csv
+Processing C0R580_南州_22.48591_120.50274.csv
+Processing C0D430_峨眉_24.6905_121.017189.csv
+Processing C0G780_秀水_24.03405_120.503869.csv
+Processing 72N100_臺南農改場_23.0605_120.342194.csv
+Processing C0S900_蘭嶼高中_22.04909_121.51214.csv
+Processing 467540_大武_22.355675_120.903789.csv
+Processing C1F9W0_德基_24.254783_121.190261.csv
+Processing C1Z120_壽豐_23.870853_121.508081.csv
+Processing C0W160_烏坵_24.9944_119.44956.csv
+Processing C1I240_外大坪_23.958697_120.917931.csv
+Processing C1I550_國六W023K_23.979067_120.867742.csv
+Processing C0R870_興海_21.9752_120.8439.csv
+Processing C0R140_瑪家_22.682903_120.686639.csv
+Processing C0A530_坪林_24.938183_121.70975.csv
+Processing C0X260_後壁_23.366358_120.362326.csv
+Processing C0Z230_和平_24.30717_121.77007.csv
+Processing C0G770_福興_24.041289_120.437669.csv
+Processing C0H9A0_神木村_23.532742_120.843667.csv
+Processing C0I460_南投_23.911469_120.687331.csv
+Processing C0I480_梅峰_24.085272_121.173572.csv
+Processing C1V570_吉東_22.85422_120.5454.csv
+Processing C2A560_福山_24.776203_121.502811.csv
+Processing C0AH30_五分山_25.07125_121.780794.csv
+Processing C0FA10_松柏_24.429115_120.617482.csv
+Processing 72S200_東改班鳩分場_22.829528_121.077694.csv
+Processing 72HA00_中改埔里分場_23.903208_120.963364.csv
+Processing C0C650_平鎮_24.897503_121.214636.csv
+Processing C0S930_延平_22.902581_121.084058.csv
+Processing C0UA60_樟樹山_24.41393_121.78325.csv
+Processing C1S670_摩天_23.199503_121.027.csv
+Processing C0V630_茄萣_22.906642_120.182608.csv
+Processing 466940_基隆_25.133314_121.740475.csv
+Processing C0X050_東河_23.296598_120.385608.csv
+Processing C0R770_保力_22.071122_120.764111.csv
+Processing G2L020_農試嘉義分所_23.485028_120.473806.csv
+Processing C0X240_關子嶺_23.331169_120.508025.csv
+Processing C0I380_集集_23.828206_120.801467.csv
+Processing 466990_花蓮_23.975128_121.613275.csv
+Processing C1V220_小關山_23.154217_120.813603.csv
+Processing C1F9G1_慶福山_24.180853_120.848378.csv
+Processing C0Z250_瑞穗林道_23.49284_121.30688.csv
+Processing C0D590_新豐_24.87068_120.97721.csv
+Processing C0A870_五指山_25.132153_121.608692.csv
+Processing C0UA50_西帽山_24.555361_121.802628.csv
+Processing C0X160_仁德_22.968258_120.257689.csv
+Processing C1H971_六分寮_23.92507_120.6378.csv
+Processing C0W120_西嶼_23.5626_119.468436.csv
+Processing C0G650_員林_23.946503_120.585597.csv
+Processing C0AD50_鶯歌_24.951533_121.346294.csv
+Processing C0S990_山豬窟_22.318619_120.857372.csv
+Processing 72Q010_高雄農改_22.709333_120.525889.csv
+Processing C0X190_安平_22.993161_120.152181.csv
+Processing C0K400_斗六_23.720583_120.541127.csv
+Processing 12J990_口湖工作站_23.589978_120.180394.csv
+Processing C0O830_北寮_23.079561_120.495008.csv
+Processing C1D410_白蘭_24.579364_121.079947.csv
+Processing C0S970_加津林_22.416211_120.926942.csv
+Processing C0D700_關西_24.7977_121.1732.csv
+Processing C0M810_里佳_23.389125_120.716647.csv
+Processing C0U750_龜山島_24.841667_121.953133.csv
+Processing C0R810_內獅_22.305064_120.642986.csv
+Processing C1M390_龍美_23.406728_120.654417.csv
+Processing C1H840_國三N238K_23.841008_120.707711.csv
+Processing CAQ030_崎峰國小_22.42565_120.49521.csv
+Processing C2E520_大湖_24.414939_120.870872.csv
+Processing 467530_阿里山_23.508208_120.813242.csv
+Processing C1E691_南湖_24.40135_120.837533.csv
+Processing C0FA30_梧棲_24.256003_120.523381.csv
+Processing C1V231_高中_23.134911_120.716711.csv
+Processing C0F9V0_新社_24.200172_120.815806.csv
+Processing C0H890_埔里_23.972169_120.952425.csv
+Processing C0R690_墾丁_21.966756_120.810269.csv
+Processing C0F0D0_審馬陣_24.381675_121.4203.csv
+Processing C0R820_白鷺_22.454275_120.666219.csv
+Processing U2H480_臺大溪頭_23.670306_120.798194.csv
+Processing C1V190_南天池_23.27403_120.91176.csv
+Processing K2E360_苗栗農改場_24.495722_120.829111.csv
+Processing CAJ050_海口故事園區_23.57543_120.14121.csv
+Processing C0O990_媽廟_22.99175_120.293525.csv
+Processing C0D480_打鐵坑_24.849664_121.150789.csv
+Processing C0Z220_和平林道_24.343922_121.656317.csv
+Processing 72C440_桃園農改場_24.950944_121.030583.csv
+Processing C1E711_馬拉邦山_24.367306_120.901656.csv
+Processing C0D560_竹東_24.767147_121.057881.csv
+Processing C0F9U0_南屯_24.137006_120.637969.csv
+Processing C0M720_番路_23.464657_120.554156.csv
+Processing C0F0A0_雪山圈谷_24.388594_121.236339.csv
+Processing C1A9N0_四十份_24.934158_121.593283.csv
+Processing C0U760_東澳_24.52196_121.83318.csv
+Processing C0X230_鹽水_23.272621_120.247641.csv
+Processing C0V370_古亭坑_22.893178_120.401947.csv
+Processing C1I340_新興橋_23.563333_120.868728.csv
+Processing C0SA80_土坂_22.453108_120.887572.csv
+Processing C0R160_鹽埔_22.739558_120.530778.csv
+Processing C0AC40_大屯山_25.175675_121.522408.csv
+Processing 466850_五分山雷達站_25.071182_121.781205.csv
+Processing C1AI50_國三N016K_25.034164_121.619664.csv
+Processing C1V600_藤枝_23.071961_120.757042.csv
+Processing C1E601_南勢_24.572486_120.734842.csv
+Processing C0Z180_新城_24.03946_121.60454.csv
+Processing C0O980_新市_23.061614_120.298197.csv
+Processing C0K420_西螺_23.800407_120.467394.csv
+Processing C0Z050_佳心_23.34567_121.21316.csv
+Processing C0AD30_蘆洲_25.086594_121.472331.csv
+Processing C0V610_梓官_22.760558_120.267211.csv
+Processing K2F750_種苗改良場_24.225972_120.800917.csv
+Processing C0UA80_大溪漁港_24.941801_121.902955.csv
+Processing C1AI60_國一39K邊坡_25.064361_121.383836.csv
+Processing C0W150_金寧_24.457703_118.328989.csv
+Processing V2C250_八德合作社_24.93775_121.266389.csv
+Processing C0AH40_平等_25.129142_121.577086.csv
+Processing C0R540_佳冬_22.419456_120.552375.csv
+Processing 466950_彭佳嶼_25.627975_122.079744.csv
+Processing C0A890_雙溪_25.036003_121.864242.csv
+Processing C0C480_桃園_24.992425_121.323172.csv
+Processing C0AH50_林口_25.072181_121.38084.csv
+Processing A2K360_水試臺西試驗場_23.717231_120.190522.csv
+Processing B2N890_畜試所_23.058972_120.336406.csv
+Processing C0F9S0_烏日_24.107058_120.624103.csv
+Processing C0C490_八德_24.928708_121.283289.csv
+Processing C0R190_赤山_22.592333_120.614306.csv
+Processing C0T820_天祥_24.179597_121.495639.csv
+Processing C1F9E1_龍安_24.1605_120.831961.csv
+Processing C0V820_小林_23.148408_120.63325.csv
+Processing C2G870_芳苑_23.922303_120.320025.csv
+Processing C0E850_大河_24.618069_120.948578.csv
+Processing C1U670_寒溪_24.634_121.71691.csv
+Processing C0N020_城西_23.0568_120.0956.csv
+Processing C1Z110_三棧_24.11557_121.60501.csv
+Processing C0R280_檳榔_22.076078_120.836777.csv
+Processing C0F9L0_后里_24.310436_120.729725.csv
+Processing C0D540_橫山_24.71116_121.11693.csv
+Processing C1D420_太閣南_24.632808_121.160575.csv
+Processing C1E770_公館_24.526914_120.830806.csv
+Processing CAN130_水試所海水繁養殖中心_23.120802_120.07968.csv
+Processing C1I430_翠華_24.191961_121.224339.csv
+Processing C1M400_菜瓜坪_23.251928_120.576103.csv
+Processing C0G730_二林_23.903325_120.376081.csv
+Processing 72M360_南改義竹分場_23.360694_120.279361.csv
+Processing V2K620_麥寮合作社_23.753836_120.294783.csv
+Processing C0Z070_舞鶴_23.46811_121.37407.csv
+Processing C0B040_大武崙_25.166676_121.706993.csv
+Processing C1Z030_紅葉_23.493119_121.338806.csv
+Processing C1I050_丹大_23.753747_121.141147.csv
+Processing C0I080_信義_23.689694_120.851036.csv
+Processing C2A880_福隆_25.017842_121.942083.csv
+Processing C0Z160_鳳林_23.746114_121.453411.csv
+Processing C0V210_復興_23.222403_120.806089.csv
+Processing C0H990_昆陽_24.121322_121.273642.csv
+Processing C0R741_獅子_22.202308_120.705236.csv
+Processing C0S710_鹿野_22.917711_121.122994.csv
+Processing C0I530_小奇萊_24.131764_121.295717.csv
+Processing C0Z080_富源_23.587642_121.378225.csv
+Processing 467441_高雄_22.7304_120.3125.csv
+Processing C1I140_卡奈托灣_23.754364_121.087872.csv
+Processing C0I520_玉山風口_23.470489_120.955994.csv
+Processing C1G691_下水埔_23.816114_120.5676.csv
+Processing C0X110_臺南市南區_22.961189_120.188378.csv
+Processing C0V680_仁武_22.701083_120.347722.csv
+Processing C2G840_北斗_23.877586_120.514222.csv
+Processing C0R900_竹坑_22.1385_120.7022.csv
+Processing C0K250_崙背_23.75555_120.318925.csv
+Processing C0G860_社頭_23.897647_120.5862.csv
+Processing C0X150_安定_23.102614_120.227839.csv
+Processing C0R590_里港_22.77919_120.49459.csv
+Processing C0E610_馬都安_24.451272_120.930192.csv
+Processing C0E550_明德_24.583486_120.885411.csv
+Processing C0R150_三地門_22.709889_120.639944.csv
+Processing C0G910_花壇_24.032076_120.549461.csv
+Processing C1D400_鳥嘴山_24.71909_121.28387.csv
+Processing C0K500_元長_23.64981_120.315024.csv
+Processing C0F0B0_石岡_24.276061_120.777644.csv
+Processing C2V250_甲仙_23.080106_120.591758.csv
+Processing C0SA20_金崙山_22.567419_120.959667.csv
+Processing C0V350_溪埔_22.738578_120.446797.csv
+Processing C0M660_溪口_23.604131_120.403569.csv
+Processing C1S880_壽卡_22.238911_120.858903.csv
+Processing 72D680_桃改新埔分場_24.834444_121.066111.csv
+   1/1104 [..............................] - ETA: 12:30   9/1104 [..............................] - ETA: 7s     17/1104 [..............................] - ETA: 7s  25/1104 [..............................] - ETA: 7s  33/1104 [..............................] - ETA: 7s  41/1104 [>.............................] - ETA: 7s  49/1104 [>.............................] - ETA: 6s  57/1104 [>.............................] - ETA: 6s  65/1104 [>.............................] - ETA: 6s  73/1104 [>.............................] - ETA: 6s  81/1104 [=>............................] - ETA: 6s  89/1104 [=>............................] - ETA: 6s  97/1104 [=>............................] - ETA: 6s 105/1104 [=>............................] - ETA: 6s 113/1104 [==>...........................] - ETA: 6s 121/1104 [==>...........................] - ETA: 6s 129/1104 [==>...........................] - ETA: 6s 137/1104 [==>...........................] - ETA: 6s 145/1104 [==>...........................] - ETA: 6s 153/1104 [===>..........................] - ETA: 6s 161/1104 [===>..........................] - ETA: 6s 169/1104 [===>..........................] - ETA: 6s 177/1104 [===>..........................] - ETA: 5s 185/1104 [====>.........................] - ETA: 5s 193/1104 [====>.........................] - ETA: 5s 201/1104 [====>.........................] - ETA: 5s 209/1104 [====>.........................] - ETA: 5s 217/1104 [====>.........................] - ETA: 5s 225/1104 [=====>........................] - ETA: 5s 233/1104 [=====>........................] - ETA: 5s 241/1104 [=====>........................] - ETA: 5s 249/1104 [=====>........................] - ETA: 5s 257/1104 [=====>........................] - ETA: 5s 265/1104 [======>.......................] - ETA: 5s 273/1104 [======>.......................] - ETA: 5s 281/1104 [======>.......................] - ETA: 5s 289/1104 [======>.......................] - ETA: 5s 297/1104 [=======>......................] - ETA: 5s 305/1104 [=======>......................] - ETA: 5s 313/1104 [=======>......................] - ETA: 5s 321/1104 [=======>......................] - ETA: 5s 329/1104 [=======>......................] - ETA: 5s 337/1104 [========>.....................] - ETA: 4s 345/1104 [========>.....................] - ETA: 4s 353/1104 [========>.....................] - ETA: 4s 361/1104 [========>.....................] - ETA: 4s 369/1104 [=========>....................] - ETA: 4s 376/1104 [=========>....................] - ETA: 4s 384/1104 [=========>....................] - ETA: 4s 392/1104 [=========>....................] - ETA: 4s 400/1104 [=========>....................] - ETA: 4s 408/1104 [==========>...................] - ETA: 4s 416/1104 [==========>...................] - ETA: 4s 424/1104 [==========>...................] - ETA: 4s 432/1104 [==========>...................] - ETA: 4s 440/1104 [==========>...................] - ETA: 4s 448/1104 [===========>..................] - ETA: 4s 456/1104 [===========>..................] - ETA: 4s 464/1104 [===========>..................] - ETA: 4s 472/1104 [===========>..................] - ETA: 4s 480/1104 [============>.................] - ETA: 4s 488/1104 [============>.................] - ETA: 4s 496/1104 [============>.................] - ETA: 3s 504/1104 [============>.................] - ETA: 3s 512/1104 [============>.................] - ETA: 3s 520/1104 [=============>................] - ETA: 3s 528/1104 [=============>................] - ETA: 3s 536/1104 [=============>................] - ETA: 3s 544/1104 [=============>................] - ETA: 3s 552/1104 [==============>...............] - ETA: 3s 560/1104 [==============>...............] - ETA: 3s 567/1104 [==============>...............] - ETA: 3s 575/1104 [==============>...............] - ETA: 3s 583/1104 [==============>...............] - ETA: 3s 591/1104 [===============>..............] - ETA: 3s 599/1104 [===============>..............] - ETA: 3s 607/1104 [===============>..............] - ETA: 3s 615/1104 [===============>..............] - ETA: 3s 623/1104 [===============>..............] - ETA: 3s 631/1104 [================>.............] - ETA: 3s 639/1104 [================>.............] - ETA: 3s 647/1104 [================>.............] - ETA: 2s 655/1104 [================>.............] - ETA: 2s 663/1104 [=================>............] - ETA: 2s 671/1104 [=================>............] - ETA: 2s 679/1104 [=================>............] - ETA: 2s 687/1104 [=================>............] - ETA: 2s 695/1104 [=================>............] - ETA: 2s 703/1104 [==================>...........] - ETA: 2s 711/1104 [==================>...........] - ETA: 2s 719/1104 [==================>...........] - ETA: 2s 727/1104 [==================>...........] - ETA: 2s 735/1104 [==================>...........] - ETA: 2s 743/1104 [===================>..........] - ETA: 2s 751/1104 [===================>..........] - ETA: 2s 759/1104 [===================>..........] - ETA: 2s 767/1104 [===================>..........] - ETA: 2s 775/1104 [====================>.........] - ETA: 2s 783/1104 [====================>.........] - ETA: 2s 791/1104 [====================>.........] - ETA: 2s 799/1104 [====================>.........] - ETA: 1s 807/1104 [====================>.........] - ETA: 1s 815/1104 [=====================>........] - ETA: 1s 823/1104 [=====================>........] - ETA: 1s 831/1104 [=====================>........] - ETA: 1s 839/1104 [=====================>........] - ETA: 1s 847/1104 [======================>.......] - ETA: 1s 855/1104 [======================>.......] - ETA: 1s 863/1104 [======================>.......] - ETA: 1s 871/1104 [======================>.......] - ETA: 1s 879/1104 [======================>.......] - ETA: 1s 887/1104 [=======================>......] - ETA: 1s 895/1104 [=======================>......] - ETA: 1s 903/1104 [=======================>......] - ETA: 1s 911/1104 [=======================>......] - ETA: 1s 919/1104 [=======================>......] - ETA: 1s 927/1104 [========================>.....] - ETA: 1s 935/1104 [========================>.....] - ETA: 1s 943/1104 [========================>.....] - ETA: 1s 951/1104 [========================>.....] - ETA: 0s 959/1104 [=========================>....] - ETA: 0s 967/1104 [=========================>....] - ETA: 0s 975/1104 [=========================>....] - ETA: 0s 983/1104 [=========================>....] - ETA: 0s 991/1104 [=========================>....] - ETA: 0s 999/1104 [==========================>...] - ETA: 0s1007/1104 [==========================>...] - ETA: 0s1015/1104 [==========================>...] - ETA: 0s1022/1104 [==========================>...] - ETA: 0s1029/1104 [==========================>...] - ETA: 0s1037/1104 [===========================>..] - ETA: 0s1045/1104 [===========================>..] - ETA: 0s1053/1104 [===========================>..] - ETA: 0s1061/1104 [===========================>..] - ETA: 0s1069/1104 [============================>.] - ETA: 0s1077/1104 [============================>.] - ETA: 0s1085/1104 [============================>.] - ETA: 0s1093/1104 [============================>.] - ETA: 0s1099/1104 [============================>.] - ETA: 0s1104/1104 [==============================] - 8s 7ms/step
+來自 https://github.com/Raingel/rice_blast_prediction
+ * branch                  master     -> FETCH_HEAD
+已經是最新的。
+位於分支 master
+您的分支與上游分支 'origin/master' 一致。
+
+沒有要提交的檔案，工作區為乾淨狀態
+Everything up-to-date
+來自 https://github.com/Raingel/rice_blast_prediction
+   cb0b7e4c48..53f3ee5fab  master     -> origin/master
+HEAD 現在位於 53f3ee5fab update prediction
+共有 751 個有效氣象站
+Traceback (most recent call last):
+  File "ERA5_current_download_cron.py", line 56, in <module>
+    weather_df_archive = fetch_openmeteo_archive(lat=lat, lon=lon, start=past_days_start, end=past_days_end)
+  File "ERA5_current_download_cron.py", line 11, in fetch_openmeteo_archive
+    df = pd.read_json(url)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 760, in read_json
+    json_reader = JsonReader(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 861, in __init__
+    data = self._get_data_from_filepath(filepath_or_buffer)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 901, in _get_data_from_filepath
+    self.handles = get_handle(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 368, in _get_filepath_or_buffer
+    with urlopen(req_info) as req:
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 270, in urlopen
+    return urllib.request.urlopen(*args, **kwargs)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 531, in open
+    response = meth(req, response)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 640, in http_response
+    response = self.parent.error(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 569, in error
+    return self._call_chain(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 502, in _call_chain
+    result = func(*args)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/urllib/request.py", line 649, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+2025-01-26 05:00:06.371461: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-26 05:00:06.500042: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2025-01-26 05:00:06.500095: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2025-01-26 05:00:06.526145: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-26 05:00:07.172606: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2025-01-26 05:00:07.172693: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2025-01-26 05:00:07.172708: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2025-01-26 05:00:07.957851: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2025-01-26 05:00:07.957891: W tensorflow/stream_executor/cuda/cuda_driver.cc:263] failed call to cuInit: UNKNOWN ERROR (303)
+2025-01-26 05:00:07.957908: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (raingel-NUC8i3PNB): /proc/driver/nvidia/version does not exist
+2025-01-26 05:00:07.958100: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Processing C0R710_龍磐_21.931672_120.838942.csv
+Processing C1F9D1_白毛台_24.158325_120.886933.csv
+Processing C0G940_竹塘_23.848253_120.386764.csv
+Processing 467590_恆春_22.003897_120.746339.csv
+Processing C1O850_環湖_23.148617_120.418633.csv
+Processing C0U710_太平山_24.505486_121.525656.csv
+Processing C0E820_獅潭_24.539133_120.920042.csv
+Processing C0V880_興達_22.8778_120.2127.csv
+Processing C0S890_關山_23.0395_121.175017.csv
+Processing K2F750_種苗繁殖_24.225972_120.800917.csv
+Processing C1Z130_銅門_23.965694_121.492842.csv
+Processing C0AD40_土城_24.973208_121.445169.csv
+Processing CAN140_六官養殖協會_23.22881_120.29962.csv
+Processing C0X180_山上_23.0757_120.363253.csv
+Processing C0F9Z0_雪山東峰_24.388792_121.268675.csv
+Processing C1M480_獨立山_23.537022_120.607797.csv
+Processing C0X220_學甲_23.230367_120.182187.csv
+Processing C0R170_屏東_22.660269_120.494072.csv
+Processing 467650_日月潭_23.881325_120.90805.csv
+Processing C0K600_箔子寮_23.6197_120.14.csv
+Processing C0G830_埤頭_23.866003_120.452806.csv
+Processing C0S950_七塊厝_22.954453_121.229922.csv
+Processing 467110_金門_24.407306_118.289281.csv
+Processing C0AH80_深坑_25.002703_121.628328.csv
+Processing 467990_馬祖_26.169269_119.923419.csv
+Processing C0A970_三貂角_25.007606_122.002058.csv
+Processing C0K430_褒忠_23.690938_120.303634.csv
+Processing 467480_嘉義_23.495925_120.432906.csv
+Processing C2E540_後龍_24.606489_120.783933.csv
+Processing C0V400_阿公店_22.804194_120.355528.csv
+Processing C0R440_大漢山_22.405264_120.753181.csv
+Processing C0K280_四湖_23.630414_120.227125.csv
+Processing C1F9B1_桐林_24.066172_120.735194.csv
+Processing C0K390_土庫_23.679029_120.395574.csv
+Processing C1I450_望鄉山_23.594153_120.944286.csv
+Processing C0E910_海埔_24.648767_120.772435.csv
+Processing B2E890_畜試北區分所_24.527806_120.770972.csv
+Processing C0R750_四林格山_22.076989_120.802439.csv
+Processing C0F0C0_中坑_24.248517_120.903319.csv
+Processing C1I121_大鞍_23.678381_120.760017.csv
+Processing 72U480_花改蘭陽分場_24.686306_121.716583.csv
+Processing C0A770_科教館_25.096356_121.516507.csv
+Processing C0AJ60_六塊厝_25.24_121.4481.csv
+Processing C0R620_墾雷_21.900836_120.855269.csv
+Processing 467420_永康_23.038386_120.2367.csv
+Processing 467300_東吉島_23.25695_119.667467.csv
+Processing C0I410_名間_23.837053_120.701447.csv
+Processing A2C560_農工中心_24.985917_121.239833.csv
+Processing C0V740_旗山_22.888614_120.483597.csv
+Processing C0Z061_玉里_23.3215_121.339656.csv
+Processing C0S840_南田_22.279725_120.889208.csv
+Processing C1I470_杉林溪_23.639517_120.786444.csv
+Processing C1X040_東原_23.291597_120.463822.csv
+Processing C0R660_枋寮_22.367722_120.590647.csv
+Processing C1R120_上德文_22.763272_120.704442.csv
+Processing C0K450_大埤_23.646074_120.431537.csv
+Processing C0UA00_土場_24.576533_121.495333.csv
+Processing 467080_宜蘭_24.763975_121.756528.csv
+Processing C0N030_四草_23.0235_120.1116.csv
+Processing C0V650_彌陀_22.783806_120.246361.csv
+Processing C0D660_新竹市東區_24.798681_120.986942.csv
+Processing 82S580_茶改東部分場_22.907694_121.130139.csv
+Processing C0C710_大溪永福_24.892936_121.324975.csv
+Processing C0FA20_溫寮_24.372177_120.583125.csv
+Processing C0V640_湖內_22.887139_120.2445.csv
+Processing C0R910_下寮_22.3929_120.5548.csv
+Processing C0Z020_明里_23.208717_121.262342.csv
+Processing C0M770_嘉義梅山_23.585398_120.555587.csv
+Processing G2F820_農業試驗所_24.031261_120.688133.csv
+Processing C0C660_楊梅_24.912375_121.143047.csv
+Processing C1E511_新開_24.347703_120.827019.csv
+Processing G2F820_農試所(霧峰)_24.031261_120.688133.csv
+Processing C1I070_和社_23.591131_120.888861.csv
+Processing C2F000_大肚_24.15295_120.572117.csv
+Processing C1S850_豐南_23.122139_121.262389.csv
+Processing C2A920_富貴角_25.263783_121.565258.csv
+Processing CAH030_茶改場竹圍站_23.860083_120.637528.csv
+Processing C0T960_光復_23.660694_121.424964.csv
+Processing C0F9M0_豐原_24.254322_120.720692.csv
+Processing C0R720_旭海_22.205403_120.887614.csv
+Processing C0V710_苓雅_22.622742_120.330669.csv
+Processing C0C740_觀音工業區_25.064764_121.114856.csv
+Processing CAC040_拉拉山_24.699317_121.427133.csv
+Processing C0V790_萬山_22.905944_120.688056.csv
+Processing U2HA30_臺大和社_23.590856_120.888864.csv
+Processing C0AJ90_澳底_25.0552_121.9253.csv
+Processing C0Z100_東華_23.89525_121.549833.csv
+Processing C0G970_三豐_23.882_120.2895.csv
+Processing V2K610_大庄合作社_23.8068_120.367939.csv
+Processing C0V900_汕尾_22.4782_120.4151.csv
+Processing C1R630_龍泉_22.66701_120.59091.csv
+Processing C1AC50_關渡_25.133486_121.469331.csv
+Processing C0F9I0_神岡_24.272481_120.658314.csv
+Processing C0K460_斗南_23.678734_120.478359.csv
+Processing 467410_臺南_22.993239_120.204772.csv
+Processing C2O810_曾文_23.219681_120.497328.csv
+Processing 467280_後龍_24.648563_120.831834.csv
+Processing C1F9J1_清水林_24.071242_120.820419.csv
+Processing C2A650_火燒寮_25.002719_121.742892.csv
+Processing 466930_竹子湖_25.162078_121.544547.csv
+Processing C1I220_樟湖_23.905333_120.846983.csv
+Processing C0I390_仁愛_24.022122_121.132206.csv
+Processing C0Z300_東里_23.26853_121.30547.csv
+Processing C0V310_美濃_22.898742_120.519153.csv
+Processing C1V590_新發_23.057019_120.646064.csv
+Processing C0K510_水林_23.572924_120.24597.csv
+Processing 72S590_東改賓朗果園_22.813889_121.071278.csv
+Processing 82A750_茶改北部分場_24.955778_121.631222.csv
+Processing C1A750_石碇服務區_25.00872_121.646242.csv
+Processing C0X300_鹿寮_23.386047_120.477331.csv
+Processing G2AI50_關渡_25.11575_121.492.csv
+Processing C0K590_雲林東勢_23.674192_120.255721.csv
+Processing C0A570_桶後_24.848222_121.597992.csv
+Processing C1S800_華源_22.657883_121.02325.csv
+Processing C0G720_溪州_23.851589_120.499093.csv
+Processing C1V160_達卡努瓦_23.279811_120.705319.csv
+Processing C2M410_馬頭山_23.324361_120.582017.csv
+Processing C0V850_蚵仔寮_22.7256_120.2527.csv
+Processing C0S740_池上_23.119628_121.209469.csv
+Processing C1V390_尖山_22.813153_120.367789.csv
+Processing C0AH70_松山_25.04871_121.55042.csv
+Processing C0N010_鯤鯓國小_23.1879_120.0889.csv
+Processing C0R550_新埤_22.467947_120.582894.csv
+Processing C0SA60_知本（水試所）_22.702394_121.082761.csv
+Processing C0T9I0_豐濱_23.583897_121.514806.csv
+Processing C0UB00_淡江大學蘭陽校園_24.823239_121.730383.csv
+Processing C0T9N0_富里_23.171639_121.249378.csv
+Processing U2HA50_臺大竹山_23.756972_120.681556.csv
+Processing C0V840_鳳鼻頭_22.5083_120.3591.csv
+Processing C0X140_西港_23.125608_120.203108.csv
+Processing 72D080_桃改五峰分場_24.612194_121.157167.csv
+Processing C0V530_阿蓮_22.883208_120.327508.csv
+Processing C1O880_關山_23.173397_120.594092.csv
+Processing C0E791_卓蘭_24.3126_120.8244.csv
+Processing C1I030_武界_23.913225_121.052483.csv
+Processing C0R520_崁頂_22.514781_120.506914.csv
+Processing C0R341_牡丹_22.130036_120.792639.csv
+Processing C0R930_萬丹_22.5885_120.4851.csv
+Processing C0S760_紅石_23.069131_121.126219.csv
+Processing C1M610_石磐龍_23.496606_120.663506.csv
+Processing C0UA10_鴛鴦湖_24.590269_121.412228.csv
+Processing V2C260_八德蔬果_24.978508_121.281819.csv
+Processing C0R800_丹路_22.204481_120.750989.csv
+Processing C0G920_永靖_23.924703_120.547533.csv
+Processing C1A630_下盆_24.771003_121.538622.csv
+Processing B2N890_畜產試驗所_23.058972_120.336406.csv
+Processing C0UA30_白嶺_24.527819_121.519031.csv
+Processing C1V580_溪南(特生中心)_23.084972_120.788475.csv
+Processing C1T970_大農_23.615233_121.413331.csv
+Processing E2S960_林試太麻里2_22.598014_120.989761.csv
+Processing C0R650_竹田_22.58486_120.54344.csv
+Processing C1H900_清流_24.080775_120.962997.csv
+Processing C1C510_水尾_24.940081_121.087161.csv
+Processing C0F9X0_大雅(中科園區)_24.21528_120.62445.csv
+Processing C0O970_虎頭埤_23.021375_120.347878.csv
+Processing C0C730_中大臨海站_24.966126_121.008581.csv
+Processing C0X250_新營_23.310689_120.316681.csv
+Processing C0V700_三民_22.645017_120.311233.csv
+Processing C0U870_大礁溪_24.791042_121.675047.csv
+Processing C0E870_高鐵苗栗_24.60725_120.826094.csv
+Processing A2K570_古坑花卉中心_23.63353_120.55239.csv
+Processing C0M860_新美_23.338017_120.683169.csv
+Processing C1E701_八卦_24.491756_120.927619.csv
+Processing C0I420_國姓_24.037803_120.855072.csv
+Processing C0S960_香蘭_22.587569_120.993375.csv
+Processing C0R260_春日_22.370361_120.628306.csv
+Processing 72G600_臺中農改場_24.003028_120.534389.csv
+Processing C0Z210_瑞穗_23.5239_121.39021.csv
+Processing C0M820_達邦_23.453994_120.749517.csv
+Processing C0V860_南寮_22.7616_120.2339.csv
+Processing C0G740_大城_23.852487_120.320935.csv
+Processing C0R920_塭仔_22.4169_120.5197.csv
+Processing C0R470_高樹_22.826389_120.600806.csv
+Processing C0R680_佳樂水_21.993578_120.861633.csv
+Processing C1O870_大棟山_23.31157_120.52226.csv
+Processing C0D360_梅花_24.678347_121.208558.csv
+Processing C0Z190_富世_24.14743_121.6297.csv
+Processing C0AI10_屈尺_24.92184_121.54475.csv
+Processing B2U990_畜試東區分所_24.669039_121.832561.csv
+Processing C0R240_來義_22.527306_120.625111.csv
+Processing C1R610_西大武山_22.617719_120.7322.csv
+Processing C0G900_線西_24.143358_120.443536.csv
+Processing C0M700_竹崎_23.526178_120.555508.csv
+Processing C2E880_三義_24.405478_120.749819.csv
+Processing C0C720_竹圍_25.112692_121.239824.csv
+Processing C0F9P0_清水_24.312297_120.562242.csv
+Processing C0Z150_吉安光華_23.930925_121.595153.csv
+Processing C1D640_外坪(五指山)_24.644447_121.090961.csv
+Processing C0F9O0_潭子_24.213106_120.703933.csv
+Processing 72T250_花蓮農改場_23.975222_121.563889.csv
+Processing C0E780_銅鑼_24.489681_120.790853.csv
+Processing C1T950_太安_23.666719_121.370128.csv
+Processing C0E830_苑裡_24.439714_120.653053.csv
+Processing 467270_田中_23.873803_120.581286.csv
+Processing C0SA10_檳榔四格山_22.810031_121.109308.csv
+Processing C1T830_布洛灣_24.17184_121.57127.csv
+Processing C0F970_大坑_24.173142_120.722289.csv
+Processing C1U920_思源_24.393125_121.347214.csv
+Processing C0A931_三和_25.233153_121.595236.csv
+Processing C0I010_廬山_24.033311_121.181808.csv
+Processing C0R860_鼻頭_22.1043_120.8979.csv
+Processing C0UB20_壯圍_24.7359_121.8163.csv
+Processing C0R790_九棚_22.14195_120.889281.csv
+Processing C0W110_東莒_25.9652_119.98069.csv
+Processing C1U930_粉鳥林_24.497088_121.842479.csv
+Processing C1I211_蘆竹湳_23.934019_120.811994.csv
+Processing C0S830_長濱_23.286817_121.411975.csv
+Processing C1F9F1_伯公龍_24.272392_120.849047.csv
+Processing C0E810_西湖_24.562947_120.7485.csv
+Processing C1I440_新高口_23.478744_120.878939.csv
+Processing C0O840_王爺宮_23.222064_120.40085.csv
+Processing C0T9G0_鳳林山_23.735269_121.420131.csv
+Processing C0X080_佳里_23.173039_120.145086.csv
+Processing C0Z310_清水斷崖_24.218294_121.689142.csv
+Processing C0M680_太保_23.455062_120.331455.csv
+Processing C1S820_金峰_22.590969_120.933236.csv
+Processing C0AD10_八里_25.150211_121.403947.csv
+Processing C2K240_草嶺_23.59555_120.693461.csv
+Processing C1SA70_都蘭_22.87794_121.226881.csv
+Processing C0K440_二崙_23.772797_120.408944.csv
+Processing C1A760_坪林交控_24.94284_121.713442.csv
+Processing C0F9N0_大里_24.092464_120.701378.csv
+Processing C0SA90_達仁林場_22.264347_120.823972.csv
+Processing C1R290_石門山_22.112611_120.756597.csv
+Processing 42HA10_萬大發電廠_23.978875_121.139639.csv
+Processing C0R890_山海_21.9878_120.7091.csv
+Processing C0T9A0_月眉山_23.809928_121.539828.csv
+Processing C0AC70_信義_25.037822_121.564597.csv
+Processing C0K560_棋山_23.68645_120.603417.csv
+Processing C1Z240_中平林道_23.42115_121.26763.csv
+Processing U2H480_溪頭_23.670306_120.798194.csv
+Processing C0M880_好美里_23.3364_120.138.csv
+Processing C0T9E0_大坑_23.880628_121.581981.csv
+Processing C0K530_臺西_23.701547_120.197559.csv
+Processing C1E900_國一N128K_24.560997_120.844186.csv
+Processing C0AJ50_水湳洞_25.123695_121.862238.csv
+Processing C0AI20_白沙灣_25.283128_121.519058.csv
+Processing C0A860_大坪_25.165914_121.632969.csv
+Processing C1U850_觀音海岸_24.38319_121.77856.csv
+Processing C0U950_鶯子嶺_24.89754_121.79244.csv
+Processing C0O900_善化_23.112883_120.297219.csv
+Processing C0K550_蔦松_23.514319_120.229736.csv
+Processing E2P980_林試六龜中心_22.991703_120.645722.csv
+Processing C0E590_通霄_24.471892_120.704622.csv
+Processing C1I310_西巒_23.754486_120.883956.csv
+Processing C0A550_泰平_24.971197_121.823711.csv
+Processing C0I360_水里_23.812553_120.849792.csv
+Processing C0R830_高士_22.121825_120.836781.csv
+Processing C1I101_溪頭_23.661789_120.807647.csv
+Processing C0AJ20_野柳_25.20703_121.690021.csv
+Processing C0B060_暖暖_25.0957_121.7403.csv
+Processing C1H920_長豐_24.102039_120.879897.csv
+Processing C0V360_內門_22.975481_120.466769.csv
+Processing C0R850_林邊_22.4634_120.5339.csv
+Processing C0E930_龍鳳_24.700034_120.859125.csv
+Processing C0U910_冬山_24.63373_121.7937.csv
+Processing C1E721_泰安_24.489017_120.968036.csv
+Processing 82H320_茶改中部分場_23.875611_120.913583.csv
+Processing C0M750_布袋_23.380878_120.167789.csv
+Processing C1S860_利嘉_22.809417_121.050528.csv
+Processing 72C440_桃園農改_24.950944_121.030583.csv
+Processing E2S980_林試太麻里1_22.598922_120.980044.csv
+Processing C0X170_關廟_22.963017_120.327797.csv
+Processing C0V720_林園_22.507747_120.394511.csv
+Processing C1I510_線浸林道_23.761508_120.832956.csv
+Processing C0D690_外湖_24.917735_120.968711.csv
+Processing C0C750_新興坑尾_25.0061_121.0971.csv
+Processing B2Q810_畜試南區分所_21.945583_120.802167.csv
+Processing C0S790_金崙_22.538122_120.966875.csv
+Processing C0AH90_福山植物園_24.760717_121.58135.csv
+Processing C0I540_奇萊稜線_24.109231_121.326456.csv
+Processing C0M850_表湖_23.24186_120.64166.csv
+Processing C0S770_大溪山_22.478475_120.943325.csv
+Processing C0AG80_中和_24.991622_121.491792.csv
+Processing C0T790_大禹嶺_24.186117_121.316086.csv
+Processing C0T9B0_水源_23.991861_121.537169.csv
+Processing C0R840_牡丹池山_22.168389_120.841225.csv
+Processing C1I131_桶頭_23.641944_120.654117.csv
+Processing CAL110_布袋國中_23.35893_120.18026.csv
+Processing 467571_新竹_24.827853_121.014219.csv
+Processing C0Z290_赤柯山_23.36893_121.38293.csv
+Processing C0X280_將軍_23.214999_120.13577.csv
+Processing C0S690_太麻里_22.60902_120.98533.csv
+Processing C0U880_北關_24.9072_121.8734.csv
+Processing C1H860_瑞岩_24.123772_121.18345.csv
+Processing C0G810_埔心_23.947633_120.525456.csv
+Processing C0U970_大福_24.80064_121.81389.csv
+Processing C1E670_南礦_24.538278_121.002836.csv
+Processing C0M520_東後寮_23.369908_120.248065.csv
+Processing C1E461_松安_24.397972_120.986022.csv
+Processing 72G600_臺中農改_24.003028_120.534389.csv
+Processing C2N160_西拉雅風管處_23.189481_120.335297.csv
+Processing C0A640_石碇_24.993969_121.662917.csv
+Processing E2S960_林試太麻里2_22.598_120.99775.csv
+Processing C0F9Y0_桃山_24.432739_121.303808.csv
+Processing C1I020_萬大_23.979817_121.132261.csv
+Processing C0U940_羅東_24.68184_121.74934.csv
+Processing C0M650_朴子_23.43463_120.23902.csv
+Processing C1I500_大尖山_23.858572_120.994889.csv
+Processing C0G820_田尾_23.901669_120.509389.csv
+Processing E2K600_四湖植物園_23.676986_120.163433.csv
+Processing C0S730_綠島_22.6672_121.47533.csv
+Processing 12Q970_東港工作站_22.479997_120.466058.csv
+Processing C0E430_南庄_24.601775_121.000214.csv
+Processing C1TA00_太魯閣_24.15773_121.6236.csv
+Processing 466920_臺北_25.037658_121.514853.csv
+Processing C0R600_舊泰武_22.588194_120.664944.csv
+Processing C1I260_北坑_23.9246_121.006903.csv
+Processing 466910_鞍部_25.182586_121.529731.csv
+Processing C1I230_九份二山_23.961944_120.845.csv
+Processing C2A660_瑞芳_25.113169_121.801147.csv
+Processing C0R270_琉球嶼_22.332244_120.362236.csv
+Processing C1T990_高寮_23.394239_121.356808.csv
+Processing C0G620_芬園_24.015678_120.6213.csv
+Processing C1Z140_荖溪_23.890575_121.45964.csv
+Processing C1I201_中心崙_23.728722_120.712097.csv
+Processing C1I400_凌霄_24.018778_121.004456.csv
+Processing C1M640_十字_23.492153_120.753683.csv
+Processing G2P820_農試鳳山分所_22.646611_120.356083.csv
+Processing C0Z270_蕃薯寮_23.73835_121.540108.csv
+Processing C0F9Q0_外埔_24.347817_120.705686.csv
+Processing C0K580_高鐵雲林_23.737456_120.417944.csv
+Processing C2I090_鳳凰_23.728081_120.787347.csv
+Processing C0U990_員山_24.74435_121.72247.csv
+Processing C0V770_大社_22.730306_120.346639.csv
+Processing C0X120_麻豆_23.183289_120.248611.csv
+Processing C0C670_龍潭_24.870056_121.221389.csv
+Processing C0D680_香山濕地_24.783581_120.914988.csv
+Processing C0S980_勝林山_22.430439_120.8938.csv
+Processing C0V730_大寮_22.605614_120.395717.csv
+Processing C0R570_麟洛_22.65078_120.52719.csv
+Processing CAG100_王功漁港_23.96824_120.32586.csv
+Processing C0X290_北門_23.267772_120.125481.csv
+Processing C2F930_大甲_24.347667_120.640403.csv
+Processing C0D650_湖口_24.904794_121.043628.csv
+Processing C0E420_竹南_24.708978_120.888897.csv
+Processing C0U780_五結_24.68637_121.79794.csv
+Processing C1I250_鯉潭_23.961922_120.991131.csv
+Processing C0R130_阿禮_22.742908_120.743678.csv
+Processing C0X100_臺南市北區_23.010394_120.194228.csv
+Processing C0S920_金峰嘉蘭_22.594789_120.960825.csv
+Processing C0V490_新興_22.627422_120.298803.csv
+Processing C0F9K0_大安_24.345061_120.588025.csv
+Processing 72N100_臺南農改_23.0605_120.342194.csv
+Processing 467290_古坑_23.633639_120.551889.csv
+Processing C0V440_鳳山_22.646653_120.356122.csv
+Processing C1T940_大觀_23.714206_121.373133.csv
+Processing 72T250_花蓮農改_23.975222_121.563889.csv
+Processing C0E740_造橋_24.637056_120.864778.csv
+Processing C0R100_尾寮山_22.833111_120.683889.csv
+Processing A2K630_臺大雲林校區_23.730628_120.423903.csv
+Processing C0D580_寶山_24.735006_121.025192.csv
+Processing E2P990_林試扇平站_22.9677_120.6857.csv
+Processing C0AI30_三重_25.057328_121.500629.csv
+Processing C0AH00_汐止_25.066881_121.658778.csv
+Processing C1Z040_立山_23.443356_121.327375.csv
+Processing C0W130_花嶼_23.40007_119.32276.csv
+Processing C0A950_鼻頭角_25.129036_121.923372.csv
+Processing C0K470_林內_23.748675_120.609642.csv
+Processing 82C160_茶改場_24.908472_121.185333.csv
+Processing C0Z320_清水林道_23.27125_121.188272.csv
+Processing C0R760_南仁湖_22.084681_120.863353.csv
+Processing C0M670_大林_23.600616_120.45841.csv
+Processing C0M800_茶山_23.299075_120.664767.csv
+Processing C0A9C0_天母_25.117494_121.537169.csv
+Processing 72K220_南改斗南分場_23.634556_120.477333.csv
+Processing 72AI40_桃改樹林分場_24.944503_121.386972.csv
+Processing C0S910_蘭嶼燈塔_22.081197_121.503117.csv
+Processing C0B050_八斗子_25.144754_121.79167.csv
+Processing C0U900_內城_24.71813_121.68766.csv
+Processing C0X320_柳營_23.253328_120.375253.csv
+Processing C0M790_新港_23.553269_120.345728.csv
+Processing C0F9T0_西屯_24.179494_120.641275.csv
+Processing C0SA30_都歷_23.020333_121.323642.csv
+Processing C0C620_蘆竹_25.084275_121.265767.csv
+Processing C0R730_大坪頂_22.024633_120.69355.csv
+Processing C0AJ40_石門_25.273672_121.601198.csv
+Processing C0E750_苗栗_24.564569_120.824575.csv
+Processing C0T870_鯉魚潭_23.935639_121.508944.csv
+Processing C1V170_排雲_23.463619_120.954147.csv
+Processing C2H950_中寮_23.884447_120.766406.csv
+Processing C0R350_貓鼻頭_21.921774_120.7358.csv
+Processing C0V660_岡山_22.797078_120.294958.csv
+Processing C1H941_雙冬_23.967378_120.802189.csv
+Processing C0AJ70_田寮_25.2698_121.4886.csv
+Processing C0AI00_五股_25.07445_121.42728.csv
+Processing C0Z280_德武_23.47426_121.41071.csv
+Processing C0R700_枋山_22.246844_120.661086.csv
+Processing C0C460_復興_24.820208_121.352281.csv
+Processing E2H360_蓮華池_23.918333_120.885278.csv
+Processing C0M640_中埔_23.42538_120.5229.csv
+Processing C0W140_金沙_24.488292_118.408778.csv
+Processing C2A540_四堵_24.8926_121.745736.csv
+Processing C0ACA0_新莊_25.051478_121.446756.csv
+Processing C0R220_潮州_22.534361_120.54.csv
+Processing U2HA40_臺大內茅埔_23.689722_120.851117.csv
+Processing 467490_臺中_24.145736_120.684075.csv
+Processing C0U960_翠峰湖_24.510856_121.608044.csv
+Processing E2HA20_林試畢祿溪站_24.226944_121.308522.csv
+Processing C0V890_前鎮_22.5718_120.3117.csv
+Processing 467620_蘭嶼_22.036969_121.558339.csv
+Processing C1F941_雪嶺_24.280586_121.026642.csv
+Processing C0AC80_文山_25.00235_121.575728.csv
+Processing C0F9R0_龍井_24.184536_120.528972.csv
+Processing C0M760_民雄_23.551754_120.428457.csv
+Processing C0UA40_西德山_24.560647_121.752608.csv
+Processing C1T920_中興_23.769503_121.498653.csv
+Processing C0D550_雪霸_24.526972_121.11605.csv
+Processing C2F860_梨山_24.247522_121.243669.csv
+Processing C0R320_車城_22.0744_120.716247.csv
+Processing C1S870_南美山_23.15025_121.382333.csv
+Processing C0B020_基隆嶼_25.19141_121.78391.csv
+Processing C1U501_牛鬥_24.637836_121.573656.csv
+Processing C0M730_嘉義市東區_23.457673_120.460531.csv
+Processing C0S700_知本_22.684866_121.005642.csv
+Processing C1N001_沙崙_22.935472_120.309406.csv
+Processing C0V760_橋頭_22.757806_120.30575.csv
+Processing C0G960_福寶_24.0443_120.3814.csv
+Processing C0X210_白河_23.347466_120.414427.csv
+Processing C0S810_東河_22.972672_121.303986.csv
+Processing C0R670_楓港_22.190131_120.692156.csv
+Processing C0FA50_霧峰_24.0419_120.6995.csv
+Processing C0UB10_蘇澳_24.5969_121.8571.csv
+Processing C0G950_防潮門_24.1835_120.4871.csv
+Processing C0M740_六腳_23.492871_120.290625.csv
+Processing C1R250_力里_22.428117_120.629228.csv
+Processing C0K330_虎尾_23.719183_120.442036.csv
+Processing C2FA00_烏石坑_24.273503_120.947617.csv
+Processing C0V620_永安_22.82315_120.236856.csv
+Processing C1I330_楓樹林_23.986803_121.076117.csv
+Processing C0W200_湖西_23.596314_119.67275.csv
+Processing 72Q010_高雄農改場_22.709333_120.525889.csv
+Processing C0SA40_瑞和_22.974361_121.156697.csv
+Processing C0C680_龜山_25.02846_121.38656.csv
+Processing C2V260_月眉_22.971003_120.539853.csv
+Processing C0V450_鳳森_22.545064_120.392592.csv
+Processing C0U720_南山_24.43742_121.38167.csv
+Processing A2N290_臺南蘭花園區_23.340258_120.379661.csv
+Processing C0R560_新園_22.5434_120.461558.csv
+Processing C0U890_三星_24.66812_121.65302.csv
+Processing C1V300_御油山_23.001983_120.715364.csv
+Processing C0U600_礁溪_24.817539_121.765608.csv
+Processing C1T980_龍澗_24.023289_121.411328.csv
+Processing C0D670_海天一線_24.831986_120.914438.csv
+Processing C0SA00_歷坵_22.520969_120.89185.csv
+Processing C0M710_東石_23.458927_120.15385.csv
+Processing C0M780_鹿草_23.41134_120.30835.csv
+Processing C0U520_雙連埤_24.753033_121.641303.csv
+Processing C0B010_七堵_25.094819_121.71713.csv
+Processing C0R480_長治_22.693128_120.542622.csv
+Processing C1V830_國三S383K_22.781967_120.426475.csv
+Processing 12Q980_恆春工作站_22.079678_120.714425.csv
+Processing C1O940_東山服務區_23.286016_120.398472.csv
+Processing C1U840_東澳嶺_24.5378_121.8485.csv
+Processing C1D630_飛鳳山_24.766464_121.119178.csv
+Processing C0S940_石寧山_23.223772_121.406639.csv
+Processing C0K410_北港_23.573957_120.292802.csv
+Processing C2M620_瑞里_23.545133_120.675197.csv
+Processing C2O950_安南_23.076694_120.144861.csv
+Processing C0F0E0_南湖圈谷_24.363714_121.444667.csv
+Processing 467610_成功_23.097486_121.373428.csv
+Processing C0G890_伸港_24.148933_120.484403.csv
+Processing C2E540_龍溪_24.606489_120.783933.csv
+Processing C1V200_梅山_23.268447_120.823556.csv
+Processing C0T9H0_加路蘭山_23.682947_121.5274.csv
+Processing C2O930_玉井_23.126042_120.46055.csv
+Processing C1F911_新伯公_24.221361_120.841069.csv
+Processing C0R490_九如_22.7405_120.490503.csv
+Processing C0X200_左鎮_23.056758_120.408522.csv
+Processing C1F891_稍來_24.265689_121.001142.csv
+Processing 72N240_七股研究中心_23.081672_120.062894.csv
+Processing C0C700_中壢_24.977661_121.256375.csv
+Processing C0M690_水上_23.419734_120.388909.csv
+Processing C0V690_鼓山_22.623325_120.275575.csv
+Processing C0O860_大內_23.11885_120.36083.csv
+Processing C0Z200_萬榮_23.709219_121.420106.csv
+Processing C0T9D0_和中_24.26676_121.74103.csv
+Processing C1O921_楠西_23.183511_120.484083.csv
+Processing C0AJ30_淡水觀海_25.184591_121.408616.csv
+Processing C0V810_左營_22.67491_120.28491.csv
+Processing C0UA70_桃源谷_24.962606_121.888875.csv
+Processing C0X130_官田_23.193217_120.315422.csv
+Processing C1H000_翠峰_24.109397_121.205211.csv
+Processing C0UA90_石城_24.980444_121.951214.csv
+Processing C1E681_南勢山_24.421669_120.923831.csv
+Processing C0A9F0_內湖_25.079422_121.57545.csv
+Processing C0K291_宜梧_23.536281_120.169329.csv
+Processing C1K540_口湖_23.585344_120.180517.csv
+Processing C0R780_滿州_22.024403_120.839892.csv
+Processing C0V870_文安_22.8025_120.2164.csv
+Processing C0U650_玉蘭_24.675286_121.587061.csv
+Processing C0R640_東港_22.46247_120.44074.csv
+Processing K2E360_苗栗農改_24.495722_120.829111.csv
+Processing C0AJ80_板橋_25.0107_121.4489.csv
+Processing C0S660_下馬_23.150427_121.070312.csv
+Processing C1H9B1_阿眉_24.1263_120.994672.csv
+Processing C0UA20_多加屯_24.368614_121.373189.csv
+Processing C0E730_頭份_24.688247_120.912206.csv
+Processing 72V140_高改旗南分場_22.857861_120.516667.csv
+Processing C0K480_莿桐_23.761192_120.502372.csv
+Processing C0U980_坪林石牌_24.86478_121.77396.csv
+Processing C0T900_西林_23.8119_121.441458.csv
+Processing C1I150_青雲_23.793361_120.949378.csv
+Processing 467350_澎湖_23.565503_119.563094.csv
+Processing C0G800_埔鹽_24.000394_120.431683.csv
+Processing C0H960_草屯_23.973672_120.68085.csv
+Processing C1V780_多納林道_22.888028_120.737917.csv
+Processing C0E920_通霄漁港_24.498589_120.673876.csv
+Processing C0Z330_安通山_23.290728_121.348528.csv
+Processing C0AH10_永和_25.01125_121.508111.csv
+Processing C2G640_鹿港_24.0753_120.430481.csv
+Processing C1E890_國三N149K_24.463414_120.680019.csv
+Processing C1R110_口社_22.770111_120.645222.csv
+Processing C1M870_國三N285K_23.550319_120.505833.csv
+Processing 467050_新屋_25.006744_121.047486.csv
+Processing C1E480_鳳美_24.554803_121.034747.csv
+Processing C0M530_奮起湖_23.493903_120.699253.csv
+Processing C0C590_觀音_25.027072_121.153317.csv
+Processing C0T9M0_靜浦_23.455167_121.495028.csv
+Processing C0AI40_石牌_25.115597_121.513139.csv
+Processing C1F871_上谷關_24.203483_121.018644.csv
+Processing C0G880_二水_23.810742_120.6173.csv
+Processing C0R940_加祿堂_22.3363_120.6217.csv
+Processing C0W220_北竿_26.220358_119.974881.csv
+Processing C0O960_崎頂_22.959547_120.369317.csv
+Processing C0S750_向陽_23.248397_120.986133.csv
+Processing C0T9F0_水璉_23.797131_121.542514.csv
+Processing C1M600_頭凍_23.406364_120.603339.csv
+Processing 467660_臺東_22.752211_121.154586.csv
+Processing C1D380_新埔_24.84745_121.03834.csv
+Processing C0V750_路竹_22.854997_120.259439.csv
+Processing C0N050_蚵寮_23.301_120.1104.csv
+Processing 72M700_南改鹿草分場_23.416869_120.283061.csv
+Processing C1SA50_利嘉林道_22.82325_121.009389.csv
+Processing 467550_玉山_23.487614_120.959522.csv
+Processing C0A940_金山_25.223628_121.643967.csv
+Processing C1V340_大津_22.888322_120.645986.csv
+Processing C0W180_七美_23.219333_119.444892.csv
+Processing C1F9C1_白冷_24.182844_120.929889.csv
+Processing K2E710_苗改生物防治研究中心_24.422861_120.871833.csv
+Processing C0N040_蘆竹溝_23.2344_120.0961.csv
+Processing C2W230_畜試所澎湖_23.628342_119.513206.csv
+Processing C0R880_後壁湖_21.9457_120.7457.csv
+Processing C1I280_埔中_23.820778_120.642594.csv
+Processing 467790_墾丁雷達站_21.948235_120.808028.csv
+Processing C0W190_望安_23.380564_119.494075.csv
+Processing 466881_新北_24.9593_121.52.csv
+Processing C0Z170_卓溪_23.3443_121.3029.csv
+Processing C0F850_東勢_24.246428_120.833047.csv
+Processing 466900_淡水_25.164889_121.448906.csv
+Processing C0I370_魚池_23.895703_120.94135.csv
+Processing C0C630_大溪_24.882853_121.265547.csv
+Processing C0A520_山佳_24.974944_121.402008.csv
+Processing C0I110_竹山_23.761225_120.688156.csv
+Processing 82H840_茶改南部分場_23.762528_120.7405.csv
+Processing C0G660_溪湖_23.94835_120.479122.csv
+Processing C1T800_洛韶_24.204558_121.453956.csv
+Processing C1T810_慈恩_24.192044_121.388386.csv
+Processing C1E451_象鼻_24.368617_120.940228.csv
+Processing C0AC60_三峽_24.939025_121.369728.csv
+Processing C0I490_萬大林道_23.928228_121.091411.csv
+Processing C1I290_豐丘_23.668178_120.887417.csv
+Processing C1I320_奧萬大_23.952956_121.178556.csv
+Processing C0U770_南澳_24.44935_121.81022.csv
+Processing C0A980_社子_25.109508_121.469681.csv
+Processing C0V800_六龜_22.997889_120.633583.csv
+Processing C1G9D0_國一S218K_23.890641_120.493253.csv
+Processing C2F9A0_中竹林_24.103556_120.751061.csv
+Processing C0FA40_臺中電廠_24.2146_120.4907.csv
+Processing C0H9C0_合歡山_24.143442_121.272547.csv
+Processing C0X060_下營_23.22695_120.256261.csv
+Processing G2M350_農試溪口農場_23.58565_120.408111.csv
+Processing C0U860_頭城_24.85323_121.8308.csv
+Processing C0R580_南州_22.48591_120.50274.csv
+Processing C0D430_峨眉_24.6905_121.017189.csv
+Processing C0G780_秀水_24.03405_120.503869.csv
+Processing 72N100_臺南農改場_23.0605_120.342194.csv
+Processing C0S900_蘭嶼高中_22.04909_121.51214.csv
+Processing 467540_大武_22.355675_120.903789.csv
+Processing C1F9W0_德基_24.254783_121.190261.csv
+Processing C1Z120_壽豐_23.870853_121.508081.csv
+Processing C0W160_烏坵_24.9944_119.44956.csv
+Processing C1I240_外大坪_23.958697_120.917931.csv
+Processing C1I550_國六W023K_23.979067_120.867742.csv
+Processing C0R870_興海_21.9752_120.8439.csv
+Processing C0R140_瑪家_22.682903_120.686639.csv
+Processing C0A530_坪林_24.938183_121.70975.csv
+Processing C0X260_後壁_23.366358_120.362326.csv
+Processing C0Z230_和平_24.30717_121.77007.csv
+Processing C0G770_福興_24.041289_120.437669.csv
+Processing C0H9A0_神木村_23.532742_120.843667.csv
+Processing C0I460_南投_23.911469_120.687331.csv
+Processing C0I480_梅峰_24.085272_121.173572.csv
+Processing C1V570_吉東_22.85422_120.5454.csv
+Processing C2A560_福山_24.776203_121.502811.csv
+Processing C0AH30_五分山_25.07125_121.780794.csv
+Processing C0FA10_松柏_24.429115_120.617482.csv
+Processing 72S200_東改班鳩分場_22.829528_121.077694.csv
+Processing 72HA00_中改埔里分場_23.903208_120.963364.csv
+Processing C0C650_平鎮_24.897503_121.214636.csv
+Processing C0S930_延平_22.902581_121.084058.csv
+Processing C0UA60_樟樹山_24.41393_121.78325.csv
+Processing C1S670_摩天_23.199503_121.027.csv
+Processing C0V630_茄萣_22.906642_120.182608.csv
+Processing 466940_基隆_25.133314_121.740475.csv
+Processing C0X050_東河_23.296598_120.385608.csv
+Processing C0R770_保力_22.071122_120.764111.csv
+Processing G2L020_農試嘉義分所_23.485028_120.473806.csv
+Processing C0X240_關子嶺_23.331169_120.508025.csv
+Processing C0I380_集集_23.828206_120.801467.csv
+Processing 466990_花蓮_23.975128_121.613275.csv
+Processing C1V220_小關山_23.154217_120.813603.csv
+Processing C1F9G1_慶福山_24.180853_120.848378.csv
+Processing C0Z250_瑞穗林道_23.49284_121.30688.csv
+Processing C0D590_新豐_24.87068_120.97721.csv
+Processing C0A870_五指山_25.132153_121.608692.csv
+Processing C0UA50_西帽山_24.555361_121.802628.csv
+Processing C0X160_仁德_22.968258_120.257689.csv
+Processing C1H971_六分寮_23.92507_120.6378.csv
+Processing C0W120_西嶼_23.5626_119.468436.csv
+Processing C0G650_員林_23.946503_120.585597.csv
+Processing C0AD50_鶯歌_24.951533_121.346294.csv
+Processing C0S990_山豬窟_22.318619_120.857372.csv
+Processing 72Q010_高雄農改_22.709333_120.525889.csv
+Processing C0X190_安平_22.993161_120.152181.csv
+Processing C0K400_斗六_23.720583_120.541127.csv
+Processing 12J990_口湖工作站_23.589978_120.180394.csv
+Processing C0O830_北寮_23.079561_120.495008.csv
+Processing C1D410_白蘭_24.579364_121.079947.csv
+Processing C0S970_加津林_22.416211_120.926942.csv
+Processing C0D700_關西_24.7977_121.1732.csv
+Processing C0M810_里佳_23.389125_120.716647.csv
+Processing C0U750_龜山島_24.841667_121.953133.csv
+Processing C0R810_內獅_22.305064_120.642986.csv
+Processing C1M390_龍美_23.406728_120.654417.csv
+Processing C1H840_國三N238K_23.841008_120.707711.csv
+Processing CAQ030_崎峰國小_22.42565_120.49521.csv
+Processing C2E520_大湖_24.414939_120.870872.csv
+Processing 467530_阿里山_23.508208_120.813242.csv
+Processing C1E691_南湖_24.40135_120.837533.csv
+Processing C0FA30_梧棲_24.256003_120.523381.csv
+Processing C1V231_高中_23.134911_120.716711.csv
+Processing C0F9V0_新社_24.200172_120.815806.csv
+Processing C0H890_埔里_23.972169_120.952425.csv
+Processing C0R690_墾丁_21.966756_120.810269.csv
+Processing C0F0D0_審馬陣_24.381675_121.4203.csv
+Processing C0R820_白鷺_22.454275_120.666219.csv
+Processing U2H480_臺大溪頭_23.670306_120.798194.csv
+Processing C1V190_南天池_23.27403_120.91176.csv
+Processing K2E360_苗栗農改場_24.495722_120.829111.csv
+Processing CAJ050_海口故事園區_23.57543_120.14121.csv
+Processing C0O990_媽廟_22.99175_120.293525.csv
+Processing C0D480_打鐵坑_24.849664_121.150789.csv
+Processing C0Z220_和平林道_24.343922_121.656317.csv
+Processing 72C440_桃園農改場_24.950944_121.030583.csv
+Processing C1E711_馬拉邦山_24.367306_120.901656.csv
+Processing C0D560_竹東_24.767147_121.057881.csv
+Processing C0F9U0_南屯_24.137006_120.637969.csv
+Processing C0M720_番路_23.464657_120.554156.csv
+Processing C0F0A0_雪山圈谷_24.388594_121.236339.csv
+Processing C1A9N0_四十份_24.934158_121.593283.csv
+Processing C0U760_東澳_24.52196_121.83318.csv
+Processing C0X230_鹽水_23.272621_120.247641.csv
+Processing C0V370_古亭坑_22.893178_120.401947.csv
+Processing C1I340_新興橋_23.563333_120.868728.csv
+Processing C0SA80_土坂_22.453108_120.887572.csv
+Processing C0R160_鹽埔_22.739558_120.530778.csv
+Processing C0AC40_大屯山_25.175675_121.522408.csv
+Processing 466850_五分山雷達站_25.071182_121.781205.csv
+Processing C1AI50_國三N016K_25.034164_121.619664.csv
+Processing C1V600_藤枝_23.071961_120.757042.csv
+Processing C1E601_南勢_24.572486_120.734842.csv
+Processing C0Z180_新城_24.03946_121.60454.csv
+Processing C0O980_新市_23.061614_120.298197.csv
+Processing C0K420_西螺_23.800407_120.467394.csv
+Processing C0Z050_佳心_23.34567_121.21316.csv
+Processing C0AD30_蘆洲_25.086594_121.472331.csv
+Processing C0V610_梓官_22.760558_120.267211.csv
+Processing K2F750_種苗改良場_24.225972_120.800917.csv
+Processing C0UA80_大溪漁港_24.941801_121.902955.csv
+Processing C1AI60_國一39K邊坡_25.064361_121.383836.csv
+Processing C0W150_金寧_24.457703_118.328989.csv
+Processing V2C250_八德合作社_24.93775_121.266389.csv
+Processing C0AH40_平等_25.129142_121.577086.csv
+Processing C0R540_佳冬_22.419456_120.552375.csv
+Processing 466950_彭佳嶼_25.627975_122.079744.csv
+Processing C0A890_雙溪_25.036003_121.864242.csv
+Processing C0C480_桃園_24.992425_121.323172.csv
+Processing C0AH50_林口_25.072181_121.38084.csv
+Processing A2K360_水試臺西試驗場_23.717231_120.190522.csv
+Processing B2N890_畜試所_23.058972_120.336406.csv
+Processing C0F9S0_烏日_24.107058_120.624103.csv
+Processing C0C490_八德_24.928708_121.283289.csv
+Processing C0R190_赤山_22.592333_120.614306.csv
+Processing C0T820_天祥_24.179597_121.495639.csv
+Processing C1F9E1_龍安_24.1605_120.831961.csv
+Processing C0V820_小林_23.148408_120.63325.csv
+Processing C2G870_芳苑_23.922303_120.320025.csv
+Processing C0E850_大河_24.618069_120.948578.csv
+Processing C1U670_寒溪_24.634_121.71691.csv
+Processing C0N020_城西_23.0568_120.0956.csv
+Processing C1Z110_三棧_24.11557_121.60501.csv
+Processing C0R280_檳榔_22.076078_120.836777.csv
+Processing C0F9L0_后里_24.310436_120.729725.csv
+Processing C0D540_橫山_24.71116_121.11693.csv
+Processing C1D420_太閣南_24.632808_121.160575.csv
+Processing C1E770_公館_24.526914_120.830806.csv
+Processing CAN130_水試所海水繁養殖中心_23.120802_120.07968.csv
+Processing C1I430_翠華_24.191961_121.224339.csv
+Processing C1M400_菜瓜坪_23.251928_120.576103.csv
+Processing C0G730_二林_23.903325_120.376081.csv
+Processing 72M360_南改義竹分場_23.360694_120.279361.csv
+Processing V2K620_麥寮合作社_23.753836_120.294783.csv
+Processing C0Z070_舞鶴_23.46811_121.37407.csv
+Processing C0B040_大武崙_25.166676_121.706993.csv
+Processing C1Z030_紅葉_23.493119_121.338806.csv
+Processing C1I050_丹大_23.753747_121.141147.csv
+Processing C0I080_信義_23.689694_120.851036.csv
+Processing C2A880_福隆_25.017842_121.942083.csv
+Processing C0Z160_鳳林_23.746114_121.453411.csv
+Processing C0V210_復興_23.222403_120.806089.csv
+Processing C0H990_昆陽_24.121322_121.273642.csv
+Processing C0R741_獅子_22.202308_120.705236.csv
+Processing C0S710_鹿野_22.917711_121.122994.csv
+Processing C0I530_小奇萊_24.131764_121.295717.csv
+Processing C0Z080_富源_23.587642_121.378225.csv
+Processing 467441_高雄_22.7304_120.3125.csv
+Processing C1I140_卡奈托灣_23.754364_121.087872.csv
+Processing C0I520_玉山風口_23.470489_120.955994.csv
+Processing C1G691_下水埔_23.816114_120.5676.csv
+Processing C0X110_臺南市南區_22.961189_120.188378.csv
+Processing C0V680_仁武_22.701083_120.347722.csv
+Processing C2G840_北斗_23.877586_120.514222.csv
+Processing C0R900_竹坑_22.1385_120.7022.csv
+Processing C0K250_崙背_23.75555_120.318925.csv
+Processing C0G860_社頭_23.897647_120.5862.csv
+Processing C0X150_安定_23.102614_120.227839.csv
+Processing C0R590_里港_22.77919_120.49459.csv
+Processing C0E610_馬都安_24.451272_120.930192.csv
+Processing C0E550_明德_24.583486_120.885411.csv
+Processing C0R150_三地門_22.709889_120.639944.csv
+Processing C0G910_花壇_24.032076_120.549461.csv
+Processing C1D400_鳥嘴山_24.71909_121.28387.csv
+Processing C0K500_元長_23.64981_120.315024.csv
+Processing C0F0B0_石岡_24.276061_120.777644.csv
+Processing C2V250_甲仙_23.080106_120.591758.csv
+Processing C0SA20_金崙山_22.567419_120.959667.csv
+Processing C0V350_溪埔_22.738578_120.446797.csv
+Processing C0M660_溪口_23.604131_120.403569.csv
+Processing C1S880_壽卡_22.238911_120.858903.csv
+Processing 72D680_桃改新埔分場_24.834444_121.066111.csv
+   1/1104 [..............................] - ETA: 12:37   9/1104 [..............................] - ETA: 7s     17/1104 [..............................] - ETA: 7s  25/1104 [..............................] - ETA: 7s  33/1104 [..............................] - ETA: 6s  41/1104 [>.............................] - ETA: 6s  49/1104 [>.............................] - ETA: 6s  57/1104 [>.............................] - ETA: 6s  65/1104 [>.............................] - ETA: 6s  73/1104 [>.............................] - ETA: 6s  81/1104 [=>............................] - ETA: 6s  89/1104 [=>............................] - ETA: 6s  97/1104 [=>............................] - ETA: 6s 105/1104 [=>............................] - ETA: 6s 113/1104 [==>...........................] - ETA: 6s 121/1104 [==>...........................] - ETA: 6s 129/1104 [==>...........................] - ETA: 6s 137/1104 [==>...........................] - ETA: 6s 145/1104 [==>...........................] - ETA: 6s 153/1104 [===>..........................] - ETA: 6s 161/1104 [===>..........................] - ETA: 6s 169/1104 [===>..........................] - ETA: 6s 177/1104 [===>..........................] - ETA: 5s 185/1104 [====>.........................] - ETA: 5s 193/1104 [====>.........................] - ETA: 5s 201/1104 [====>.........................] - ETA: 5s 209/1104 [====>.........................] - ETA: 5s 217/1104 [====>.........................] - ETA: 5s 225/1104 [=====>........................] - ETA: 5s 233/1104 [=====>........................] - ETA: 5s 241/1104 [=====>........................] - ETA: 5s 249/1104 [=====>........................] - ETA: 5s 257/1104 [=====>........................] - ETA: 5s 265/1104 [======>.......................] - ETA: 5s 273/1104 [======>.......................] - ETA: 5s 281/1104 [======>.......................] - ETA: 5s 289/1104 [======>.......................] - ETA: 5s 297/1104 [=======>......................] - ETA: 5s 305/1104 [=======>......................] - ETA: 5s 313/1104 [=======>......................] - ETA: 5s 321/1104 [=======>......................] - ETA: 5s 329/1104 [=======>......................] - ETA: 5s 337/1104 [========>.....................] - ETA: 4s 345/1104 [========>.....................] - ETA: 4s 353/1104 [========>.....................] - ETA: 4s 361/1104 [========>.....................] - ETA: 4s 368/1104 [=========>....................] - ETA: 4s 376/1104 [=========>....................] - ETA: 4s 384/1104 [=========>....................] - ETA: 4s 392/1104 [=========>....................] - ETA: 4s 400/1104 [=========>....................] - ETA: 4s 408/1104 [==========>...................] - ETA: 4s 416/1104 [==========>...................] - ETA: 4s 424/1104 [==========>...................] - ETA: 4s 432/1104 [==========>...................] - ETA: 4s 440/1104 [==========>...................] - ETA: 4s 448/1104 [===========>..................] - ETA: 4s 456/1104 [===========>..................] - ETA: 4s 464/1104 [===========>..................] - ETA: 4s 472/1104 [===========>..................] - ETA: 4s 480/1104 [============>.................] - ETA: 4s 488/1104 [============>.................] - ETA: 4s 496/1104 [============>.................] - ETA: 3s 504/1104 [============>.................] - ETA: 3s 512/1104 [============>.................] - ETA: 3s 520/1104 [=============>................] - ETA: 3s 528/1104 [=============>................] - ETA: 3s 536/1104 [=============>................] - ETA: 3s 544/1104 [=============>................] - ETA: 3s 552/1104 [==============>...............] - ETA: 3s 560/1104 [==============>...............] - ETA: 3s 568/1104 [==============>...............] - ETA: 3s 576/1104 [==============>...............] - ETA: 3s 584/1104 [==============>...............] - ETA: 3s 592/1104 [===============>..............] - ETA: 3s 600/1104 [===============>..............] - ETA: 3s 608/1104 [===============>..............] - ETA: 3s 616/1104 [===============>..............] - ETA: 3s 624/1104 [===============>..............] - ETA: 3s 632/1104 [================>.............] - ETA: 3s 640/1104 [================>.............] - ETA: 3s 648/1104 [================>.............] - ETA: 2s 656/1104 [================>.............] - ETA: 2s 664/1104 [=================>............] - ETA: 2s 672/1104 [=================>............] - ETA: 2s 680/1104 [=================>............] - ETA: 2s 688/1104 [=================>............] - ETA: 2s 695/1104 [=================>............] - ETA: 2s 703/1104 [==================>...........] - ETA: 2s 711/1104 [==================>...........] - ETA: 2s 719/1104 [==================>...........] - ETA: 2s 727/1104 [==================>...........] - ETA: 2s 735/1104 [==================>...........] - ETA: 2s 743/1104 [===================>..........] - ETA: 2s 751/1104 [===================>..........] - ETA: 2s 759/1104 [===================>..........] - ETA: 2s 767/1104 [===================>..........] - ETA: 2s 775/1104 [====================>.........] - ETA: 2s 783/1104 [====================>.........] - ETA: 2s 791/1104 [====================>.........] - ETA: 2s 799/1104 [====================>.........] - ETA: 2s 807/1104 [====================>.........] - ETA: 1s 815/1104 [=====================>........] - ETA: 1s 823/1104 [=====================>........] - ETA: 1s 831/1104 [=====================>........] - ETA: 1s 839/1104 [=====================>........] - ETA: 1s 847/1104 [======================>.......] - ETA: 1s 855/1104 [======================>.......] - ETA: 1s 863/1104 [======================>.......] - ETA: 1s 871/1104 [======================>.......] - ETA: 1s 879/1104 [======================>.......] - ETA: 1s 887/1104 [=======================>......] - ETA: 1s 895/1104 [=======================>......] - ETA: 1s 903/1104 [=======================>......] - ETA: 1s 911/1104 [=======================>......] - ETA: 1s 919/1104 [=======================>......] - ETA: 1s 927/1104 [========================>.....] - ETA: 1s 935/1104 [========================>.....] - ETA: 1s 943/1104 [========================>.....] - ETA: 1s 951/1104 [========================>.....] - ETA: 1s 959/1104 [=========================>....] - ETA: 0s 967/1104 [=========================>....] - ETA: 0s 975/1104 [=========================>....] - ETA: 0s 983/1104 [=========================>....] - ETA: 0s 991/1104 [=========================>....] - ETA: 0s 999/1104 [==========================>...] - ETA: 0s1006/1104 [==========================>...] - ETA: 0s1014/1104 [==========================>...] - ETA: 0s1022/1104 [==========================>...] - ETA: 0s1030/1104 [==========================>...] - ETA: 0s1038/1104 [===========================>..] - ETA: 0s1046/1104 [===========================>..] - ETA: 0s1054/1104 [===========================>..] - ETA: 0s1062/1104 [===========================>..] - ETA: 0s1070/1104 [============================>.] - ETA: 0s1078/1104 [============================>.] - ETA: 0s1086/1104 [============================>.] - ETA: 0s1094/1104 [============================>.] - ETA: 0s1102/1104 [============================>.] - ETA: 0s1104/1104 [==============================] - 8s 7ms/step
+來自 https://github.com/Raingel/rice_blast_prediction
+ * branch                  master     -> FETCH_HEAD
+已經是最新的。
+位於分支 master
+您的分支與上游分支 'origin/master' 一致。
+
+沒有要提交的檔案，工作區為乾淨狀態
+Everything up-to-date
+HEAD 現在位於 53f3ee5fab update prediction
+共有 751 個有效氣象站
+已下載 466850_五分山雷達站_25.071182_121.781205.csv
+已下載 466881_新北_24.9593_121.52.csv
+已下載 466900_淡水_25.164889_121.448906.csv
+已下載 466910_鞍部_25.182586_121.529731.csv
+已下載 466920_臺北_25.037658_121.514853.csv
+已下載 466930_竹子湖_25.162078_121.544547.csv
+已下載 466940_基隆_25.133314_121.740475.csv
+已下載 466950_彭佳嶼_25.627975_122.079744.csv
+已下載 466990_花蓮_23.975128_121.613275.csv
+已下載 467050_新屋_25.006744_121.047486.csv
+已下載 467080_宜蘭_24.763975_121.756528.csv
+已下載 467110_金門_24.407306_118.289281.csv
+已下載 467270_田中_23.873803_120.581286.csv
+已下載 467280_後龍_24.648563_120.831834.csv
+已下載 467290_古坑_23.633639_120.551889.csv
+已下載 467300_東吉島_23.25695_119.667467.csv
+已下載 467350_澎湖_23.565503_119.563094.csv
+已下載 467410_臺南_22.993239_120.204772.csv
+已下載 467420_永康_23.038386_120.2367.csv
+已下載 467441_高雄_22.7304_120.3125.csv
+已下載 467480_嘉義_23.495925_120.432906.csv
+已下載 467490_臺中_24.145736_120.684075.csv
+已下載 467530_阿里山_23.508208_120.813242.csv
+已下載 467540_大武_22.355675_120.903789.csv
+已下載 467550_玉山_23.487614_120.959522.csv
+已下載 467571_新竹_24.827853_121.014219.csv
+已下載 467590_恆春_22.003897_120.746339.csv
+已下載 467610_成功_23.097486_121.373428.csv
+已下載 467620_蘭嶼_22.036969_121.558339.csv
+已下載 467650_日月潭_23.881325_120.90805.csv
+已下載 467660_臺東_22.752211_121.154586.csv
+已下載 467790_墾丁雷達站_21.948235_120.808028.csv
+已下載 467990_馬祖_26.169269_119.923419.csv
+已下載 C0A520_山佳_24.974944_121.402008.csv
+已下載 C0A530_坪林_24.938183_121.70975.csv
+已下載 C0A550_泰平_24.971197_121.823711.csv
+已下載 C0A570_桶後_24.848222_121.597992.csv
+已下載 C0A640_石碇_24.993969_121.662917.csv
+已下載 C0A770_科教館_25.096356_121.516507.csv
+已下載 C0A860_大坪_25.165914_121.632969.csv
+已下載 C0A870_五指山_25.132153_121.608692.csv
+已下載 C0A890_雙溪_25.036003_121.864242.csv
+已下載 C0A931_三和_25.233153_121.595236.csv
+已下載 C0A940_金山_25.223628_121.643967.csv
+已下載 C0A950_鼻頭角_25.129036_121.923372.csv
+已下載 C0A970_三貂角_25.007606_122.002058.csv
+已下載 C0A980_社子_25.109508_121.469681.csv
+已下載 C0A9C0_天母_25.117494_121.537169.csv
+已下載 C0A9F0_內湖_25.079422_121.57545.csv
+已下載 C0AC40_大屯山_25.175675_121.522408.csv
+已下載 C0AC60_三峽_24.939025_121.369728.csv
+已下載 C0AC70_信義_25.037822_121.564597.csv
+已下載 C0AC80_文山_25.00235_121.575728.csv
+已下載 C0ACA0_新莊_25.051478_121.446756.csv
+已下載 C0AD10_八里_25.150211_121.403947.csv
+已下載 C0AD30_蘆洲_25.086594_121.472331.csv
+已下載 C0AD40_土城_24.973208_121.445169.csv
+已下載 C0AD50_鶯歌_24.951533_121.346294.csv
+已下載 C0AG80_中和_24.991622_121.491792.csv
+已下載 C0AH00_汐止_25.066881_121.658778.csv
+已下載 C0AH10_永和_25.01125_121.508111.csv
+已下載 C0AH30_五分山_25.07125_121.780794.csv
+已下載 C0AH40_平等_25.129142_121.577086.csv
+已下載 C0AH50_林口_25.072181_121.38084.csv
+已下載 C0AH70_松山_25.04871_121.55042.csv
+已下載 C0AH80_深坑_25.002703_121.628328.csv
+已下載 C0AH90_福山植物園_24.760717_121.58135.csv
+已下載 C0AI00_五股_25.07445_121.42728.csv
+已下載 C0AI10_屈尺_24.92184_121.54475.csv
+已下載 C0AI20_白沙灣_25.283128_121.519058.csv
+已下載 C0AI30_三重_25.057328_121.500629.csv
+已下載 C0AI40_石牌_25.115597_121.513139.csv
+已下載 C0AJ20_野柳_25.20703_121.690021.csv
+已下載 C0AJ30_淡水觀海_25.184591_121.408616.csv
+已下載 C0AJ40_石門_25.273672_121.601198.csv
+已下載 C0AJ50_水湳洞_25.123695_121.862238.csv
+已下載 C0AJ60_六塊厝_25.24_121.4481.csv
+已下載 C0AJ70_田寮_25.2698_121.4886.csv
+已下載 C0AJ80_板橋_25.0107_121.4489.csv
+Traceback (most recent call last):
+  File "ERA5_current_download_cron.py", line 56, in <module>
+    weather_df_archive = fetch_openmeteo_archive(lat=lat, lon=lon, start=past_days_start, end=past_days_end)
+  File "ERA5_current_download_cron.py", line 11, in fetch_openmeteo_archive
+    df = pd.read_json(url)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 760, in read_json
+    json_reader = JsonReader(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 861, in __init__
+    data = self._get_data_from_filepath(filepath_or_buffer)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/json/_json.py", line 901, in _get_data_from_filepath
+    self.handles = get_handle(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/site-packages/pandas/io/common.py", line 373, in _get_filepath_or_buffer
+    reader = BytesIO(req.read())
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/http/client.py", line 466, in read
+    return self._readall_chunked()
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/http/client.py", line 576, in _readall_chunked
+    value.append(self._safe_read(chunk_left))
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/http/client.py", line 613, in _safe_read
+    data = self.fp.read(amt)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/socket.py", line 681, in readinto
+    return self._sock.recv_into(b)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/ssl.py", line 1274, in recv_into
+    return self.read(nbytes, buffer)
+  File "/home/raingel/anaconda3/envs/keras2.10/lib/python3.8/ssl.py", line 1132, in read
+    return self._sslobj.read(len, buffer)
+KeyboardInterrupt
