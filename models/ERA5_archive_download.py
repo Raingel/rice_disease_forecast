@@ -62,6 +62,42 @@ def fetch_openmeteo_archive_batch(lat_list, lon_list, start="2013-01-01", end="2
     return results
 
 
+def normalize_wind_components(df):
+    if "windspeed_10m" not in df.columns or "winddirection_10m" not in df.columns:
+        return df
+    if "Wu" not in df.columns:
+        df["Wu"] = pd.NA
+    if "Wv" not in df.columns:
+        df["Wv"] = pd.NA
+    if "u" not in df.columns:
+        df["u"] = pd.NA
+    if "v" not in df.columns:
+        df["v"] = pd.NA
+
+    missing_wu = df["Wu"].isna()
+    missing_wv = df["Wv"].isna()
+    missing_u = df["u"].isna()
+    missing_v = df["v"].isna()
+
+    if missing_wu.any():
+        df.loc[missing_wu, "Wu"] = df.loc[missing_wu, "windspeed_10m"] * df.loc[
+            missing_wu, "winddirection_10m"
+        ].apply(lambda x: math.cos(math.radians(270 - x)))
+    if missing_wv.any():
+        df.loc[missing_wv, "Wv"] = df.loc[missing_wv, "windspeed_10m"] * df.loc[
+            missing_wv, "winddirection_10m"
+        ].apply(lambda x: math.sin(math.radians(270 - x)))
+    if missing_u.any():
+        df.loc[missing_u, "u"] = df.loc[missing_u, "windspeed_10m"] * df.loc[
+            missing_u, "winddirection_10m"
+        ].apply(lambda x: math.cos(math.radians(270 - x)))
+    if missing_v.any():
+        df.loc[missing_v, "v"] = df.loc[missing_v, "windspeed_10m"] * df.loc[
+            missing_v, "winddirection_10m"
+        ].apply(lambda x: math.sin(math.radians(270 - x)))
+    return df
+
+
 def chunk_date_range(start_date, end_date, max_days):
     start = pd.to_datetime(start_date)
     end = pd.to_datetime(end_date)
@@ -94,12 +130,14 @@ def count_missing_hours(existing_index, chunk_start, chunk_end):
 def merge_and_save(existing_path, new_data):
     new_data = new_data.copy()
     new_data["time"] = pd.to_datetime(new_data["time"])
+    new_data = normalize_wind_components(new_data)
     if os.path.exists(existing_path):
         df_existing = pd.read_csv(existing_path)
         if "time" not in df_existing.columns:
             df_existing = pd.DataFrame(columns=new_data.columns)
         else:
             df_existing["time"] = pd.to_datetime(df_existing["time"])
+            df_existing = normalize_wind_components(df_existing)
         df_existing["__source"] = "existing"
     else:
         df_existing = pd.DataFrame(columns=new_data.columns)
