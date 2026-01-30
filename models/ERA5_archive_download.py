@@ -10,7 +10,10 @@ ARCHIVE_API_URL = "https://archive-api.open-meteo.com/v1/archive"
 HOURLY_FIELDS = [
     "temperature_2m",
     "relativehumidity_2m",
+    "dewpoint_2m",
     "precipitation",
+    "cloudcover",
+    "direct_radiation",
     "windspeed_10m",
     "winddirection_10m",
 ]
@@ -45,12 +48,12 @@ def fetch_openmeteo_archive_batch(lat_list, lon_list, start="2013-01-01", end="2
         hourly = row["hourly"]
         df_hourly = pd.DataFrame(hourly)
         df_hourly["time"] = pd.to_datetime(df_hourly["time"])
-        # 若有風速與風向資料，則計算 u, v 分量
+        # 若有風速與風向資料，則計算 Wu, Wv (相容舊資料格式)
         if "windspeed_10m" in df_hourly.columns and "winddirection_10m" in df_hourly.columns:
-            df_hourly["u"] = df_hourly["windspeed_10m"] * df_hourly["winddirection_10m"].apply(
+            df_hourly["Wu"] = df_hourly["windspeed_10m"] * df_hourly["winddirection_10m"].apply(
                 lambda x: math.cos(math.radians(270 - x))
             )
-            df_hourly["v"] = df_hourly["windspeed_10m"] * df_hourly["winddirection_10m"].apply(
+            df_hourly["Wv"] = df_hourly["windspeed_10m"] * df_hourly["winddirection_10m"].apply(
                 lambda x: math.sin(math.radians(270 - x))
             )
         df_hourly = df_hourly.dropna()
@@ -86,13 +89,22 @@ def has_full_coverage(existing_index, chunk_start, chunk_end):
 
 
 def merge_and_save(existing_path, new_data):
+    new_data = new_data.copy()
+    new_data["time"] = pd.to_datetime(new_data["time"])
     if os.path.exists(existing_path):
         df_existing = pd.read_csv(existing_path)
+        df_existing["time"] = pd.to_datetime(df_existing["time"])
+        all_columns = sorted(set(df_existing.columns).union(new_data.columns))
+        df_existing = df_existing.reindex(columns=all_columns)
+        new_data = new_data.reindex(columns=all_columns)
         df_combined = pd.concat([df_existing, new_data], ignore_index=True)
     else:
         df_combined = new_data.copy()
-    df_combined["time"] = pd.to_datetime(df_combined["time"])
-    df_combined = df_combined.drop_duplicates(subset=["time"]).sort_values("time")
+    data_columns = [col for col in df_combined.columns if col != "time"]
+    df_combined["_filled_count"] = df_combined[data_columns].notna().sum(axis=1)
+    df_combined = df_combined.sort_values(["time", "_filled_count"], ascending=[True, False])
+    df_combined = df_combined.drop_duplicates(subset=["time"], keep="first")
+    df_combined = df_combined.drop(columns=["_filled_count"]).sort_values("time")
     df_combined.to_csv(existing_path, index=False)
     return df_combined
 
