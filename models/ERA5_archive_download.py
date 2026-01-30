@@ -19,7 +19,8 @@ HOURLY_FIELDS = [
 ]
 TIMEZONE = "Asia%2FSingapore"
 
-OUTPUT_FOLDER = os.path.join("..", "ERA5_archive")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FOLDER = os.path.join(BASE_DIR, "..", "ERA5_archive")
 START_DATE = "2000-01-01"
 END_DATE = (datetime.today() - timedelta(days=7)).strftime("%Y-%m-%d")
 BATCH_SIZE = 80
@@ -56,7 +57,7 @@ def fetch_openmeteo_archive_batch(lat_list, lon_list, start="2013-01-01", end="2
             df_hourly["Wv"] = df_hourly["windspeed_10m"] * df_hourly["winddirection_10m"].apply(
                 lambda x: math.sin(math.radians(270 - x))
             )
-        df_hourly = df_hourly.dropna()
+        df_hourly = df_hourly.dropna(subset=["time"])
         results.append(df_hourly)
     return results
 
@@ -71,21 +72,23 @@ def chunk_date_range(start_date, end_date, max_days):
         current = chunk_end + timedelta(days=1)
 
 
-def load_existing_index(path):
+def load_existing_info(path):
     if not os.path.exists(path):
-        return pd.DatetimeIndex([])
-    df_existing = pd.read_csv(path)
-    if "time" not in df_existing.columns:
-        return pd.DatetimeIndex([])
-    return pd.to_datetime(df_existing["time"]).dropna().unique()
+        return pd.DatetimeIndex([]), 0
+    try:
+        df_existing = pd.read_csv(path, usecols=["time"])
+    except ValueError:
+        return pd.DatetimeIndex([]), 0
+    time_index = pd.to_datetime(df_existing["time"]).dropna().unique()
+    return time_index, len(df_existing)
 
 
-def has_full_coverage(existing_index, chunk_start, chunk_end):
-    if existing_index is None or len(existing_index) == 0:
-        return False
+def count_missing_hours(existing_index, chunk_start, chunk_end):
     chunk_range = pd.date_range(chunk_start, chunk_end, freq="H")
+    if existing_index is None or len(existing_index) == 0:
+        return len(chunk_range)
     missing = chunk_range.difference(pd.DatetimeIndex(existing_index))
-    return missing.empty
+    return len(missing)
 
 
 def merge_and_save(existing_path, new_data):
@@ -93,20 +96,44 @@ def merge_and_save(existing_path, new_data):
     new_data["time"] = pd.to_datetime(new_data["time"])
     if os.path.exists(existing_path):
         df_existing = pd.read_csv(existing_path)
-        df_existing["time"] = pd.to_datetime(df_existing["time"])
-        all_columns = sorted(set(df_existing.columns).union(new_data.columns))
-        df_existing = df_existing.reindex(columns=all_columns)
-        new_data = new_data.reindex(columns=all_columns)
-        df_combined = pd.concat([df_existing, new_data], ignore_index=True)
+        if "time" not in df_existing.columns:
+            df_existing = pd.DataFrame(columns=new_data.columns)
+        else:
+            df_existing["time"] = pd.to_datetime(df_existing["time"])
+        df_existing["__source"] = "existing"
     else:
-        df_combined = new_data.copy()
-    data_columns = [col for col in df_combined.columns if col != "time"]
+        df_existing = pd.DataFrame(columns=new_data.columns)
+        df_existing["__source"] = pd.Series(dtype="string")
+
+    new_data["__source"] = "new"
+    all_columns = sorted(set(df_existing.columns).union(new_data.columns))
+    df_existing = df_existing.reindex(columns=all_columns)
+    new_data = new_data.reindex(columns=all_columns)
+    df_combined = pd.concat([df_existing, new_data], ignore_index=True)
+    data_columns = [col for col in df_combined.columns if col not in ("time", "__source")]
     df_combined["_filled_count"] = df_combined[data_columns].notna().sum(axis=1)
     df_combined = df_combined.sort_values(["time", "_filled_count"], ascending=[True, False])
     df_combined = df_combined.drop_duplicates(subset=["time"], keep="first")
-    df_combined = df_combined.drop(columns=["_filled_count"]).sort_values("time")
+
+    existing_times = set(df_existing["time"].dropna())
+    df_combined["__is_existing_time"] = df_combined["time"].isin(existing_times)
+    added_count = int((~df_combined["__is_existing_time"] & (df_combined["__source"] == "new")).sum())
+    updated_count = int((df_combined["__is_existing_time"] & (df_combined["__source"] == "new")).sum())
+
+    df_combined = df_combined.drop(columns=["_filled_count", "__source", "__is_existing_time"]).sort_values("time")
+
+    if os.path.exists(existing_path):
+        existing_row_count = len(df_existing)
+        combined_row_count = len(df_combined)
+        if combined_row_count < existing_row_count:
+            print(
+                f"警告: {os.path.basename(existing_path)} 合併後列數變少 "
+                f"({combined_row_count} < {existing_row_count})，將保留原檔案。"
+            )
+            return df_existing.drop(columns=["__source"]).sort_values("time"), 0, 0
+
     df_combined.to_csv(existing_path, index=False)
-    return df_combined
+    return df_combined, added_count, updated_count
 
 
 # %%
@@ -125,23 +152,29 @@ print(f"共有 {len(df_sta)} 個有效氣象站")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 existing_index_map = {}
+existing_row_count_map = {}
 for _, row in df_sta.iterrows():
     filename = f"{row['站號']}_{row['站名']}_{row['緯度']}_{row['經度']}.csv"
     output_path = os.path.join(OUTPUT_FOLDER, filename)
-    existing_index_map[filename] = load_existing_index(output_path)
+    existing_index, existing_rows = load_existing_info(output_path)
+    existing_index_map[filename] = existing_index
+    existing_row_count_map[filename] = existing_rows
 
 for chunk_start, chunk_end in chunk_date_range(START_DATE, END_DATE, MAX_DAYS_PER_REQUEST):
     print(f"處理區間: {chunk_start.date()} ~ {chunk_end.date()}")
     for i in range(0, len(df_sta), BATCH_SIZE):
         group = df_sta.iloc[i : i + BATCH_SIZE]
         missing_rows = []
+        missing_info = []
         for _, row in group.iterrows():
             filename = f"{row['站號']}_{row['站名']}_{row['緯度']}_{row['經度']}.csv"
             output_path = os.path.join(OUTPUT_FOLDER, filename)
             existing_index = existing_index_map.get(filename, pd.DatetimeIndex([]))
-            if CHECK_FULL_COVERAGE and has_full_coverage(existing_index, chunk_start, chunk_end):
+            missing_count = count_missing_hours(existing_index, chunk_start, chunk_end)
+            if CHECK_FULL_COVERAGE and missing_count == 0:
                 continue
             missing_rows.append(row)
+            missing_info.append((filename, output_path, missing_count))
 
         if not missing_rows:
             continue
@@ -149,6 +182,10 @@ for chunk_start, chunk_end in chunk_date_range(START_DATE, END_DATE, MAX_DAYS_PE
         df_missing = pd.DataFrame(missing_rows)
         lat_list = df_missing["緯度"].tolist()
         lon_list = df_missing["經度"].tolist()
+        print(
+            f"批次下載: 站點 {i + 1} ~ {i + len(df_missing)} "
+            f"(缺資料站點數: {len(df_missing)})"
+        )
 
         archive_results = fetch_openmeteo_archive_batch(
             lat_list,
@@ -157,13 +194,21 @@ for chunk_start, chunk_end in chunk_date_range(START_DATE, END_DATE, MAX_DAYS_PE
             end=chunk_end.strftime("%Y-%m-%d"),
         )
 
-        for idx, (_, row) in enumerate(df_missing.iterrows()):
-            filename = f"{row['站號']}_{row['站名']}_{row['緯度']}_{row['經度']}.csv"
-            output_path = os.path.join(OUTPUT_FOLDER, filename)
+        for idx, info in enumerate(missing_info):
+            filename, output_path, missing_count = info
+            existing_rows = existing_row_count_map.get(filename, 0)
             df_archive = archive_results[idx]
-            df_combined = merge_and_save(output_path, df_archive)
+            print(
+                f"處理站點: {filename} | 既有 {existing_rows} 筆 | "
+                f"本段缺 {missing_count} 筆 | 下載區間 {chunk_start.date()} ~ {chunk_end.date()}"
+            )
+            df_combined, added_count, updated_count = merge_and_save(output_path, df_archive)
             existing_index_map[filename] = pd.to_datetime(df_combined["time"]).dropna().unique()
-            print(f"已更新 {filename} ({chunk_start.date()} ~ {chunk_end.date()})")
+            existing_row_count_map[filename] = len(df_combined)
+            print(
+                f"合併完成: {filename} | 新增 {added_count} 筆 | "
+                f"更新 {updated_count} 筆 | 合併後 {len(df_combined)} 筆"
+            )
 
         time.sleep(SLEEP_SECONDS)
 
