@@ -27,9 +27,10 @@ import numpy as np
 import pandas as pd
 
 # ========== 參數 ==========
-DATA_FOLDER = "/home/raingel/rice_blast_model_update/rice_blast_prediction/data"
-PLAN_FOLDER = "/home/raingel/planthopper/HYSPLIT-Planthopper-Forecast/prediction"  # planthopper 格點資料（若沒有可設為 ""）
-OUTPUT_CSV  = "/home/raingel/rice_blast_model_update/rice_blast_prediction/recent_summary.csv"
+ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+DATA_FOLDER = os.getenv("DATA_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "data"))
+PLAN_FOLDER = os.getenv("PLAN_FOLDER", "")  # planthopper 格點資料（若沒有可設為 ""）
+OUTPUT_CSV = os.getenv("OUTPUT_CSV", os.path.join(ROOT_DIR, "rice_blast_prediction", "recent_summary.csv"))
 
 # 風險門檻
 RISK_THRESHOLD_MODELS = 0.5      # 四模型：>= 0.5 算高風險
