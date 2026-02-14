@@ -39,6 +39,7 @@ jobs:
           RECENT_OUTPUT_FOLDER: ${{ github.workspace }}/rice_blast_prediction/recent_daily_by_station
           OUTPUT_CSV: ${{ github.workspace }}/rice_blast_prediction/recent_summary.csv
           PLAN_FOLDER: ""
+          ERA5_OUTPUT_DIR: ${{ github.workspace }}/ERA5
         run: bash scripts/run_daily_pipeline.sh
 
       - name: Commit and push updated outputs
