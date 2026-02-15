@@ -4,6 +4,7 @@ import subprocess
 import logging
 from datetime import datetime
 import pandas as pd
+from typing import Optional
 
 # ----------------------------
 # 設定參數
@@ -41,6 +42,21 @@ else:
     logging.info(f"倉庫已存在，開始 pull 更新：{REPO_DIR}")
     subprocess.run(['git', 'pull'], cwd=REPO_DIR, check=True)
 
+
+
+def resolve_data_base_path(repo_dir: str, data_subdir: str) -> Optional[str]:
+    """Resolve BlastDT2 prediction folder with fallback search."""
+    direct_path = os.path.join(repo_dir, data_subdir)
+    if os.path.isdir(direct_path):
+        return direct_path
+
+    # Fallback: if upstream repo structure changed, search recursively by folder name
+    for root, dirs, _files in os.walk(repo_dir):
+        if data_subdir in dirs:
+            return os.path.join(root, data_subdir)
+
+    return None
+
 # ----------------------------
 # 準備輸出資料夾
 # ----------------------------
@@ -51,7 +67,12 @@ logging.info(f"確保輸出資料夾存在：{OUTPUT_DIR}")
 # 讀取並處理資料
 # ----------------------------
 all_records = []  # 用於累積所有站點資料的列表
-base_path = os.path.join(REPO_DIR, DATA_SUBDIR)
+base_path = resolve_data_base_path(REPO_DIR, DATA_SUBDIR)
+if not base_path:
+    logging.error(f"找不到資料夾：{DATA_SUBDIR}（repo: {REPO_DIR}）。本次跳過 BlastDT2 更新，保留既有輸出。")
+    raise SystemExit(0)
+
+logging.info(f"使用 BlastDT2 資料夾：{base_path}")
 
 # 掃描所有氣象站子資料夾
 for station in os.listdir(base_path):

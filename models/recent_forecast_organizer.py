@@ -3,10 +3,13 @@ import pandas as pd
 import os
 from datetime import datetime, timedelta
 
+ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 # 定義資料夾路徑
-DATA_FOLDER = "/home/raingel/rice_blast_model_update/rice_blast_prediction/data"
+DATA_FOLDER = os.getenv("DATA_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "data"))
 # 指定一個輸出資料夾，用來存放各個站號的 CSV 檔案與氣象站列表
-OUTPUT_FOLDER = "/home/raingel/rice_blast_model_update/rice_blast_prediction/recent_daily_by_station"
+OUTPUT_FOLDER = os.getenv("RECENT_OUTPUT_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "recent_daily_by_station"))
+PLANTHOPPER_FOLDER = os.getenv("PLAN_FOLDER", "")
 
 # 建立輸出資料夾（若不存在的話）
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -28,7 +31,7 @@ for target_date in date_range:
     dt2_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BlastDT2.csv")
     lstls_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BlastLSTLS.csv")
     BLBTSLS_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BLBTSLS.csv")
-    planthopper_file_path = os.path.join("/home/raingel/planthopper/HYSPLIT-Planthopper-Forecast/prediction", f"{date_str}_max_freq.csv")
+    planthopper_file_path = os.path.join(PLANTHOPPER_FOLDER, f"{date_str}_max_freq.csv") if PLANTHOPPER_FOLDER else ""
     
     merged_data = None
 
@@ -72,7 +75,7 @@ for target_date in date_range:
                                    how="left")
 
     # 讀取 Planthopper 預報檔案，並根據最近的經緯度進行合併
-    if os.path.exists(planthopper_file_path):
+    if planthopper_file_path and os.path.exists(planthopper_file_path):
         planthopper_data = pd.read_csv(planthopper_file_path)
         if merged_data is not None:
             def find_nearest_probability(lat, lon, planthopper_data):
