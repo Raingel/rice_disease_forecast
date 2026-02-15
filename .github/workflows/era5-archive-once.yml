@@ -1,0 +1,55 @@
+name: Run ERA5 Archive Download Once
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_runtime_seconds:
+        description: "Max runtime for ERA5 archive download (seconds)"
+        required: false
+        default: "18000"
+
+permissions:
+  contents: write
+
+jobs:
+  run-era5-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy requests
+
+      - name: Run ERA5 archive download (single run)
+        continue-on-error: true
+        env:
+          MAX_RUNTIME_SECONDS: ${{ github.event.inputs.max_runtime_seconds || '18000' }}
+        run: |
+          cd models
+          python ERA5_archive_download.py
+
+      - name: Commit and push updated ERA5 archive outputs
+        if: always()
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ERA5_archive models/ERA5_archive_download.py .github/workflows/era5-archive-once.yml
+            git commit -m "chore: update ERA5 archive outputs ($(date -u '+%Y-%m-%d %H:%M:%S UTC'))"
+            git push
+          else
+            echo "No changes to commit."
+          fi
