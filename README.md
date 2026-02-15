@@ -32,3 +32,12 @@ This repository now includes a full daily automation workflow at:
   - `RECENT_OUTPUT_FOLDER`
   - `OUTPUT_CSV`
   - `PLAN_FOLDER`
+
+
+## One-time ERA5 archive run (GitHub Actions)
+
+Use workflow `.github/workflows/era5-archive-once.yml` (manual trigger) to run `models/ERA5_archive_download.py` once.
+
+- Default max runtime is 5 hours (`18000` seconds).
+- If archive API repeatedly fails (e.g., rate limit), the script stops early and keeps already-downloaded results.
+- Workflow still attempts to commit/push partial outputs (`ERA5_archive/`) even when the run step reports an error.
