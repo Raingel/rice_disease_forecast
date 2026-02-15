@@ -73,6 +73,8 @@ VERIFY_AT_END = True
 FINAL_PATCH_MISSING = True
 FINAL_PATCH_MAX_RANGES = 50
 
+MAX_RUNTIME_SECONDS = int(os.getenv("MAX_RUNTIME_SECONDS", str(5 * 60 * 60)))
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FOLDER = os.path.normpath(os.path.join(BASE_DIR, "..", "ERA5_archive"))
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -265,6 +267,9 @@ def dedupe_and_finalize(df_all: pd.DataFrame) -> pd.DataFrame:
 # =============================
 # 5) 下載
 # =============================
+class APIRateLimitStop(Exception):
+    """Stop the archive run when API keeps failing (likely rate-limited)."""
+
 def fetch_openmeteo_archive_batch(lat_list: List[float], lon_list: List[float], start_date: str, end_date: str) -> List[pd.DataFrame]:
     assert len(lat_list) == len(lon_list)
 
@@ -309,7 +314,7 @@ def fetch_openmeteo_archive_batch(lat_list: List[float], lon_list: List[float], 
             print(f"API 失敗，重試 {attempt}/{MAX_RETRIES}，{sleep_s} 秒後再試，原因: {e}")
             time.sleep(sleep_s)
 
-    raise RuntimeError(f"API 多次失敗，最後錯誤: {last_err}")
+    raise APIRateLimitStop(f"API 多次失敗，停止本次任務: {last_err}")
 
 # =============================
 # 6) 檔案狀態判斷與清理
@@ -379,7 +384,7 @@ def clean_file_in_place(path: str):
 # =============================
 # 7) 主處理流程
 # =============================
-def process_station_batch(batch_rows: pd.DataFrame):
+def process_station_batch(batch_rows: pd.DataFrame, deadline_ts: float) -> bool:
     # state: 每個站點保留 has array 與是否需要清理
     state = {}
 
@@ -404,6 +409,9 @@ def process_station_batch(batch_rows: pd.DataFrame):
 
     # chunk 補齊
     for chunk_start_date, chunk_end_date in iter_date_chunks(TARGET_START_DATE, TARGET_END_DATE, MAX_DAYS_PER_REQUEST):
+        if time.time() >= deadline_ts:
+            print("[TIMEOUT] 已達 5 小時上限，停止本次任務並保留目前成果。")
+            return False
         cs = pd.Timestamp(chunk_start_date)               # 00:00
         ce = pd.Timestamp(chunk_end_date) + pd.Timedelta(hours=23)  # 23:00
         si = dt_to_hour_index(cs)
@@ -425,7 +433,12 @@ def process_station_batch(batch_rows: pd.DataFrame):
             lat_list = [state[fn]["lat"] for fn in sub_fns]
             lon_list = [state[fn]["lon"] for fn in sub_fns]
 
-            dfs = fetch_openmeteo_archive_batch(lat_list, lon_list, chunk_start_date, chunk_end_date)
+            try:
+                dfs = fetch_openmeteo_archive_batch(lat_list, lon_list, chunk_start_date, chunk_end_date)
+            except APIRateLimitStop as e:
+                print(f"[API-STOP] {e}")
+                print("[API-STOP] 中止後續下載，保留目前已寫入的檔案。")
+                return False
 
             for fn, df_new_raw in zip(sub_fns, dfs):
                 path = state[fn]["path"]
@@ -480,12 +493,20 @@ def process_station_batch(batch_rows: pd.DataFrame):
             print(f"{fn} 仍缺 {len(missing_idx)} 小時，缺口區間數 {len(ranges)}，進行補丁")
 
             for (a, b) in ranges:
+                if time.time() >= deadline_ts:
+                    print("[TIMEOUT] 已達 5 小時上限，停止本次任務並保留目前成果。")
+                    return False
                 dt_a = TARGET_START_DT + pd.Timedelta(hours=int(a))
                 dt_b = TARGET_START_DT + pd.Timedelta(hours=int(b))
                 patch_start = dt_a.date().isoformat()
                 patch_end = dt_b.date().isoformat()
 
-                df_patch_raw = fetch_openmeteo_archive_batch([st["lat"]], [st["lon"]], patch_start, patch_end)[0]
+                try:
+                    df_patch_raw = fetch_openmeteo_archive_batch([st["lat"]], [st["lon"]], patch_start, patch_end)[0]
+                except APIRateLimitStop as e:
+                    print(f"[API-STOP] {e}")
+                    print("[API-STOP] 中止後續下載，保留目前已寫入的檔案。")
+                    return False
 
                 path = st["path"]
                 if os.path.exists(path):
@@ -532,15 +553,29 @@ def process_station_batch(batch_rows: pd.DataFrame):
                 else:
                     print(f"警告 {fn} rows={rows} missing_hours={miss}")
 
+    return True
+
 def main():
+    start_ts = time.time()
+    deadline_ts = start_ts + MAX_RUNTIME_SECONDS
+    print(f"[INFO] 最長執行時間: {MAX_RUNTIME_SECONDS} 秒")
+
     df_sta = load_station_list()
 
     FILE_BATCH_SIZE = 25
     for i in range(0, len(df_sta), FILE_BATCH_SIZE):
+        if time.time() >= deadline_ts:
+            print("[TIMEOUT] 已達 5 小時上限，停止新的批次並保留目前成果。")
+            break
+
         batch = df_sta.iloc[i:i + FILE_BATCH_SIZE].copy()
         print("")
         print(f"處理站點批次 {i + 1} 到 {i + len(batch)} 共 {len(df_sta)}")
-        process_station_batch(batch)
+        should_continue = process_station_batch(batch, deadline_ts)
+        if not should_continue:
+            break
+
+    print("[INFO] ERA5 archive 任務結束（可能為完成、超時或 API 限流中止）。")
 
 if __name__ == "__main__":
     main()

@@ -4,6 +4,10 @@ from datetime import datetime, timedelta
 import math
 import os
 import time
+
+ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+ERA5_OUTPUT_DIR = os.getenv("ERA5_OUTPUT_DIR", os.path.join(ROOT_DIR, "ERA5"))
+os.makedirs(ERA5_OUTPUT_DIR, exist_ok=True)
 # %%
 def fetch_openmeteo_archive_batch(lat_list, lon_list, start="2014-02-12", end="2014-04-08"):
     """
@@ -105,7 +109,7 @@ for i in range(0, len(df_sta), batch_size):
         
         # 檔名格式: 站號_站名_緯度_經度.csv
         filename = f"{row['站號']}_{row['站名']}_{row['緯度']}_{row['經度']}.csv"
-        output_path = os.path.join("..", "ERA5", filename)
+        output_path = os.path.join(ERA5_OUTPUT_DIR, filename)
         df_combined.to_csv(output_path, index=False)
         print(f"已下載 {filename}")
     #休息60秒
