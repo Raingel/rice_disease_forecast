@@ -67,7 +67,7 @@ API_BATCH_SIZE = 60
 MAX_RETRIES = 5
 RETRY_SLEEP_BASE = 3
 
-SLEEP_SECONDS = 5  # 你原本是 360 秒，想快一點可以先用 5，遇到 rate limit 再調大
+SLEEP_SECONDS = 20  # 你原本是 360 秒，想快一點可以先用 5，遇到 rate limit 再調大
 
 VERIFY_AT_END = True
 FINAL_PATCH_MISSING = True
