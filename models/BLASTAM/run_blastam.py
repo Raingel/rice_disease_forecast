@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
+import requests
 
 ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 OUTPUT_DATA_DIR = os.getenv("DATA_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "data"))
@@ -16,6 +17,56 @@ WINDOW_HOURS = 24 * 5
 WINDOW_STEP = 24
 
 
+def _openmeteo_get_json(url, retries=3, timeout=120):
+    last_error = None
+    for attempt in range(1, retries + 1):
+        try:
+            resp = requests.get(url, timeout=timeout)
+            if resp.status_code != 200:
+                raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:200]}")
+            payload = resp.json()
+            if isinstance(payload, dict) and payload.get("error"):
+                reason = payload.get("reason", "unknown error")
+                raise RuntimeError(f"Open-Meteo error: {reason}")
+            return payload
+        except Exception as e:
+            last_error = e
+            if attempt < retries:
+                time.sleep(2 * attempt)
+            else:
+                raise RuntimeError(f"Failed to fetch Open-Meteo after {retries} attempts: {e}") from e
+
+
+def _openmeteo_payload_to_hourly_frames(payload):
+    if isinstance(payload, dict):
+        payload = [payload]
+    if not isinstance(payload, list):
+        raise RuntimeError(f"Unexpected Open-Meteo payload type: {type(payload)}")
+
+    out = []
+    for item in payload:
+        if not isinstance(item, dict) or "hourly" not in item:
+            raise RuntimeError(f"Unexpected Open-Meteo payload item: {str(item)[:200]}")
+
+        hourly = pd.DataFrame(item["hourly"])
+        if hourly.empty:
+            out.append(hourly)
+            continue
+
+        hourly["time"] = pd.to_datetime(hourly["time"])
+        if "windspeed_10m" in hourly.columns and "winddirection_10m" in hourly.columns:
+            hourly["u"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
+                lambda x: math.cos(math.radians(270 - x))
+            )
+            hourly["v"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
+                lambda x: math.sin(math.radians(270 - x))
+            )
+
+        out.append(hourly.dropna(subset=["time", "temperature_2m", "precipitation", "windspeed_10m"]))
+
+    return out
+
+
 def fetch_openmeteo_archive_batch(lat_list, lon_list, start, end):
     lat_str = ",".join(map(str, lat_list))
     lon_str = ",".join(map(str, lon_list))
@@ -25,20 +76,8 @@ def fetch_openmeteo_archive_batch(lat_list, lon_list, start, end):
         "&hourly=temperature_2m,precipitation,windspeed_10m,winddirection_10m,sunshine_duration,direct_radiation"
         "&timezone=Asia%2FSingapore"
     )
-    data = pd.read_json(url)
-    out = []
-    for _, row in data.iterrows():
-        hourly = pd.DataFrame(row["hourly"])
-        hourly["time"] = pd.to_datetime(hourly["time"])
-        if "windspeed_10m" in hourly.columns and "winddirection_10m" in hourly.columns:
-            hourly["u"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
-                lambda x: math.cos(math.radians(270 - x))
-            )
-            hourly["v"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
-                lambda x: math.sin(math.radians(270 - x))
-            )
-        out.append(hourly.dropna(subset=["time", "temperature_2m", "precipitation", "windspeed_10m"]))
-    return out
+    payload = _openmeteo_get_json(url)
+    return _openmeteo_payload_to_hourly_frames(payload)
 
 
 def fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_days=16):
@@ -51,20 +90,8 @@ def fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_day
         f"&past_days={past_days}&forecast_days={forecast_days}&models=ecmwf_aifs025_single"
         "&timezone=Asia%2FSingapore"
     )
-    data = pd.read_json(url)
-    out = []
-    for _, row in data.iterrows():
-        hourly = pd.DataFrame(row["hourly"])
-        hourly["time"] = pd.to_datetime(hourly["time"])
-        if "windspeed_10m" in hourly.columns and "winddirection_10m" in hourly.columns:
-            hourly["u"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
-                lambda x: math.cos(math.radians(270 - x))
-            )
-            hourly["v"] = hourly["windspeed_10m"] * hourly["winddirection_10m"].apply(
-                lambda x: math.sin(math.radians(270 - x))
-            )
-        out.append(hourly.dropna(subset=["time", "temperature_2m", "precipitation", "windspeed_10m"]))
-    return out
+    payload = _openmeteo_get_json(url)
+    return _openmeteo_payload_to_hourly_frames(payload)
 
 
 def extract_window(df, window_size, step):

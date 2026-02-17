@@ -23,6 +23,15 @@ BACKFILL_END_DATE = os.getenv("BLASTAM_BACKFILL_END_DATE", "2025-12-31")
 INCUBATION_PERIOD = int(os.getenv("BLASTAM_INCUBATION_DAYS", "7"))
 BATCH_SIZE = int(os.getenv("BLASTAM_BATCH_SIZE", "80"))
 SLEEP_SECONDS = int(os.getenv("BLASTAM_BATCH_SLEEP_SECONDS", "60"))
+ARCHIVE_CHUNK_DAYS = int(os.getenv("BLASTAM_ARCHIVE_CHUNK_DAYS", "60"))
+
+
+def _iter_date_chunks(start_dt: datetime, end_dt: datetime, chunk_days: int):
+    cursor = start_dt
+    while cursor <= end_dt:
+        chunk_end = min(cursor + timedelta(days=chunk_days - 1), end_dt)
+        yield cursor.strftime("%Y-%m-%d"), chunk_end.strftime("%Y-%m-%d")
+        cursor = chunk_end + timedelta(days=1)
 
 
 def main():
@@ -43,15 +52,30 @@ def main():
         lat_list = group["緯度"].tolist()
         lon_list = group["經度"].tolist()
 
-        archive_results = fetch_openmeteo_archive_batch(
-            lat_list,
-            lon_list,
-            start=BACKFILL_START_DATE,
-            end=BACKFILL_END_DATE,
-        )
+        station_chunk_frames = [[] for _ in range(len(group))]
+        for chunk_start, chunk_end in _iter_date_chunks(start_dt, end_dt, ARCHIVE_CHUNK_DAYS):
+            print(f"[INFO] Requesting archive chunk {chunk_start} ~ {chunk_end} for {len(group)} stations")
+            archive_results = fetch_openmeteo_archive_batch(
+                lat_list,
+                lon_list,
+                start=chunk_start,
+                end=chunk_end,
+            )
+            if len(archive_results) != len(group):
+                raise RuntimeError(
+                    f"Open-Meteo response count mismatch: expected {len(group)}, got {len(archive_results)}"
+                )
+            for idx, df_chunk in enumerate(archive_results):
+                station_chunk_frames[idx].append(df_chunk)
 
         for idx, (_, row) in enumerate(group.iterrows()):
-            df_archive = archive_results[idx].sort_values("time")
+            if not station_chunk_frames[idx]:
+                continue
+            df_archive = (
+                pd.concat(station_chunk_frames[idx], ignore_index=True)
+                .drop_duplicates(subset=["time"])
+                .sort_values("time")
+            )
 
             for window in extract_window(df_archive, WINDOW_HOURS, WINDOW_STEP):
                 temp_5d = window["temperature_2m"].to_numpy(dtype=float)

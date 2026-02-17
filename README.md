@@ -68,6 +68,7 @@ Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger)
 
 - Default window: `2024-01-01` to `2025-12-31`
 - Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
+- Archive download is chunked by date range to improve reliability for long windows; chunk size can be tuned via `BLASTAM_ARCHIVE_CHUNK_DAYS` (default `60`).
 - Runs `scripts/run_blastam_backfill_2024_2025.sh`, which executes:
   - `models/BLASTAM/backfill_2024_2025.py`
   - `models/recent_forecast_organizer.py`
