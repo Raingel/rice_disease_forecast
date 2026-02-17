@@ -60,3 +60,15 @@ BLASTAM needs sunshine information in addition to temperature/wind/rain. To avoi
 - If `sunshine_duration` is unavailable, it falls back to the legacy approximation `direct_radiation / 120` (clipped to 0–1).
 
 This is generally more faithful to the model hypothesis than using radiation-only scaling.
+
+
+## BLASTAM one-time backfill (2024-2025)
+
+Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger) to backfill BLASTAM outputs for historical dates.
+
+- Default window: `2024-01-01` to `2025-12-31`
+- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
+- Runs `scripts/run_blastam_backfill_2024_2025.sh`, which executes:
+  - `models/BLASTAM/backfill_2024_2025.py`
+  - `models/recent_forecast_organizer.py`
+  - `models/crop_season_avg.py`
