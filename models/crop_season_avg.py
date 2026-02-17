@@ -42,6 +42,7 @@ MODEL_COLS: Dict[str, str] = {
     "BlastDT2": "BlastDT2",
     "BlastLSTLS": "BlastLSTLS",
     "BLBTSLS": "BLBTSLS",
+    "BLASTAM": "BLASTAM",
     # planthopper 是格點資料（x, y, value）；將 value 對映到各站
     "planthopper": "value",
 }
@@ -161,6 +162,7 @@ def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool
             "BlastDT2":    os.path.join(DATA_FOLDER, f"{ds}_BlastDT2.csv"),
             "BlastLSTLS":  os.path.join(DATA_FOLDER, f"{ds}_BlastLSTLS.csv"),
             "BLBTSLS":     os.path.join(DATA_FOLDER, f"{ds}_BLBTSLS.csv"),
+            "BLASTAM":     os.path.join(DATA_FOLDER, f"{ds}_BLASTAM.csv"),
         }
 
         day_frames: Dict[str, pd.DataFrame] = {}
@@ -244,8 +246,8 @@ for yr in years_past:
 # 3) 輸出表骨架（以「本年度」蒐集到的站點為主）
 out_cols: List[str] = [
     "站號", "站名", "lat", "lon",
-    "BlastGRU-TW_this_year", "BlastDT2_this_year", "BlastLSTLS_this_year", "BLBTSLS_this_year", "planthopper_this_year",
-    "BlastGRU-TW_avg", "BlastDT2_avg", "BlastLSTLS_avg", "BLBTSLS_avg", "planthopper_avg",
+    "BlastGRU-TW_this_year", "BlastDT2_this_year", "BlastLSTLS_this_year", "BLBTSLS_this_year", "BLASTAM_this_year", "planthopper_this_year",
+    "BlastGRU-TW_avg", "BlastDT2_avg", "BlastLSTLS_avg", "BLBTSLS_avg", "BLASTAM_avg", "planthopper_avg",
 ]
 if station_master.empty:
     log.warning("查無任何站點資料，本年度站點主表為空，輸出將為空表。")

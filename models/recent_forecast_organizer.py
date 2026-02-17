@@ -31,6 +31,7 @@ for target_date in date_range:
     dt2_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BlastDT2.csv")
     lstls_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BlastLSTLS.csv")
     BLBTSLS_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BLBTSLS.csv")
+    blastam_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BLASTAM.csv")
     planthopper_file_path = os.path.join(PLANTHOPPER_FOLDER, f"{date_str}_max_freq.csv") if PLANTHOPPER_FOLDER else ""
     
     merged_data = None
@@ -71,6 +72,18 @@ for target_date in date_range:
         else:
             merged_data = pd.merge(merged_data,
                                    BLBTSLS_data[["站號", "日期", "BLBTSLS"]],
+                                   on=["站號", "日期"],
+                                   how="left")
+
+    # 讀取 BLASTAM 預報檔案，先統一日期格式再合併
+    if os.path.exists(blastam_file_path):
+        blastam_data = pd.read_csv(blastam_file_path)
+        blastam_data["日期"] = pd.to_datetime(blastam_data["日期"], format="mixed", errors="coerce").dt.strftime("%Y-%m-%d")
+        if merged_data is None:
+            merged_data = blastam_data.rename(columns={"BLASTAM": "BLASTAM"})
+        else:
+            merged_data = pd.merge(merged_data,
+                                   blastam_data[["站號", "日期", "BLASTAM"]],
                                    on=["站號", "日期"],
                                    how="left")
 
