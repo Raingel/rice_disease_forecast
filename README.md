@@ -41,3 +41,22 @@ Use workflow `.github/workflows/era5-archive-once.yml` (manual trigger) to run `
 - Default max runtime is 5 hours (`18000` seconds).
 - If archive API repeatedly fails (e.g., rate limit), the script stops early and keeps already-downloaded results.
 - Workflow still attempts to commit/push partial outputs (`ERA5_archive/`) even when the run step reports an error.
+
+
+## BLASTAM workflow (independent)
+
+A separate workflow was added at:
+
+- `.github/workflows/blastam-forecast.yml`
+
+### Why separate?
+
+BLASTAM needs sunshine information in addition to temperature/wind/rain. To avoid coupling this requirement into the existing ERA5 pipeline, BLASTAM runs in its own pipeline (`scripts/run_blastam_pipeline.sh`) and model runner (`models/BLASTAM/run_blastam.py`).
+
+### Sunshine design notes
+
+- BLASTAM requires hourly sunshine duration (0–1 hour fraction).
+- The implementation now **prefers `sunshine_duration`** from Open-Meteo and converts it by `sunshine_duration / 3600`.
+- If `sunshine_duration` is unavailable, it falls back to the legacy approximation `direct_radiation / 120` (clipped to 0–1).
+
+This is generally more faithful to the model hypothesis than using radiation-only scaling.
