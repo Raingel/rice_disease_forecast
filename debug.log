@@ -109739,3 +109739,989 @@ Station list has been saved to /home/runner/work/rice_disease_forecast/rice_dise
 16:35:04 | INFO     | 各模型納入平均的完整年份：{'BlastGRU-TW': [], 'BlastDT2': [], 'BlastLSTLS': [], 'BLBTSLS': [2025], 'BLASTAM': [], 'planthopper': []}
 16:35:06 | INFO     | 已輸出：/home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_summary.csv；列數：864
 [INFO] Daily pipeline completed at 2026-03-02T16:35:06Z
+[INFO] BLASTAM pipeline started at 2026-03-02T16:52:13Z
+[INFO] Running run_blastam.py (cwd=/home/runner/work/rice_disease_forecast/rice_disease_forecast/models/BLASTAM)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251213_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251214_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251215_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251216_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251217_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251218_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251219_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251220_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251221_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251222_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251223_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251224_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251225_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251226_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251227_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251228_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251229_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251230_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20251231_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260101_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260102_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260103_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260104_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260105_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260106_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260107_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260108_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260109_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260110_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260111_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260112_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260113_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260114_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260115_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260116_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260117_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260118_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260119_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260120_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260121_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260122_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260123_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260124_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260125_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260126_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260127_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260128_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260129_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260130_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260131_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260201_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260202_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260203_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260204_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260205_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260206_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260207_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260208_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260209_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260210_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260211_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260212_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260213_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260214_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260215_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260216_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260217_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260218_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260219_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260220_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260221_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260222_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260223_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260224_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260225_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260226_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260227_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260228_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260301_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260302_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260303_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260304_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260305_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260306_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260307_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260308_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260309_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260310_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260311_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260312_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260313_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260314_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260315_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260316_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260317_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260318_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260319_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260320_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260321_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260322_BLASTAM.csv (859 rows)
+Saved /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/data/20260323_BLASTAM.csv (859 rows)
+[INFO] Running recent_forecast_organizer.py (cwd=/home/runner/work/rice_disease_forecast/rice_disease_forecast/models)
+Data for 站號 12J990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/12J990.csv
+Data for 站號 12Q970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/12Q970.csv
+Data for 站號 12Q980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/12Q980.csv
+Data for 站號 42HA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/42HA10.csv
+Data for 站號 466850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466850.csv
+Data for 站號 466881 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466881.csv
+Data for 站號 466900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466900.csv
+Data for 站號 466910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466910.csv
+Data for 站號 466920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466920.csv
+Data for 站號 466930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466930.csv
+Data for 站號 466940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466940.csv
+Data for 站號 466950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466950.csv
+Data for 站號 466990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/466990.csv
+Data for 站號 467050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467050.csv
+Data for 站號 467080 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467080.csv
+Data for 站號 467110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467110.csv
+Data for 站號 467270 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467270.csv
+Data for 站號 467280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467280.csv
+Data for 站號 467290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467290.csv
+Data for 站號 467300 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467300.csv
+Data for 站號 467350 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467350.csv
+Data for 站號 467410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467410.csv
+Data for 站號 467420 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467420.csv
+Data for 站號 467441 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467441.csv
+Data for 站號 467480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467480.csv
+Data for 站號 467490 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467490.csv
+Data for 站號 467530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467530.csv
+Data for 站號 467540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467540.csv
+Data for 站號 467550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467550.csv
+Data for 站號 467571 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467571.csv
+Data for 站號 467590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467590.csv
+Data for 站號 467610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467610.csv
+Data for 站號 467620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467620.csv
+Data for 站號 467650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467650.csv
+Data for 站號 467660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467660.csv
+Data for 站號 467790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467790.csv
+Data for 站號 467990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/467990.csv
+Data for 站號 72AI40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72AI40.csv
+Data for 站號 72C440 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72C440.csv
+Data for 站號 72D080 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72D080.csv
+Data for 站號 72D680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72D680.csv
+Data for 站號 72G600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72G600.csv
+Data for 站號 72HA00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72HA00.csv
+Data for 站號 72K220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72K220.csv
+Data for 站號 72M360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72M360.csv
+Data for 站號 72M700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72M700.csv
+Data for 站號 72N100 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72N100.csv
+Data for 站號 72N240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72N240.csv
+Data for 站號 72Q010 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72Q010.csv
+Data for 站號 72S200 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72S200.csv
+Data for 站號 72S590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72S590.csv
+Data for 站號 72T250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72T250.csv
+Data for 站號 72U480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72U480.csv
+Data for 站號 72V140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/72V140.csv
+Data for 站號 82A750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/82A750.csv
+Data for 站號 82C160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/82C160.csv
+Data for 站號 82H320 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/82H320.csv
+Data for 站號 82H840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/82H840.csv
+Data for 站號 82S580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/82S580.csv
+Data for 站號 A2C560 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/A2C560.csv
+Data for 站號 A2K360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/A2K360.csv
+Data for 站號 A2K570 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/A2K570.csv
+Data for 站號 A2K630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/A2K630.csv
+Data for 站號 A2N290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/A2N290.csv
+Data for 站號 B2E890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/B2E890.csv
+Data for 站號 B2N890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/B2N890.csv
+Data for 站號 B2Q810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/B2Q810.csv
+Data for 站號 B2U990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/B2U990.csv
+Data for 站號 C0A520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A520.csv
+Data for 站號 C0A530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A530.csv
+Data for 站號 C0A550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A550.csv
+Data for 站號 C0A570 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A570.csv
+Data for 站號 C0A640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A640.csv
+Data for 站號 C0A770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A770.csv
+Data for 站號 C0A860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A860.csv
+Data for 站號 C0A870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A870.csv
+Data for 站號 C0A890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A890.csv
+Data for 站號 C0A931 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A931.csv
+Data for 站號 C0A940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A940.csv
+Data for 站號 C0A950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A950.csv
+Data for 站號 C0A970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A970.csv
+Data for 站號 C0A980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A980.csv
+Data for 站號 C0A9C0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A9C0.csv
+Data for 站號 C0A9F0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0A9F0.csv
+Data for 站號 C0AC40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AC40.csv
+Data for 站號 C0AC60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AC60.csv
+Data for 站號 C0AC70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AC70.csv
+Data for 站號 C0AC80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AC80.csv
+Data for 站號 C0ACA0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0ACA0.csv
+Data for 站號 C0AD10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AD10.csv
+Data for 站號 C0AD30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AD30.csv
+Data for 站號 C0AD40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AD40.csv
+Data for 站號 C0AD50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AD50.csv
+Data for 站號 C0AG80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AG80.csv
+Data for 站號 C0AH00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH00.csv
+Data for 站號 C0AH10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH10.csv
+Data for 站號 C0AH30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH30.csv
+Data for 站號 C0AH40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH40.csv
+Data for 站號 C0AH50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH50.csv
+Data for 站號 C0AH70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH70.csv
+Data for 站號 C0AH80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH80.csv
+Data for 站號 C0AH90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AH90.csv
+Data for 站號 C0AI00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AI00.csv
+Data for 站號 C0AI10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AI10.csv
+Data for 站號 C0AI20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AI20.csv
+Data for 站號 C0AI30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AI30.csv
+Data for 站號 C0AI40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AI40.csv
+Data for 站號 C0AJ20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ20.csv
+Data for 站號 C0AJ30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ30.csv
+Data for 站號 C0AJ40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ40.csv
+Data for 站號 C0AJ50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ50.csv
+Data for 站號 C0AJ60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ60.csv
+Data for 站號 C0AJ70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ70.csv
+Data for 站號 C0AJ80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ80.csv
+Data for 站號 C0AJ90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AJ90.csv
+Data for 站號 C0AK10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AK10.csv
+Data for 站號 C0AK30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0AK30.csv
+Data for 站號 C0B010 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0B010.csv
+Data for 站號 C0B020 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0B020.csv
+Data for 站號 C0B040 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0B040.csv
+Data for 站號 C0B050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0B050.csv
+Data for 站號 C0B060 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0B060.csv
+Data for 站號 C0C460 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C460.csv
+Data for 站號 C0C480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C480.csv
+Data for 站號 C0C490 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C490.csv
+Data for 站號 C0C620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C620.csv
+Data for 站號 C0C630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C630.csv
+Data for 站號 C0C650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C650.csv
+Data for 站號 C0C660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C660.csv
+Data for 站號 C0C670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C670.csv
+Data for 站號 C0C680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C680.csv
+Data for 站號 C0C700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C700.csv
+Data for 站號 C0C710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C710.csv
+Data for 站號 C0C720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C720.csv
+Data for 站號 C0C730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C730.csv
+Data for 站號 C0C740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C740.csv
+Data for 站號 C0C750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C750.csv
+Data for 站號 C0C790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C790.csv
+Data for 站號 C0C800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0C800.csv
+Data for 站號 C0D360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D360.csv
+Data for 站號 C0D430 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D430.csv
+Data for 站號 C0D480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D480.csv
+Data for 站號 C0D540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D540.csv
+Data for 站號 C0D550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D550.csv
+Data for 站號 C0D560 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D560.csv
+Data for 站號 C0D580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D580.csv
+Data for 站號 C0D590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D590.csv
+Data for 站號 C0D650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D650.csv
+Data for 站號 C0D660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D660.csv
+Data for 站號 C0D670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D670.csv
+Data for 站號 C0D680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D680.csv
+Data for 站號 C0D690 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D690.csv
+Data for 站號 C0D700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D700.csv
+Data for 站號 C0D750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D750.csv
+Data for 站號 C0D760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0D760.csv
+Data for 站號 C0E550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E550.csv
+Data for 站號 C0E570 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E570.csv
+Data for 站號 C0E590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E590.csv
+Data for 站號 C0E610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E610.csv
+Data for 站號 C0E730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E730.csv
+Data for 站號 C0E740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E740.csv
+Data for 站號 C0E750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E750.csv
+Data for 站號 C0E780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E780.csv
+Data for 站號 C0E791 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E791.csv
+Data for 站號 C0E810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E810.csv
+Data for 站號 C0E820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E820.csv
+Data for 站號 C0E830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E830.csv
+Data for 站號 C0E850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E850.csv
+Data for 站號 C0E870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E870.csv
+Data for 站號 C0E910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E910.csv
+Data for 站號 C0E920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E920.csv
+Data for 站號 C0E930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E930.csv
+Data for 站號 C0E940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E940.csv
+Data for 站號 C0E950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E950.csv
+Data for 站號 C0E960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0E960.csv
+Data for 站號 C0F0A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F0A0.csv
+Data for 站號 C0F0B0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F0B0.csv
+Data for 站號 C0F0C0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F0C0.csv
+Data for 站號 C0F0D0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F0D0.csv
+Data for 站號 C0F0E0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F0E0.csv
+Data for 站號 C0F850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F850.csv
+Data for 站號 C0F970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F970.csv
+Data for 站號 C0F9I0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9I0.csv
+Data for 站號 C0F9K0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9K0.csv
+Data for 站號 C0F9L0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9L0.csv
+Data for 站號 C0F9M0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9M0.csv
+Data for 站號 C0F9N0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9N0.csv
+Data for 站號 C0F9O0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9O0.csv
+Data for 站號 C0F9P0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9P0.csv
+Data for 站號 C0F9Q0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9Q0.csv
+Data for 站號 C0F9R0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9R0.csv
+Data for 站號 C0F9S0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9S0.csv
+Data for 站號 C0F9T0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9T0.csv
+Data for 站號 C0F9U0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9U0.csv
+Data for 站號 C0F9V0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9V0.csv
+Data for 站號 C0F9X0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9X0.csv
+Data for 站號 C0F9Y0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9Y0.csv
+Data for 站號 C0F9Z0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0F9Z0.csv
+Data for 站號 C0FA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA10.csv
+Data for 站號 C0FA20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA20.csv
+Data for 站號 C0FA30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA30.csv
+Data for 站號 C0FA40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA40.csv
+Data for 站號 C0FA50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA50.csv
+Data for 站號 C0FA60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA60.csv
+Data for 站號 C0FA70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA70.csv
+Data for 站號 C0FA80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA80.csv
+Data for 站號 C0FA90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FA90.csv
+Data for 站號 C0FB00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB00.csv
+Data for 站號 C0FB10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB10.csv
+Data for 站號 C0FB20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB20.csv
+Data for 站號 C0FB30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB30.csv
+Data for 站號 C0FB40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB40.csv
+Data for 站號 C0FB70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0FB70.csv
+Data for 站號 C0G620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G620.csv
+Data for 站號 C0G650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G650.csv
+Data for 站號 C0G660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G660.csv
+Data for 站號 C0G720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G720.csv
+Data for 站號 C0G730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G730.csv
+Data for 站號 C0G740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G740.csv
+Data for 站號 C0G770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G770.csv
+Data for 站號 C0G780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G780.csv
+Data for 站號 C0G800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G800.csv
+Data for 站號 C0G810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G810.csv
+Data for 站號 C0G820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G820.csv
+Data for 站號 C0G830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G830.csv
+Data for 站號 C0G860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G860.csv
+Data for 站號 C0G880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G880.csv
+Data for 站號 C0G890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G890.csv
+Data for 站號 C0G900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G900.csv
+Data for 站號 C0G910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G910.csv
+Data for 站號 C0G920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G920.csv
+Data for 站號 C0G940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G940.csv
+Data for 站號 C0G950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G950.csv
+Data for 站號 C0G960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G960.csv
+Data for 站號 C0G970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G970.csv
+Data for 站號 C0G9B0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0G9B0.csv
+Data for 站號 C0H890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0H890.csv
+Data for 站號 C0H960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0H960.csv
+Data for 站號 C0H990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0H990.csv
+Data for 站號 C0H9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0H9A0.csv
+Data for 站號 C0H9C0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0H9C0.csv
+Data for 站號 C0I010 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I010.csv
+Data for 站號 C0I080 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I080.csv
+Data for 站號 C0I110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I110.csv
+Data for 站號 C0I360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I360.csv
+Data for 站號 C0I370 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I370.csv
+Data for 站號 C0I380 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I380.csv
+Data for 站號 C0I390 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I390.csv
+Data for 站號 C0I410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I410.csv
+Data for 站號 C0I420 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I420.csv
+Data for 站號 C0I460 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I460.csv
+Data for 站號 C0I480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I480.csv
+Data for 站號 C0I490 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I490.csv
+Data for 站號 C0I520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I520.csv
+Data for 站號 C0I530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I530.csv
+Data for 站號 C0I540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0I540.csv
+Data for 站號 C0K291 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K291.csv
+Data for 站號 C0K330 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K330.csv
+Data for 站號 C0K390 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K390.csv
+Data for 站號 C0K400 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K400.csv
+Data for 站號 C0K410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K410.csv
+Data for 站號 C0K420 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K420.csv
+Data for 站號 C0K430 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K430.csv
+Data for 站號 C0K440 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K440.csv
+Data for 站號 C0K450 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K450.csv
+Data for 站號 C0K460 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K460.csv
+Data for 站號 C0K470 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K470.csv
+Data for 站號 C0K480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K480.csv
+Data for 站號 C0K500 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K500.csv
+Data for 站號 C0K510 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K510.csv
+Data for 站號 C0K530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K530.csv
+Data for 站號 C0K550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K550.csv
+Data for 站號 C0K560 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K560.csv
+Data for 站號 C0K580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K580.csv
+Data for 站號 C0K590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K590.csv
+Data for 站號 C0K600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0K600.csv
+Data for 站號 C0M520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M520.csv
+Data for 站號 C0M640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M640.csv
+Data for 站號 C0M650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M650.csv
+Data for 站號 C0M660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M660.csv
+Data for 站號 C0M670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M670.csv
+Data for 站號 C0M680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M680.csv
+Data for 站號 C0M690 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M690.csv
+Data for 站號 C0M700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M700.csv
+Data for 站號 C0M710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M710.csv
+Data for 站號 C0M720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M720.csv
+Data for 站號 C0M730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M730.csv
+Data for 站號 C0M740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M740.csv
+Data for 站號 C0M750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M750.csv
+Data for 站號 C0M760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M760.csv
+Data for 站號 C0M770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M770.csv
+Data for 站號 C0M780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M780.csv
+Data for 站號 C0M790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M790.csv
+Data for 站號 C0M800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M800.csv
+Data for 站號 C0M820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M820.csv
+Data for 站號 C0M850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M850.csv
+Data for 站號 C0M860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M860.csv
+Data for 站號 C0M880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0M880.csv
+Data for 站號 C0N010 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0N010.csv
+Data for 站號 C0N020 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0N020.csv
+Data for 站號 C0N030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0N030.csv
+Data for 站號 C0N040 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0N040.csv
+Data for 站號 C0N050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0N050.csv
+Data for 站號 C0O830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O830.csv
+Data for 站號 C0O840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O840.csv
+Data for 站號 C0O860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O860.csv
+Data for 站號 C0O900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O900.csv
+Data for 站號 C0O960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O960.csv
+Data for 站號 C0O970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O970.csv
+Data for 站號 C0O980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O980.csv
+Data for 站號 C0O990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0O990.csv
+Data for 站號 C0R100 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R100.csv
+Data for 站號 C0R130 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R130.csv
+Data for 站號 C0R140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R140.csv
+Data for 站號 C0R150 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R150.csv
+Data for 站號 C0R160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R160.csv
+Data for 站號 C0R190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R190.csv
+Data for 站號 C0R220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R220.csv
+Data for 站號 C0R260 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R260.csv
+Data for 站號 C0R270 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R270.csv
+Data for 站號 C0R280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R280.csv
+Data for 站號 C0R320 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R320.csv
+Data for 站號 C0R341 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R341.csv
+Data for 站號 C0R350 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R350.csv
+Data for 站號 C0R440 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R440.csv
+Data for 站號 C0R470 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R470.csv
+Data for 站號 C0R480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R480.csv
+Data for 站號 C0R490 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R490.csv
+Data for 站號 C0R520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R520.csv
+Data for 站號 C0R540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R540.csv
+Data for 站號 C0R550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R550.csv
+Data for 站號 C0R560 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R560.csv
+Data for 站號 C0R570 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R570.csv
+Data for 站號 C0R580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R580.csv
+Data for 站號 C0R590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R590.csv
+Data for 站號 C0R600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R600.csv
+Data for 站號 C0R620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R620.csv
+Data for 站號 C0R640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R640.csv
+Data for 站號 C0R650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R650.csv
+Data for 站號 C0R660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R660.csv
+Data for 站號 C0R670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R670.csv
+Data for 站號 C0R680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R680.csv
+Data for 站號 C0R690 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R690.csv
+Data for 站號 C0R700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R700.csv
+Data for 站號 C0R710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R710.csv
+Data for 站號 C0R720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R720.csv
+Data for 站號 C0R730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R730.csv
+Data for 站號 C0R741 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R741.csv
+Data for 站號 C0R750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R750.csv
+Data for 站號 C0R760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R760.csv
+Data for 站號 C0R770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R770.csv
+Data for 站號 C0R780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R780.csv
+Data for 站號 C0R790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R790.csv
+Data for 站號 C0R800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R800.csv
+Data for 站號 C0R810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R810.csv
+Data for 站號 C0R820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R820.csv
+Data for 站號 C0R830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R830.csv
+Data for 站號 C0R840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R840.csv
+Data for 站號 C0R850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R850.csv
+Data for 站號 C0R860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R860.csv
+Data for 站號 C0R870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R870.csv
+Data for 站號 C0R880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R880.csv
+Data for 站號 C0R890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R890.csv
+Data for 站號 C0R900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R900.csv
+Data for 站號 C0R910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R910.csv
+Data for 站號 C0R920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R920.csv
+Data for 站號 C0R930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R930.csv
+Data for 站號 C0R940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R940.csv
+Data for 站號 C0R950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R950.csv
+Data for 站號 C0R960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0R960.csv
+Data for 站號 C0S660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S660.csv
+Data for 站號 C0S690 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S690.csv
+Data for 站號 C0S700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S700.csv
+Data for 站號 C0S710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S710.csv
+Data for 站號 C0S730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S730.csv
+Data for 站號 C0S740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S740.csv
+Data for 站號 C0S750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S750.csv
+Data for 站號 C0S760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S760.csv
+Data for 站號 C0S770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S770.csv
+Data for 站號 C0S790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S790.csv
+Data for 站號 C0S810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S810.csv
+Data for 站號 C0S830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S830.csv
+Data for 站號 C0S840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S840.csv
+Data for 站號 C0S890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S890.csv
+Data for 站號 C0S900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S900.csv
+Data for 站號 C0S910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S910.csv
+Data for 站號 C0S920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S920.csv
+Data for 站號 C0S930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S930.csv
+Data for 站號 C0S940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S940.csv
+Data for 站號 C0S950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S950.csv
+Data for 站號 C0S960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S960.csv
+Data for 站號 C0S970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S970.csv
+Data for 站號 C0S980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S980.csv
+Data for 站號 C0S990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0S990.csv
+Data for 站號 C0SA00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA00.csv
+Data for 站號 C0SA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA10.csv
+Data for 站號 C0SA20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA20.csv
+Data for 站號 C0SA30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA30.csv
+Data for 站號 C0SA40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA40.csv
+Data for 站號 C0SA60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA60.csv
+Data for 站號 C0SA80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA80.csv
+Data for 站號 C0SA90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SA90.csv
+Data for 站號 C0SB10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB10.csv
+Data for 站號 C0SB20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB20.csv
+Data for 站號 C0SB30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB30.csv
+Data for 站號 C0SB40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB40.csv
+Data for 站號 C0SB50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB50.csv
+Data for 站號 C0SB60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB60.csv
+Data for 站號 C0SB70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB70.csv
+Data for 站號 C0SB80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SB80.csv
+Data for 站號 C0SD20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SD20.csv
+Data for 站號 C0SD30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SD30.csv
+Data for 站號 C0SD40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0SD40.csv
+Data for 站號 C0T790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T790.csv
+Data for 站號 C0T820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T820.csv
+Data for 站號 C0T870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T870.csv
+Data for 站號 C0T900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T900.csv
+Data for 站號 C0T960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T960.csv
+Data for 站號 C0T9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9A0.csv
+Data for 站號 C0T9B0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9B0.csv
+Data for 站號 C0T9D0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9D0.csv
+Data for 站號 C0T9E0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9E0.csv
+Data for 站號 C0T9F0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9F0.csv
+Data for 站號 C0T9G0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9G0.csv
+Data for 站號 C0T9H0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9H0.csv
+Data for 站號 C0T9I0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9I0.csv
+Data for 站號 C0T9M0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9M0.csv
+Data for 站號 C0T9N0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0T9N0.csv
+Data for 站號 C0TA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA10.csv
+Data for 站號 C0TA20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA20.csv
+Data for 站號 C0TA30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA30.csv
+Data for 站號 C0TA40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA40.csv
+Data for 站號 C0TA50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA50.csv
+Data for 站號 C0TA80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TA80.csv
+Data for 站號 C0TB40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0TB40.csv
+Data for 站號 C0U520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U520.csv
+Data for 站號 C0U600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U600.csv
+Data for 站號 C0U650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U650.csv
+Data for 站號 C0U710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U710.csv
+Data for 站號 C0U720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U720.csv
+Data for 站號 C0U750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U750.csv
+Data for 站號 C0U760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U760.csv
+Data for 站號 C0U770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U770.csv
+Data for 站號 C0U780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U780.csv
+Data for 站號 C0U860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U860.csv
+Data for 站號 C0U870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U870.csv
+Data for 站號 C0U880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U880.csv
+Data for 站號 C0U890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U890.csv
+Data for 站號 C0U900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U900.csv
+Data for 站號 C0U910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U910.csv
+Data for 站號 C0U940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U940.csv
+Data for 站號 C0U950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U950.csv
+Data for 站號 C0U960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U960.csv
+Data for 站號 C0U970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U970.csv
+Data for 站號 C0U980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U980.csv
+Data for 站號 C0U990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0U990.csv
+Data for 站號 C0UA00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA00.csv
+Data for 站號 C0UA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA10.csv
+Data for 站號 C0UA20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA20.csv
+Data for 站號 C0UA30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA30.csv
+Data for 站號 C0UA40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA40.csv
+Data for 站號 C0UA50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA50.csv
+Data for 站號 C0UA60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA60.csv
+Data for 站號 C0UA70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA70.csv
+Data for 站號 C0UA80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA80.csv
+Data for 站號 C0UA90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UA90.csv
+Data for 站號 C0UB00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB00.csv
+Data for 站號 C0UB10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB10.csv
+Data for 站號 C0UB20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB20.csv
+Data for 站號 C0UB60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB60.csv
+Data for 站號 C0UB70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB70.csv
+Data for 站號 C0UB80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB80.csv
+Data for 站號 C0UB90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0UB90.csv
+Data for 站號 C0V210 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V210.csv
+Data for 站號 C0V350 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V350.csv
+Data for 站號 C0V360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V360.csv
+Data for 站號 C0V370 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V370.csv
+Data for 站號 C0V400 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V400.csv
+Data for 站號 C0V440 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V440.csv
+Data for 站號 C0V450 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V450.csv
+Data for 站號 C0V490 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V490.csv
+Data for 站號 C0V530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V530.csv
+Data for 站號 C0V610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V610.csv
+Data for 站號 C0V620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V620.csv
+Data for 站號 C0V630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V630.csv
+Data for 站號 C0V640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V640.csv
+Data for 站號 C0V650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V650.csv
+Data for 站號 C0V660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V660.csv
+Data for 站號 C0V680 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V680.csv
+Data for 站號 C0V690 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V690.csv
+Data for 站號 C0V700 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V700.csv
+Data for 站號 C0V710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V710.csv
+Data for 站號 C0V720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V720.csv
+Data for 站號 C0V730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V730.csv
+Data for 站號 C0V740 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V740.csv
+Data for 站號 C0V750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V750.csv
+Data for 站號 C0V760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V760.csv
+Data for 站號 C0V770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V770.csv
+Data for 站號 C0V790 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V790.csv
+Data for 站號 C0V800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V800.csv
+Data for 站號 C0V810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V810.csv
+Data for 站號 C0V820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V820.csv
+Data for 站號 C0V840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V840.csv
+Data for 站號 C0V850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V850.csv
+Data for 站號 C0V860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V860.csv
+Data for 站號 C0V870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V870.csv
+Data for 站號 C0V880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V880.csv
+Data for 站號 C0V890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V890.csv
+Data for 站號 C0V900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V900.csv
+Data for 站號 C0V910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0V910.csv
+Data for 站號 C0W110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W110.csv
+Data for 站號 C0W120 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W120.csv
+Data for 站號 C0W130 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W130.csv
+Data for 站號 C0W140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W140.csv
+Data for 站號 C0W150 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W150.csv
+Data for 站號 C0W160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W160.csv
+Data for 站號 C0W180 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W180.csv
+Data for 站號 C0W190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W190.csv
+Data for 站號 C0W200 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W200.csv
+Data for 站號 C0W220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W220.csv
+Data for 站號 C0W240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0W240.csv
+Data for 站號 C0X050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X050.csv
+Data for 站號 C0X080 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X080.csv
+Data for 站號 C0X100 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X100.csv
+Data for 站號 C0X110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X110.csv
+Data for 站號 C0X120 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X120.csv
+Data for 站號 C0X130 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X130.csv
+Data for 站號 C0X140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X140.csv
+Data for 站號 C0X150 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X150.csv
+Data for 站號 C0X160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X160.csv
+Data for 站號 C0X170 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X170.csv
+Data for 站號 C0X180 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X180.csv
+Data for 站號 C0X190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X190.csv
+Data for 站號 C0X200 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X200.csv
+Data for 站號 C0X210 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X210.csv
+Data for 站號 C0X220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X220.csv
+Data for 站號 C0X230 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X230.csv
+Data for 站號 C0X240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X240.csv
+Data for 站號 C0X250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X250.csv
+Data for 站號 C0X260 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X260.csv
+Data for 站號 C0X280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X280.csv
+Data for 站號 C0X290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X290.csv
+Data for 站號 C0X300 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X300.csv
+Data for 站號 C0X320 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0X320.csv
+Data for 站號 C0Z020 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z020.csv
+Data for 站號 C0Z050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z050.csv
+Data for 站號 C0Z061 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z061.csv
+Data for 站號 C0Z070 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z070.csv
+Data for 站號 C0Z080 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z080.csv
+Data for 站號 C0Z100 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z100.csv
+Data for 站號 C0Z150 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z150.csv
+Data for 站號 C0Z160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z160.csv
+Data for 站號 C0Z170 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z170.csv
+Data for 站號 C0Z180 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z180.csv
+Data for 站號 C0Z190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z190.csv
+Data for 站號 C0Z200 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z200.csv
+Data for 站號 C0Z210 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z210.csv
+Data for 站號 C0Z220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z220.csv
+Data for 站號 C0Z230 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z230.csv
+Data for 站號 C0Z250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z250.csv
+Data for 站號 C0Z270 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z270.csv
+Data for 站號 C0Z280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z280.csv
+Data for 站號 C0Z290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z290.csv
+Data for 站號 C0Z300 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z300.csv
+Data for 站號 C0Z310 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z310.csv
+Data for 站號 C0Z320 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z320.csv
+Data for 站號 C0Z330 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C0Z330.csv
+Data for 站號 C1A630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1A630.csv
+Data for 站號 C1A750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1A750.csv
+Data for 站號 C1A760 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1A760.csv
+Data for 站號 C1A9N0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1A9N0.csv
+Data for 站號 C1AC50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1AC50.csv
+Data for 站號 C1AI50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1AI50.csv
+Data for 站號 C1AI60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1AI60.csv
+Data for 站號 C1C510 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1C510.csv
+Data for 站號 C1D380 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D380.csv
+Data for 站號 C1D400 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D400.csv
+Data for 站號 C1D410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D410.csv
+Data for 站號 C1D420 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D420.csv
+Data for 站號 C1D630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D630.csv
+Data for 站號 C1D640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1D640.csv
+Data for 站號 C1E451 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E451.csv
+Data for 站號 C1E461 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E461.csv
+Data for 站號 C1E480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E480.csv
+Data for 站號 C1E511 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E511.csv
+Data for 站號 C1E601 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E601.csv
+Data for 站號 C1E670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E670.csv
+Data for 站號 C1E681 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E681.csv
+Data for 站號 C1E691 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E691.csv
+Data for 站號 C1E701 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E701.csv
+Data for 站號 C1E711 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E711.csv
+Data for 站號 C1E721 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E721.csv
+Data for 站號 C1E770 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E770.csv
+Data for 站號 C1E890 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E890.csv
+Data for 站號 C1E900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1E900.csv
+Data for 站號 C1F871 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F871.csv
+Data for 站號 C1F891 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F891.csv
+Data for 站號 C1F911 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F911.csv
+Data for 站號 C1F941 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F941.csv
+Data for 站號 C1F9B1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9B1.csv
+Data for 站號 C1F9C1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9C1.csv
+Data for 站號 C1F9D1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9D1.csv
+Data for 站號 C1F9E1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9E1.csv
+Data for 站號 C1F9F1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9F1.csv
+Data for 站號 C1F9G1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9G1.csv
+Data for 站號 C1F9J1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9J1.csv
+Data for 站號 C1F9W0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1F9W0.csv
+Data for 站號 C1G691 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1G691.csv
+Data for 站號 C1G9D0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1G9D0.csv
+Data for 站號 C1H000 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H000.csv
+Data for 站號 C1H840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H840.csv
+Data for 站號 C1H900 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H900.csv
+Data for 站號 C1H920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H920.csv
+Data for 站號 C1H941 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H941.csv
+Data for 站號 C1H971 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H971.csv
+Data for 站號 C1H9B1 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1H9B1.csv
+Data for 站號 C1I020 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I020.csv
+Data for 站號 C1I030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I030.csv
+Data for 站號 C1I050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I050.csv
+Data for 站號 C1I070 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I070.csv
+Data for 站號 C1I101 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I101.csv
+Data for 站號 C1I121 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I121.csv
+Data for 站號 C1I131 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I131.csv
+Data for 站號 C1I140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I140.csv
+Data for 站號 C1I150 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I150.csv
+Data for 站號 C1I201 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I201.csv
+Data for 站號 C1I211 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I211.csv
+Data for 站號 C1I220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I220.csv
+Data for 站號 C1I230 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I230.csv
+Data for 站號 C1I240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I240.csv
+Data for 站號 C1I250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I250.csv
+Data for 站號 C1I260 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I260.csv
+Data for 站號 C1I280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I280.csv
+Data for 站號 C1I290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I290.csv
+Data for 站號 C1I310 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I310.csv
+Data for 站號 C1I320 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I320.csv
+Data for 站號 C1I330 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I330.csv
+Data for 站號 C1I340 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I340.csv
+Data for 站號 C1I400 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I400.csv
+Data for 站號 C1I430 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I430.csv
+Data for 站號 C1I440 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I440.csv
+Data for 站號 C1I450 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I450.csv
+Data for 站號 C1I470 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I470.csv
+Data for 站號 C1I500 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I500.csv
+Data for 站號 C1I510 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I510.csv
+Data for 站號 C1I550 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1I550.csv
+Data for 站號 C1K540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1K540.csv
+Data for 站號 C1M390 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M390.csv
+Data for 站號 C1M400 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M400.csv
+Data for 站號 C1M480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M480.csv
+Data for 站號 C1M600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M600.csv
+Data for 站號 C1M610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M610.csv
+Data for 站號 C1M640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M640.csv
+Data for 站號 C1M870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1M870.csv
+Data for 站號 C1N001 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1N001.csv
+Data for 站號 C1O850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1O850.csv
+Data for 站號 C1O870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1O870.csv
+Data for 站號 C1O880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1O880.csv
+Data for 站號 C1O921 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1O921.csv
+Data for 站號 C1O940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1O940.csv
+Data for 站號 C1R110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R110.csv
+Data for 站號 C1R120 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R120.csv
+Data for 站號 C1R250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R250.csv
+Data for 站號 C1R290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R290.csv
+Data for 站號 C1R610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R610.csv
+Data for 站號 C1R630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1R630.csv
+Data for 站號 C1S670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S670.csv
+Data for 站號 C1S800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S800.csv
+Data for 站號 C1S820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S820.csv
+Data for 站號 C1S850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S850.csv
+Data for 站號 C1S860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S860.csv
+Data for 站號 C1S870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S870.csv
+Data for 站號 C1S880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1S880.csv
+Data for 站號 C1SA50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1SA50.csv
+Data for 站號 C1SA70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1SA70.csv
+Data for 站號 C1T800 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T800.csv
+Data for 站號 C1T810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T810.csv
+Data for 站號 C1T830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T830.csv
+Data for 站號 C1T920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T920.csv
+Data for 站號 C1T940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T940.csv
+Data for 站號 C1T950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T950.csv
+Data for 站號 C1T970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T970.csv
+Data for 站號 C1T980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T980.csv
+Data for 站號 C1T990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1T990.csv
+Data for 站號 C1TA00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1TA00.csv
+Data for 站號 C1U501 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U501.csv
+Data for 站號 C1U670 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U670.csv
+Data for 站號 C1U840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U840.csv
+Data for 站號 C1U850 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U850.csv
+Data for 站號 C1U920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U920.csv
+Data for 站號 C1U930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1U930.csv
+Data for 站號 C1V160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V160.csv
+Data for 站號 C1V170 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V170.csv
+Data for 站號 C1V190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V190.csv
+Data for 站號 C1V200 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V200.csv
+Data for 站號 C1V220 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V220.csv
+Data for 站號 C1V231 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V231.csv
+Data for 站號 C1V300 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V300.csv
+Data for 站號 C1V340 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V340.csv
+Data for 站號 C1V390 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V390.csv
+Data for 站號 C1V570 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V570.csv
+Data for 站號 C1V580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V580.csv
+Data for 站號 C1V590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V590.csv
+Data for 站號 C1V600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V600.csv
+Data for 站號 C1V780 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V780.csv
+Data for 站號 C1V830 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1V830.csv
+Data for 站號 C1X040 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1X040.csv
+Data for 站號 C1Z030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z030.csv
+Data for 站號 C1Z040 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z040.csv
+Data for 站號 C1Z110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z110.csv
+Data for 站號 C1Z120 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z120.csv
+Data for 站號 C1Z130 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z130.csv
+Data for 站號 C1Z140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z140.csv
+Data for 站號 C1Z240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C1Z240.csv
+Data for 站號 C2A540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A540.csv
+Data for 站號 C2A560 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A560.csv
+Data for 站號 C2A650 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A650.csv
+Data for 站號 C2A660 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A660.csv
+Data for 站號 C2A880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A880.csv
+Data for 站號 C2A920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2A920.csv
+Data for 站號 C2C410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2C410.csv
+Data for 站號 C2C590 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2C590.csv
+Data for 站號 C2D720 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2D720.csv
+Data for 站號 C2D730 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2D730.csv
+Data for 站號 C2E420 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E420.csv
+Data for 站號 C2E430 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E430.csv
+Data for 站號 C2E520 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E520.csv
+Data for 站號 C2E540 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E540.csv
+Data for 站號 C2E880 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E880.csv
+Data for 站號 C2E970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E970.csv
+Data for 站號 C2E980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E980.csv
+Data for 站號 C2E990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2E990.csv
+Data for 站號 C2F000 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2F000.csv
+Data for 站號 C2F860 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2F860.csv
+Data for 站號 C2F930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2F930.csv
+Data for 站號 C2F990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2F990.csv
+Data for 站號 C2F9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2F9A0.csv
+Data for 站號 C2FA00 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2FA00.csv
+Data for 站號 C2FB50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2FB50.csv
+Data for 站號 C2FB60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2FB60.csv
+Data for 站號 C2G640 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G640.csv
+Data for 站號 C2G840 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G840.csv
+Data for 站號 C2G870 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G870.csv
+Data for 站號 C2G980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G980.csv
+Data for 站號 C2G9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G9A0.csv
+Data for 站號 C2G9C0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G9C0.csv
+Data for 站號 C2G9E0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2G9E0.csv
+Data for 站號 C2H950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H950.csv
+Data for 站號 C2H9D0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9D0.csv
+Data for 站號 C2H9E0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9E0.csv
+Data for 站號 C2H9F0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9F0.csv
+Data for 站號 C2H9G0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9G0.csv
+Data for 站號 C2H9H0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9H0.csv
+Data for 站號 C2H9J0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9J0.csv
+Data for 站號 C2H9K0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9K0.csv
+Data for 站號 C2H9L0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9L0.csv
+Data for 站號 C2H9M0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9M0.csv
+Data for 站號 C2H9N0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9N0.csv
+Data for 站號 C2H9P0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9P0.csv
+Data for 站號 C2H9Q0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9Q0.csv
+Data for 站號 C2H9R0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9R0.csv
+Data for 站號 C2H9S0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9S0.csv
+Data for 站號 C2H9T0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9T0.csv
+Data for 站號 C2H9U0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9U0.csv
+Data for 站號 C2H9W0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9W0.csv
+Data for 站號 C2H9Y0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2H9Y0.csv
+Data for 站號 C2I090 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2I090.csv
+Data for 站號 C2K240 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K240.csv
+Data for 站號 C2K250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K250.csv
+Data for 站號 C2K280 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K280.csv
+Data for 站號 C2K290 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K290.csv
+Data for 站號 C2K300 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K300.csv
+Data for 站號 C2K310 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K310.csv
+Data for 站號 C2K610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K610.csv
+Data for 站號 C2K620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K620.csv
+Data for 站號 C2K630 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2K630.csv
+Data for 站號 C2M410 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M410.csv
+Data for 站號 C2M530 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M530.csv
+Data for 站號 C2M620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M620.csv
+Data for 站號 C2M810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M810.csv
+Data for 站號 C2M910 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M910.csv
+Data for 站號 C2M920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M920.csv
+Data for 站號 C2M930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M930.csv
+Data for 站號 C2M940 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M940.csv
+Data for 站號 C2M950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M950.csv
+Data for 站號 C2M960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M960.csv
+Data for 站號 C2M970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M970.csv
+Data for 站號 C2M980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M980.csv
+Data for 站號 C2M990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M990.csv
+Data for 站號 C2M9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M9A0.csv
+Data for 站號 C2M9B0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M9B0.csv
+Data for 站號 C2M9C0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M9C0.csv
+Data for 站號 C2M9D0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M9D0.csv
+Data for 站號 C2M9E0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2M9E0.csv
+Data for 站號 C2N160 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2N160.csv
+Data for 站號 C2N170 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2N170.csv
+Data for 站號 C2N180 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2N180.csv
+Data for 站號 C2N190 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2N190.csv
+Data for 站號 C2O810 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2O810.csv
+Data for 站號 C2O930 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2O930.csv
+Data for 站號 C2O950 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2O950.csv
+Data for 站號 C2R170 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2R170.csv
+Data for 站號 C2R970 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2R970.csv
+Data for 站號 C2R980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2R980.csv
+Data for 站號 C2R990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2R990.csv
+Data for 站號 C2R9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2R9A0.csv
+Data for 站號 C2RA10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2RA10.csv
+Data for 站號 C2S9A0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2S9A0.csv
+Data for 站號 C2S9B0 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2S9B0.csv
+Data for 站號 C2SD50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2SD50.csv
+Data for 站號 C2SD60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2SD60.csv
+Data for 站號 C2SD70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2SD70.csv
+Data for 站號 C2SD80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2SD80.csv
+Data for 站號 C2TA60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TA60.csv
+Data for 站號 C2TA70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TA70.csv
+Data for 站號 C2TA90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TA90.csv
+Data for 站號 C2TB30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB30.csv
+Data for 站號 C2TB50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB50.csv
+Data for 站號 C2TB60 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB60.csv
+Data for 站號 C2TB70 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB70.csv
+Data for 站號 C2TB80 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB80.csv
+Data for 站號 C2TB90 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2TB90.csv
+Data for 站號 C2UC10 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2UC10.csv
+Data for 站號 C2UC20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2UC20.csv
+Data for 站號 C2V250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2V250.csv
+Data for 站號 C2V260 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2V260.csv
+Data for 站號 C2V310 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2V310.csv
+Data for 站號 C2V580 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2V580.csv
+Data for 站號 C2V920 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2V920.csv
+Data for 站號 C2W030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2W030.csv
+Data for 站號 C2W230 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2W230.csv
+Data for 站號 C2X060 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/C2X060.csv
+Data for 站號 CAC040 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAC040.csv
+Data for 站號 CAG100 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAG100.csv
+Data for 站號 CAH030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAH030.csv
+Data for 站號 CAJ050 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAJ050.csv
+Data for 站號 CAL110 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAL110.csv
+Data for 站號 CAN130 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAN130.csv
+Data for 站號 CAN140 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAN140.csv
+Data for 站號 CAQ030 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAQ030.csv
+Data for 站號 CAW010 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/CAW010.csv
+Data for 站號 E2H360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2H360.csv
+Data for 站號 E2HA20 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2HA20.csv
+Data for 站號 E2K600 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2K600.csv
+Data for 站號 E2P980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2P980.csv
+Data for 站號 E2P990 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2P990.csv
+Data for 站號 E2S960 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2S960.csv
+Data for 站號 E2S980 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/E2S980.csv
+Data for 站號 G2AI50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/G2AI50.csv
+Data for 站號 G2F820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/G2F820.csv
+Data for 站號 G2L020 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/G2L020.csv
+Data for 站號 G2M350 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/G2M350.csv
+Data for 站號 G2P820 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/G2P820.csv
+Data for 站號 K2E360 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/K2E360.csv
+Data for 站號 K2E710 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/K2E710.csv
+Data for 站號 K2F750 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/K2F750.csv
+Data for 站號 U2H480 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/U2H480.csv
+Data for 站號 U2HA30 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/U2HA30.csv
+Data for 站號 U2HA40 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/U2HA40.csv
+Data for 站號 U2HA50 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/U2HA50.csv
+Data for 站號 V2C250 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/V2C250.csv
+Data for 站號 V2C260 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/V2C260.csv
+Data for 站號 V2K610 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/V2K610.csv
+Data for 站號 V2K620 has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/V2K620.csv
+Station list has been saved to /home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_daily_by_station/station_list.csv
+[INFO] Running crop_season_avg.py (cwd=/home/runner/work/rice_disease_forecast/rice_disease_forecast/models)
+17:19:24 | INFO     | 今天：2026-03-02；半期區間：2026-01-01 ~ 2026-03-02
+17:19:24 | INFO     | 開始統計：本年度高風險『日數』
+17:19:35 | INFO     | 本年度各模型有檔天數：{'BlastGRU-TW': 61, 'BlastDT2': 44, 'BlastLSTLS': 61, 'BLBTSLS': 61, 'BLASTAM': 61, 'planthopper': 0}；期間總天數：61
+17:19:35 | INFO     | 2016 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：62
+17:19:35 | INFO     | 2017 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:35 | INFO     | 2018 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:35 | INFO     | 2019 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:35 | INFO     | 2020 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：62
+17:19:35 | INFO     | 2021 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:35 | INFO     | 2022 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:35 | INFO     | 2023 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 0, 'planthopper': 0}；期間天數：61
+17:19:37 | INFO     | 2024 年有檔天數：{'BlastGRU-TW': 0, 'BlastDT2': 0, 'BlastLSTLS': 0, 'BLBTSLS': 0, 'BLASTAM': 51, 'planthopper': 0}；期間天數：62
+17:19:37 | INFO     | 2025 年有檔天數：{'BlastGRU-TW': 58, 'BlastDT2': 0, 'BlastLSTLS': 57, 'BLBTSLS': 61, 'BLASTAM': 7, 'planthopper': 0}；期間天數：61
+17:19:39 | INFO     | 各模型納入平均的完整年份：{'BlastGRU-TW': [], 'BlastDT2': [], 'BlastLSTLS': [], 'BLBTSLS': [2025], 'BLASTAM': [], 'planthopper': []}
+17:19:41 | INFO     | 已輸出：/home/runner/work/rice_disease_forecast/rice_disease_forecast/rice_blast_prediction/recent_summary.csv；列數：864
+[INFO] BLASTAM pipeline completed at 2026-03-02T17:19:41Z
