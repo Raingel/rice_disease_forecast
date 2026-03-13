@@ -1,4 +1,4 @@
-name: One-time: BLASTAM Backfill 2024-2025
+name: One-time: BlastDT2 Backfill
 
 on:
   workflow_dispatch:
@@ -6,19 +6,19 @@ on:
       start_date:
         description: 'Backfill start date (YYYY-MM-DD)'
         required: true
-        default: '2024-01-01'
+        default: '2025-01-01'
       end_date:
         description: 'Backfill end date (YYYY-MM-DD)'
         required: true
-        default: '2025-12-31'
+        default: '2026-12-31'
 
 permissions:
   contents: write
 
 jobs:
-  run-blastam-backfill:
+  run-blastdt2-backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 600
+    timeout-minutes: 360
 
     steps:
       - name: Checkout repository
@@ -38,16 +38,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-github-actions.txt
 
-      - name: Run BLASTAM backfill (2024-2025)
+      - name: Run BlastDT2 backfill
         env:
           PIPELINE_ROOT: ${{ github.workspace }}
           DATA_FOLDER: ${{ github.workspace }}/rice_blast_prediction/data
           RECENT_OUTPUT_FOLDER: ${{ github.workspace }}/rice_blast_prediction/recent_daily_by_station
           OUTPUT_CSV: ${{ github.workspace }}/rice_blast_prediction/recent_summary.csv
           PLAN_FOLDER: ""
-          BLASTAM_BACKFILL_START_DATE: ${{ inputs.start_date }}
-          BLASTAM_BACKFILL_END_DATE: ${{ inputs.end_date }}
-        run: bash scripts/run_blastam_backfill_2024_2025.sh
+          BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date }}
+          BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date }}
+        run: bash scripts/run_blastdt2_backfill.sh
 
       - name: Commit and push updated outputs
         run: |
@@ -55,7 +55,7 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add .
-            git commit -m "chore: BLASTAM backfill ${{ inputs.start_date }} to ${{ inputs.end_date }}"
+            git commit -m "chore: BlastDT2 backfill ${{ inputs.start_date }} to ${{ inputs.end_date }}"
             git push
           else
             echo "No changes to commit."
