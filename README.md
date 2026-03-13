@@ -73,3 +73,16 @@ Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger)
   - `models/BLASTAM/backfill_2024_2025.py`
   - `models/recent_forecast_organizer.py`
   - `models/crop_season_avg.py`
+
+
+## BlastDT2 one-time backfill
+
+Use workflow `.github/workflows/blastdt2-backfill.yml` (manual trigger) to backfill BlastDT2 outputs for historical dates.
+
+- Default window: `2025-01-01` to `2026-12-31`
+- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
+- Runs `scripts/run_blastdt2_backfill.sh`, which executes:
+  - `models/BlastDT2/fetch_and_convert.py` (with date-range env vars)
+  - `models/recent_forecast_organizer.py`
+  - `models/crop_season_avg.py`
+- Daily pipeline BlastDT2 conversion now defaults to process **previous + current year** to avoid missing early-year dates after incubation shift.
