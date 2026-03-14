@@ -10,7 +10,7 @@ from tensorflow.keras.models import load_model
 
 # === 統一設定 ===
 ROOT = "./"
-ERA5_ARCHIVE = os.path.join(ROOT, "../../ERA5")                      # 氣象資料來源資料夾
+ERA5_ARCHIVE = os.getenv("ERA5_INPUT_DIR", os.path.join(ROOT, "../../ERA5"))  # 氣象資料來源資料夾
 MODEL_PATH   = os.path.join(ROOT, "230207_Transformer_colab.h5")     # 你的 BlastTF 模型
 OUTPUT_DIR   = os.path.join(ROOT, "../../rice_blast_prediction/data")  # 統一輸出資料夾
 

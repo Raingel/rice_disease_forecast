@@ -75,6 +75,19 @@ Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger)
   - `models/crop_season_avg.py`
 
 
+
+
+## One-time all-model backfill
+
+Use workflow `.github/workflows/one-time-backfill-all-models.yml` (manual trigger) to run a full historical backfill once.
+
+- ERA5-based models (BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF) read from `ERA5_archive` by default (`era5_input_dir` input can be changed).
+- BlastDT2 uses upstream `BlastDT` repo data and imports whatever dates exist in the selected window.
+- BLASTAM imports legacy daily outputs from `Raingel/rice_blast_prediction` raw CSV files for the selected date window.
+- After model outputs are generated/imported, workflow also runs:
+  - `models/recent_forecast_organizer.py`
+  - `models/crop_season_avg.py`
+
 ## BlastDT2 one-time backfill
 
 Use workflow `.github/workflows/blastdt2-backfill.yml` (manual trigger) to backfill BlastDT2 outputs for historical dates.

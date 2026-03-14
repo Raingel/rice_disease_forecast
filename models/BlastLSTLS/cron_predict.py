@@ -16,9 +16,12 @@ model = load_model(model)
 ref_avg_std = pd.read_csv('./ref_avg_std.csv', index_col=0)
 def daily_and_normalization(ref_avg_std, df):
     for col in df.columns:
-        if col == 'time':
+        if col == 'time' or col not in ref_avg_std.columns:
             continue
-        df[col] = ((df[col] - ref_avg_std[col]['mean']) / ref_avg_std[col]['std'])
+        std = ref_avg_std[col]['std']
+        if pd.isna(std) or std == 0:
+            continue
+        df[col] = ((df[col] - ref_avg_std[col]['mean']) / std)
     #Calculate daily stat
     #temperature_2m	relativehumidity_2m	precipitation	windspeed_10m	winddirection_10m	u	v
     df['time'] = pd.to_datetime(df['time'])
@@ -52,7 +55,7 @@ def daily_and_normalization(ref_avg_std, df):
 # %%
 import pandas as pd
 
-ERA5_archive = "../../ERA5"
+ERA5_archive = os.getenv("ERA5_INPUT_DIR", "../../ERA5")
 skip = 0
 x = []
 x_metadata = []
