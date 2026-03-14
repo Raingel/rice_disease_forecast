@@ -3,6 +3,11 @@ import pandas as pd
 import os
 from datetime import datetime, timedelta
 
+PLANTHOPPER_REMOTE_BASE_URL = os.getenv(
+    "PLANTHOPPER_REMOTE_BASE_URL",
+    "https://raw.githubusercontent.com/Raingel/HYSPLIT-Planthopper-Forecast/refs/heads/main/prediction",
+)
+
 ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # 定義資料夾路徑
@@ -17,6 +22,39 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 # %%
 # 用來儲存所有日期的資料
 all_data = []
+planthopper_daily_cache = {}
+
+
+def load_planthopper_data(date_str):
+    """Load daily planthopper prediction from local folder first, then remote repo."""
+    if date_str in planthopper_daily_cache:
+        return planthopper_daily_cache[date_str]
+
+    local_file_path = os.path.join(PLANTHOPPER_FOLDER, f"{date_str}_max_freq.csv") if PLANTHOPPER_FOLDER else ""
+    remote_url = f"{PLANTHOPPER_REMOTE_BASE_URL}/{date_str}_max_freq.csv"
+
+    for source in [local_file_path, remote_url]:
+        if not source:
+            continue
+        try:
+            if source == local_file_path and not os.path.exists(source):
+                continue
+            planthopper_data = pd.read_csv(source)
+            required_columns = {"y", "x", "value"}
+            if required_columns.issubset(planthopper_data.columns):
+                planthopper_daily_cache[date_str] = planthopper_data
+                return planthopper_data
+        except Exception:
+            continue
+
+    planthopper_daily_cache[date_str] = None
+    return None
+
+
+def find_nearest_planthopper_value(lat, lon, planthopper_data):
+    distances = ((planthopper_data["y"] - lat) ** 2 + (planthopper_data["x"] - lon) ** 2) ** 0.5
+    nearest_row = planthopper_data.loc[distances.idxmin()]
+    return nearest_row["value"]
 
 # 取得今日日期並設定範圍（這裡以從30天前到30天後，共60天）
 today = datetime.today() - timedelta(days=30)
@@ -32,8 +70,6 @@ for target_date in date_range:
     lstls_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BlastLSTLS.csv")
     BLBTSLS_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BLBTSLS.csv")
     blastam_file_path = os.path.join(DATA_FOLDER, f"{date_str}_BLASTAM.csv")
-    planthopper_file_path = os.path.join(PLANTHOPPER_FOLDER, f"{date_str}_max_freq.csv") if PLANTHOPPER_FOLDER else ""
-    
     merged_data = None
 
     # 讀取 GRU 預報檔案，作為初始資料
@@ -87,17 +123,12 @@ for target_date in date_range:
                                    on=["站號", "日期"],
                                    how="left")
 
-    # 讀取 Planthopper 預報檔案，並根據最近的經緯度進行合併
-    if planthopper_file_path and os.path.exists(planthopper_file_path):
-        planthopper_data = pd.read_csv(planthopper_file_path)
-        if merged_data is not None:
-            def find_nearest_probability(lat, lon, planthopper_data):
-                planthopper_data['distance'] = ((planthopper_data['y'] - lat)**2 + (planthopper_data['x'] - lon)**2)**0.5
-                nearest_row = planthopper_data.loc[planthopper_data['distance'].idxmin()]
-                return nearest_row['value']
-            
-            merged_data['planthopper'] = merged_data.apply(
-                lambda row: find_nearest_probability(row['lat'], row['lon'], planthopper_data), axis=1
+    # 讀取 Planthopper 預報檔案（先本機、再遠端），並根據最近的經緯度進行合併
+    if merged_data is not None:
+        planthopper_data = load_planthopper_data(date_str)
+        if planthopper_data is not None:
+            merged_data["planthopper"] = merged_data.apply(
+                lambda row: find_nearest_planthopper_value(row["lat"], row["lon"], planthopper_data), axis=1
             )
     
     # 如果當天有資料，依據「站號」與「日期」去除重複（不同檔案中站名可能不一致，只保留第一筆）
