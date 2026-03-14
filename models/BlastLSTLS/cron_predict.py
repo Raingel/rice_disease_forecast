@@ -9,6 +9,8 @@ from dateutil import parser
 import pandas as pd
 from datetime import datetime, timedelta
 ROOT = "./"
+BACKFILL_START_DATE = pd.to_datetime(os.getenv("BACKFILL_START_DATE", "1900-01-01")).normalize()
+BACKFILL_END_DATE = pd.to_datetime(os.getenv("BACKFILL_END_DATE", "2100-12-31")).normalize()
 model = ROOT + "model_West_241220.h5"
 model = load_model(model)
 
@@ -16,9 +18,12 @@ model = load_model(model)
 ref_avg_std = pd.read_csv('./ref_avg_std.csv', index_col=0)
 def daily_and_normalization(ref_avg_std, df):
     for col in df.columns:
-        if col == 'time':
+        if col == 'time' or col not in ref_avg_std.columns:
             continue
-        df[col] = ((df[col] - ref_avg_std[col]['mean']) / ref_avg_std[col]['std'])
+        std = ref_avg_std[col]['std']
+        if pd.isna(std) or std == 0:
+            continue
+        df[col] = ((df[col] - ref_avg_std[col]['mean']) / std)
     #Calculate daily stat
     #temperature_2m	relativehumidity_2m	precipitation	windspeed_10m	winddirection_10m	u	v
     df['time'] = pd.to_datetime(df['time'])
@@ -52,7 +57,7 @@ def daily_and_normalization(ref_avg_std, df):
 # %%
 import pandas as pd
 
-ERA5_archive = "../../ERA5"
+ERA5_archive = os.getenv("ERA5_INPUT_DIR", "../../ERA5")
 skip = 0
 x = []
 x_metadata = []
@@ -80,8 +85,15 @@ for f in os.scandir(ERA5_archive):
         #做一個slide window，輸入資料是輸入資料是[(None, 19, 15)] ，所以每19天time step是一個資料
         for i in range(0, len(df_daily)-19):
             #站號,站名,日期,lat,lon
-            x_metadata.append({"日期":df_daily.index[i+19]+timedelta(days=4), "lat":lat, "lon":lon, "站號":sta_no, "站名":sta_name})
+            pred_date = (df_daily.index[i+19]+timedelta(days=4)).normalize()
+            if pred_date < BACKFILL_START_DATE or pred_date > BACKFILL_END_DATE:
+                continue
+            x_metadata.append({"日期":pred_date, "lat":lat, "lon":lon, "站號":sta_no, "站名":sta_name})
             x.append(df_daily.iloc[i:i+19].values)
+if len(x) == 0:
+    print("No BlastLSTLS samples in selected BACKFILL window.")
+    raise SystemExit(0)
+
 x = np.array(x)
 
 # %%
