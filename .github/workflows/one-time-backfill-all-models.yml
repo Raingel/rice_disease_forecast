@@ -1,0 +1,71 @@
+name: "One-time: Backfill All Models"
+
+'on':
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Backfill start date (YYYY-MM-DD)'
+        required: true
+        default: '2018-04-05'
+      end_date:
+        description: 'Backfill end date (YYYY-MM-DD)'
+        required: true
+        default: '2025-12-31'
+      era5_input_dir:
+        description: 'ERA5 input folder (relative to repo root)'
+        required: true
+        default: 'ERA5_archive'
+
+permissions:
+  contents: write
+
+jobs:
+  run-one-time-backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 720
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+          cache-dependency-path: requirements-github-actions.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-github-actions.txt
+
+      - name: Run one-time backfill pipeline
+        env:
+          PIPELINE_ROOT: ${{ github.workspace }}
+          DATA_FOLDER: ${{ github.workspace }}/rice_blast_prediction/data
+          RECENT_OUTPUT_FOLDER: ${{ github.workspace }}/rice_blast_prediction/recent_daily_by_station
+          OUTPUT_CSV: ${{ github.workspace }}/rice_blast_prediction/recent_summary.csv
+          PLAN_FOLDER: ""
+          ERA5_INPUT_DIR: ${{ github.workspace }}/${{ inputs.era5_input_dir }}
+          BACKFILL_START_DATE: ${{ inputs.start_date }}
+          BACKFILL_END_DATE: ${{ inputs.end_date }}
+          BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date }}
+          BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date }}
+          BLASTAM_LEGACY_START_DATE: ${{ inputs.start_date }}
+          BLASTAM_LEGACY_END_DATE: ${{ inputs.end_date }}
+        run: bash scripts/run_one_time_backfill.sh
+
+      - name: Commit and push updated outputs
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore: one-time backfill ${{ inputs.start_date }} to ${{ inputs.end_date }}"
+            git push
+          else
+            echo "No changes to commit."
+          fi

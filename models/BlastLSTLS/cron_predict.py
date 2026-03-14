@@ -52,7 +52,7 @@ def daily_and_normalization(ref_avg_std, df):
 # %%
 import pandas as pd
 
-ERA5_archive = "../../ERA5"
+ERA5_archive = os.getenv("ERA5_INPUT_DIR", "../../ERA5")
 skip = 0
 x = []
 x_metadata = []
