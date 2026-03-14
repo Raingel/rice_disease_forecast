@@ -64,7 +64,8 @@ stations = stations[stations["海拔高度(m)"]<500]
 # %%
 X = []
 info = []
-for f in os.scandir("../../ERA5/"):
+ERA5_INPUT_DIR = os.getenv("ERA5_INPUT_DIR", "../../ERA5/")
+for f in os.scandir(ERA5_INPUT_DIR):
     if f.name.endswith(".csv"):
         print(f.name)
         try:
