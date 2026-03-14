@@ -19,6 +19,10 @@ on:
         description: 'Chunk size days for ERA5 model backfill (<=0 disables chunking)'
         required: true
         default: '180'
+      max_runtime_seconds:
+        description: 'Soft stop for resumable run; default 19800 (5.5 hours)'
+        required: true
+        default: '19800'
 
 permissions:
   contents: write
@@ -57,6 +61,7 @@ jobs:
           BACKFILL_START_DATE: ${{ inputs.start_date }}
           BACKFILL_END_DATE: ${{ inputs.end_date }}
           ERA5_BACKFILL_CHUNK_DAYS: ${{ inputs.era5_chunk_days }}
+          MAX_RUNTIME_SECONDS: ${{ inputs.max_runtime_seconds }}
           BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date }}
           BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date }}
           BLASTAM_LEGACY_START_DATE: ${{ inputs.start_date }}
