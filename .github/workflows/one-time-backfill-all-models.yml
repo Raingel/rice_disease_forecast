@@ -15,6 +15,10 @@ on:
         description: 'ERA5 input folder (relative to repo root)'
         required: true
         default: 'ERA5_archive'
+      era5_chunk_days:
+        description: 'Chunk size days for ERA5 model backfill (<=0 disables chunking)'
+        required: true
+        default: '180'
 
 permissions:
   contents: write
@@ -52,6 +56,7 @@ jobs:
           ERA5_INPUT_DIR: ${{ github.workspace }}/${{ inputs.era5_input_dir }}
           BACKFILL_START_DATE: ${{ inputs.start_date }}
           BACKFILL_END_DATE: ${{ inputs.end_date }}
+          ERA5_BACKFILL_CHUNK_DAYS: ${{ inputs.era5_chunk_days }}
           BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date }}
           BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date }}
           BLASTAM_LEGACY_START_DATE: ${{ inputs.start_date }}

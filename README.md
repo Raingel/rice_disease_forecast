@@ -81,6 +81,8 @@ Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger)
 
 Use workflow `.github/workflows/one-time-backfill-all-models.yml` (manual trigger) to run a full historical backfill once.
 
+- ERA5 model backfill is chunked by date window (`era5_chunk_days`, default `180`) to reduce memory pressure and avoid long single-run kills.
+
 - ERA5-based models (BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF) read from `ERA5_archive` by default (`era5_input_dir` input can be changed).
 - BlastDT2 uses upstream `BlastDT` repo data and imports whatever dates exist in the selected window.
 - BLASTAM imports legacy daily outputs from `Raingel/rice_blast_prediction` raw CSV files for the selected date window.

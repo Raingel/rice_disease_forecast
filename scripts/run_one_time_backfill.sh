@@ -17,6 +17,7 @@ export PLAN_FOLDER="${PLAN_FOLDER:-}"
 export ERA5_INPUT_DIR="${ERA5_INPUT_DIR:-$ROOT_DIR/ERA5_archive}"
 export BACKFILL_START_DATE="${BACKFILL_START_DATE:-2018-04-05}"
 export BACKFILL_END_DATE="${BACKFILL_END_DATE:-2025-12-31}"
+export ERA5_BACKFILL_CHUNK_DAYS="${ERA5_BACKFILL_CHUNK_DAYS:-180}"
 
 # BlastDT2 backfill window (same as one-time backfill window)
 export BLASTDT2_BACKFILL_START_DATE="${BLASTDT2_BACKFILL_START_DATE:-$BACKFILL_START_DATE}"
@@ -38,11 +39,35 @@ run_py() {
   )
 }
 
-# ERA5-based models (read from ERA5_INPUT_DIR, default ERA5_archive)
-run_py "$ROOT_DIR/models/BlastLSTLS" "cron_predict.py"
-run_py "$ROOT_DIR/models/230127_GRU" "predictor.py"
-run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
-run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
+run_era5_models_for_window() {
+  local chunk_start="$1"
+  local chunk_end="$2"
+  echo "[INFO] ERA5 model chunk: ${chunk_start} ~ ${chunk_end}"
+  BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/BlastLSTLS" "cron_predict.py"
+  BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/230127_GRU" "predictor.py"
+  BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
+  BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
+}
+
+if [[ "$ERA5_BACKFILL_CHUNK_DAYS" -le 0 ]]; then
+  run_era5_models_for_window "$BACKFILL_START_DATE" "$BACKFILL_END_DATE"
+else
+  while IFS=',' read -r chunk_start chunk_end; do
+    run_era5_models_for_window "$chunk_start" "$chunk_end"
+  done < <(python - <<'PY'
+import os
+from datetime import datetime, timedelta
+start = datetime.strptime(os.environ['BACKFILL_START_DATE'], '%Y-%m-%d').date()
+end = datetime.strptime(os.environ['BACKFILL_END_DATE'], '%Y-%m-%d').date()
+chunk = int(os.environ.get('ERA5_BACKFILL_CHUNK_DAYS', '180'))
+cur = start
+while cur <= end:
+    chunk_end = min(cur + timedelta(days=chunk-1), end)
+    print(f"{cur.isoformat()},{chunk_end.isoformat()}")
+    cur = chunk_end + timedelta(days=1)
+PY
+)
+fi
 
 # BlastDT2: fetch whatever exists in upstream repo within selected date range
 run_py "$ROOT_DIR/models/BlastDT2" "fetch_and_convert.py"

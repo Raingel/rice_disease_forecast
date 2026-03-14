@@ -13,6 +13,8 @@ ROOT = "./"
 ERA5_ARCHIVE = os.getenv("ERA5_INPUT_DIR", os.path.join(ROOT, "../../ERA5"))  # 氣象資料來源資料夾
 MODEL_PATH   = os.path.join(ROOT, "230207_Transformer_colab.h5")     # 你的 BlastTF 模型
 OUTPUT_DIR   = os.path.join(ROOT, "../../rice_blast_prediction/data")  # 統一輸出資料夾
+BACKFILL_START_DATE = pd.to_datetime(os.getenv("BACKFILL_START_DATE", "1900-01-01")).normalize()
+BACKFILL_END_DATE = pd.to_datetime(os.getenv("BACKFILL_END_DATE", "2100-12-31")).normalize()
 
 # 確保輸出資料夾存在
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -54,10 +56,13 @@ for f in os.scandir(ERA5_ARCHIVE):
     n_days = len(df_daily)
     for start in range(0, n_days - WINDOW_SIZE + 1):
         window_df = df_daily.iloc[start:start + WINDOW_SIZE]
-        X_list.append(window_df.values)
 
         # 用 window 本身最後一天再 +3 天作為預測日
-        predict_date = window_df.index[-1] + timedelta(days=3)
+        predict_date = (window_df.index[-1] + timedelta(days=3)).normalize()
+        if predict_date < BACKFILL_START_DATE or predict_date > BACKFILL_END_DATE:
+            continue
+
+        X_list.append(window_df.values)
         meta_list.append({
             "sta_id":   sta_id,
             "sta_name": sta_name,
@@ -67,6 +72,10 @@ for f in os.scandir(ERA5_ARCHIVE):
         })
 
 # === 數值轉陣列並正規化 ===
+if len(X_list) == 0:
+    print("No BlastTF samples in selected BACKFILL window.")
+    raise SystemExit(0)
+
 X = np.stack(X_list, axis=0)       # shape = (n_samples, WINDOW_SIZE, 2)
 X = (X - TF_MEAN) / TF_STD         # 針對 feature 0,1 分別做 normalization
 

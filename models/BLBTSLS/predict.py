@@ -6,6 +6,9 @@ import numpy as np
 import tensorflow as tf
 from datetime import datetime
 
+BACKFILL_START_DATE = pd.to_datetime(os.getenv("BACKFILL_START_DATE", "1900-01-01")).date()
+BACKFILL_END_DATE = pd.to_datetime(os.getenv("BACKFILL_END_DATE", "2100-12-31")).date()
+
 # ---------------------------
 # 1. 讀取正規化參數
 # ---------------------------
@@ -124,6 +127,9 @@ for filepath in glob.glob(os.path.join(era5_folder, "*.csv")):
         forecast_date = dates[i + window_size]            # 預報目標日期
         # We use 21-27 in 0-31 data, so   we need to shift the forecast date by 4 days
         forecast_date = forecast_date + pd.DateOffset(days=4)
+        forecast_date_cmp = pd.to_datetime(forecast_date).date()
+        if forecast_date_cmp < BACKFILL_START_DATE or forecast_date_cmp > BACKFILL_END_DATE:
+            continue
         # 將視窗資料與對應 meta 儲存起來
         input_windows.append(window_data)
         # 格式化日期字串 (YYYY-MM-DD)
