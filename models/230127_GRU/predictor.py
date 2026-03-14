@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 import os
 ranger2 = tfa.optimizers.Lookahead(tfa.optimizers.RectifiedAdam(learning_rate=0.001))
 ROOT = "./"
+BACKFILL_START_DATE = pd.to_datetime(os.getenv("BACKFILL_START_DATE", "1900-01-01")).normalize()
+BACKFILL_END_DATE = pd.to_datetime(os.getenv("BACKFILL_END_DATE", "2100-12-31")).normalize()
 
 # %%
 """
@@ -64,7 +66,8 @@ stations = stations[stations["海拔高度(m)"]<500]
 # %%
 X = []
 info = []
-for f in os.scandir("../../ERA5/"):
+ERA5_INPUT_DIR = os.getenv("ERA5_INPUT_DIR", "../../ERA5/")
+for f in os.scandir(ERA5_INPUT_DIR):
     if f.name.endswith(".csv"):
         print(f.name)
         try:
@@ -99,12 +102,18 @@ for f in os.scandir("../../ERA5/"):
         input['u_norm'] = (input['u_mean'] - -45.732) / 66.011
         input['v_norm'] = (input['v_mean'] - -40.008) / 63.111
         for e in extract_window(input, 20):
+            pred_date = (e.iloc[-1].name + pd.Timedelta(days=3)).normalize()
+            if pred_date < BACKFILL_START_DATE or pred_date > BACKFILL_END_DATE:
+                continue
             x = e[['temp_norm', 'rh_norm', 'precip_norm', 'u_norm', 'v_norm']].to_numpy()
             X.append(x)
-            info.append({"date":e.iloc[-1].name + pd.Timedelta(days=3), "sta_id":sta_id,"sta_name":sta_name, "lat":lat, "lon":lon})
+            info.append({"date":pred_date, "sta_id":sta_id,"sta_name":sta_name, "lat":lat, "lon":lon})
 
 # %%
 print("X shape:", np.array(X).shape, "info shape:", np.array(info).shape)
+if len(X) == 0:
+    print("No BlastGRU-TW samples in selected BACKFILL window.")
+    raise SystemExit(0)
 
 # %%
 model = load_model(ROOT+"/230126.h5")
