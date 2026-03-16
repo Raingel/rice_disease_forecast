@@ -253,6 +253,9 @@ C0R880,後壁湖,120.7457,21.9457
 
 **輸入**
 - 讀取 `rice_blast_prediction/data/` 的每日模型檔
+- planthopper 來源：優先 `PLAN_FOLDER` 本機檔，否則 fallback 到 `HYSPLIT-Planthopper-Forecast` 遠端日檔
+- 可選：若存在 `rice_blast_prediction/planthopper_avg_snapshot.csv`（或 `PLAN_AVG_SNAPSHOT_CSV` 指定）則直接帶入 `planthopper_avg`，避免每次重算歷史
+- 可用 `python models/build_planthopper_avg_snapshot.py` 從 `recent_summary.csv` 萃取快照檔
 - 依作期期間計算今年高風險日數 + 近十年平均
 
 **輸出**

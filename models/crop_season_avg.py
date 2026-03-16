@@ -22,6 +22,7 @@ import logging
 from datetime import datetime, date, timedelta
 from collections import defaultdict
 from typing import Tuple, List, Dict, Optional
+from urllib.parse import urljoin
 
 import numpy as np
 import pandas as pd
@@ -30,7 +31,12 @@ import pandas as pd
 ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 DATA_FOLDER = os.getenv("DATA_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "data"))
 PLAN_FOLDER = os.getenv("PLAN_FOLDER", "")  # planthopper 格點資料（若沒有可設為 ""）
+PLANTHOPPER_REMOTE_BASE_URL = os.getenv(
+    "PLANTHOPPER_REMOTE_BASE_URL",
+    "https://raw.githubusercontent.com/Raingel/HYSPLIT-Planthopper-Forecast/refs/heads/main/prediction/",
+)
 OUTPUT_CSV = os.getenv("OUTPUT_CSV", os.path.join(ROOT_DIR, "rice_blast_prediction", "recent_summary.csv"))
+PLAN_AVG_SNAPSHOT_CSV = os.getenv("PLAN_AVG_SNAPSHOT_CSV", os.path.join(ROOT_DIR, "rice_blast_prediction", "planthopper_avg_snapshot.csv"))
 
 # 風險門檻
 RISK_THRESHOLD_MODELS = 0.5      # 四模型：>= 0.5 算高風險
@@ -89,6 +95,58 @@ def safe_read_csv(path: str) -> Optional[pd.DataFrame]:
     except Exception as e:
         log.warning(f"讀檔失敗：{path} -> {e}")
         return None
+
+def load_planthopper_data(date_str: str) -> Optional[pd.DataFrame]:
+    """planthopper 讀檔：優先本機 PLAN_FOLDER，若無則回退到遠端 repo。"""
+    local_file = os.path.join(PLAN_FOLDER, f"{date_str}_max_freq.csv") if PLAN_FOLDER else ""
+    remote_url = urljoin(PLANTHOPPER_REMOTE_BASE_URL, f"{date_str}_max_freq.csv")
+
+    for source in [local_file, remote_url]:
+        if not source:
+            continue
+        if source == local_file and not os.path.exists(source):
+            continue
+
+        df = safe_read_csv(source)
+        if df is None or df.empty:
+            continue
+
+        rename_map: Dict[str, str] = {}
+        if "x" not in df.columns and "lon" in df.columns:
+            rename_map["lon"] = "x"
+        if "y" not in df.columns and "lat" in df.columns:
+            rename_map["lat"] = "y"
+        if rename_map:
+            df = df.rename(columns=rename_map)
+
+        if all(c in df.columns for c in ["x", "y", "value"]):
+            return df
+
+    return None
+
+def load_planthopper_avg_snapshot(snapshot_csv: str) -> Dict[str, float]:
+    """讀取一次性計算後的 planthopper 平年平均（日數）快照。"""
+    if not snapshot_csv or not os.path.exists(snapshot_csv):
+        return {}
+
+    df = safe_read_csv(snapshot_csv)
+    if df is None or df.empty:
+        return {}
+    if "站號" not in df.columns or "planthopper_avg" not in df.columns:
+        log.warning("planthopper 快照格式不符，缺少欄位：站號 / planthopper_avg")
+        return {}
+
+    out: Dict[str, float] = {}
+    for _, row in df.iterrows():
+        sid = str(row.get("站號", "")).strip()
+        if not sid:
+            continue
+        try:
+            out[sid] = float(row["planthopper_avg"])
+        except Exception:
+            continue
+    return out
+
 
 def build_station_master(rows: List[pd.DataFrame]) -> pd.DataFrame:
     """由多筆日資料匯總站點（站號/站名/lat/lon），以第一筆為準避免重複/微差。"""
@@ -175,9 +233,8 @@ def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool
 
         # planthopper
         plan_df: Optional[pd.DataFrame] = None
-        if need_plan and PLAN_FOLDER and os.path.isdir(PLAN_FOLDER):
-            ph_path = os.path.join(PLAN_FOLDER, f"{ds}_max_freq.csv")
-            plan_df = safe_read_csv(ph_path)
+        if need_plan:
+            plan_df = load_planthopper_data(ds)
             if plan_df is not None and not plan_df.empty:
                 model_avail_days["planthopper"] += 1
 
@@ -281,9 +338,17 @@ for (yr, avail_y, total_days_y) in yearly_avail_list:
 log.info("各模型納入平均的完整年份：%s",
          {m: sorted(list(yrs)) for m, yrs in model_complete_years.items()})
 
+plan_avg_snapshot = load_planthopper_avg_snapshot(PLAN_AVG_SNAPSHOT_CSV)
+if plan_avg_snapshot:
+    log.info("已載入 planthopper 平年平均快照：%s（站點數：%d）", PLAN_AVG_SNAPSHOT_CSV, len(plan_avg_snapshot))
+
 # 對每個站/模型，將「完整年份」的日數取平均；若沒有任何完整年份，留 NaN
 for sid in out_df["站號"].astype(str).tolist():
     for m in MODEL_COLS.keys():
+        if m == "planthopper" and sid in plan_avg_snapshot:
+            out_df.loc[out_df["站號"] == sid, f"{m}_avg"] = plan_avg_snapshot[sid]
+            continue
+
         elig_years = model_complete_years[m]
         if not elig_years:
             out_df.loc[out_df["站號"] == sid, f"{m}_avg"] = np.nan
