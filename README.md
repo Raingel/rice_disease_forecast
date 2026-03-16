@@ -1,105 +1,84 @@
-# rice_disease_forecast
-run rice disease forecast on cloud
+# 水稻病害預報自動化（rice_disease_forecast）
 
-## GitHub Actions automation
+這個 repo 主要用來做**台灣水稻病害風險預報資料的每日更新與彙整**，包含多個模型輸出、站點日資料整理、近期摘要與作期平均統計。
 
-This repository now includes a full daily automation workflow at:
+---
 
-- `.github/workflows/daily-forecast.yml`
+## 這個 repo 在做什麼
 
-### What it does
+核心目標：
 
-1. Installs Python dependencies from `requirements-github-actions.txt`.
-2. Runs the full pipeline via `scripts/run_daily_pipeline.sh`:
-   - ERA5/Open-Meteo download
-   - BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF predictions
-   - BlastDT2 repository fetch + conversion
-   - recent forecast organizer
-   - crop season summary generation
-3. Commits and pushes generated/updated files automatically when changes exist.
+1. 下載與更新氣象資料（ERA5 / Open-Meteo / 上游資料來源）。
+2. 執行多個病害預測模型產生每日風險結果。
+3. 整理成可下游使用的彙整檔案（例如 `recent_summary.csv` 與 `recent_daily_by_station/`）。
+4. 透過 GitHub Actions 自動提交更新結果。
 
-### Trigger
+主要輸出位置：
 
-- Scheduled daily at **00:00 Asia/Taipei** (`0 16 * * *` UTC)
-- Manual trigger through **workflow_dispatch**
+- `rice_blast_prediction/recent_daily_by_station/`
+- `rice_blast_prediction/recent_summary.csv`
+- `rice_blast_prediction/data/`
 
-### Notes
+---
 
-- `PLAN_FOLDER` is optional in GitHub Actions and defaults to empty.
-- Path settings are now environment-variable driven for portability:
-  - `PIPELINE_ROOT`
-  - `DATA_FOLDER`
-  - `RECENT_OUTPUT_FOLDER`
-  - `OUTPUT_CSV`
-  - `PLAN_FOLDER`
+## 自動化排程（GitHub Actions）
 
+### 1) 每日主流程（全模型，不含 BLASTAM）
 
-## One-time ERA5 archive run (GitHub Actions)
+- Workflow: `.github/workflows/daily-forecast.yml`
+- 觸發時間：**每天台灣時間 00:00**（cron: `0 16 * * *`，UTC）
+- 執行腳本：`scripts/run_daily_pipeline.sh`
 
-Use workflow `.github/workflows/era5-archive-once.yml` (manual trigger) to run `models/ERA5_archive_download.py` once.
+`run_daily_pipeline.sh` 會執行：
 
-- Default max runtime is 5 hours (`18000` seconds).
-- If archive API repeatedly fails (e.g., rate limit), the script stops early and keeps already-downloaded results.
-- Workflow still attempts to commit/push partial outputs (`ERA5_archive/`) even when the run step reports an error.
+1. `models/ERA5_current_download_cron.py`
+2. `models/BlastLSTLS/cron_predict.py`
+3. `models/230127_GRU/predictor.py`
+4. `models/BLBTSLS/predict.py`
+5. `models/230128_Transformer/predictor_250628.py`
+6. `models/BlastDT2/fetch_and_convert.py`
+7. `models/recent_forecast_organizer.py`
+8. `models/crop_season_avg.py`
 
+---
 
-## BLASTAM workflow (independent)
+### 2) 每日 BLASTAM 流程（獨立）
 
-A separate workflow was added at:
+- Workflow: `.github/workflows/blastam-forecast.yml`
+- 觸發時間：**每天台灣時間 00:30**（cron: `30 16 * * *`，UTC）
+- 執行腳本：`scripts/run_blastam_pipeline.sh`
 
-- `.github/workflows/blastam-forecast.yml`
+`run_blastam_pipeline.sh` 會執行：
 
-### Why separate?
+1. `models/BLASTAM/run_blastam.py`
+2. `models/recent_forecast_organizer.py`
+3. `models/crop_season_avg.py`
 
-BLASTAM needs sunshine information in addition to temperature/wind/rain. To avoid coupling this requirement into the existing ERA5 pipeline, BLASTAM runs in its own pipeline (`scripts/run_blastam_pipeline.sh`) and model runner (`models/BLASTAM/run_blastam.py`).
+---
 
-### Sunshine design notes
+## Backfill / 一次性流程（已整理到 legacy）
 
-- BLASTAM requires hourly sunshine duration (0–1 hour fraction).
-- The implementation now **prefers `sunshine_duration`** from Open-Meteo and converts it by `sunshine_duration / 3600`.
-- If `sunshine_duration` is unavailable, it falls back to the legacy approximation `direct_radiation / 120` (clipped to 0–1).
+為了讓主流程更乾淨，已將「一次性回補」與「舊版排程」腳本移到 `legacy/`：
 
-This is generally more faithful to the model hypothesis than using radiation-only scaling.
+- `legacy/scripts/run_one_time_backfill.sh`
+- `legacy/scripts/run_blastam_backfill_2024_2025.sh`
+- `legacy/scripts/run_blastdt2_backfill.sh`
+- `legacy/scripts/cron_update_legacy.sh`（舊 server cron 流程，僅保留參考）
 
+對應 workflow 仍可手動觸發，並已改為呼叫 `legacy/scripts/`：
 
-## BLASTAM one-time backfill (2024-2025)
+- `.github/workflows/one-time-backfill-all-models.yml`
+- `.github/workflows/blastam-backfill-2024-2025.yml`
+- `.github/workflows/blastdt2-backfill.yml`
 
-Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger) to backfill BLASTAM outputs for historical dates.
+> 這些都屬於手動／一次性用途，不影響每日自動更新。
 
-- Default window: `2024-01-01` to `2025-12-31`
-- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
-- Archive download is chunked by date range to improve reliability for long windows; chunk size can be tuned via `BLASTAM_ARCHIVE_CHUNK_DAYS` (default `60`).
-- Runs `scripts/run_blastam_backfill_2024_2025.sh`, which executes:
-  - `models/BLASTAM/backfill_2024_2025.py`
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
+---
 
+## 目錄建議
 
+- `scripts/`：保留「目前仍在每日自動流程使用」的腳本。
+- `legacy/`：放已完成階段性任務、一次性回補、舊機制腳本。
+- `.github/workflows/`：排程與手動工作流定義。
+- `models/`：各模型與彙整程式。
 
-
-## One-time all-model backfill
-
-Use workflow `.github/workflows/one-time-backfill-all-models.yml` (manual trigger) to run a full historical backfill once.
-
-- ERA5 model backfill is chunked by date window (`era5_chunk_days`, default `180`) to reduce memory pressure and avoid long single-run kills.
-- Workflow uses soft runtime stop (`max_runtime_seconds`, default `19800` = 5.5h). When reached, it exits gracefully and commits partial outputs + progress state for next rerun.
-- Resume state is stored at `rice_blast_prediction/data/.one_time_backfill_progress.json`; rerun with same inputs will continue from the next unfinished ERA5 chunk.
-
-- ERA5-based models (BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF) read from `ERA5_archive` by default (`era5_input_dir` input can be changed).
-- BlastDT2 uses upstream `BlastDT` repo data and imports whatever dates exist in the selected window.
-- BLASTAM imports legacy daily outputs from `Raingel/rice_blast_prediction` raw CSV files for the selected date window.
-- After model outputs are generated/imported, workflow also runs:
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
-
-## BlastDT2 one-time backfill
-
-Use workflow `.github/workflows/blastdt2-backfill.yml` (manual trigger) to backfill BlastDT2 outputs for historical dates.
-
-- Default window: `2025-01-01` to `2026-12-31`
-- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
-- Runs `scripts/run_blastdt2_backfill.sh`, which executes:
-  - `models/BlastDT2/fetch_and_convert.py` (with date-range env vars)
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
-- Daily pipeline BlastDT2 conversion now defaults to process **previous + current year** to avoid missing early-year dates after incubation shift.

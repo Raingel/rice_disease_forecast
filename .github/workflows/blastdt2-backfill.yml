@@ -47,7 +47,7 @@ jobs:
           PLAN_FOLDER: ""
           BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date }}
           BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date }}
-        run: bash scripts/run_blastdt2_backfill.sh
+        run: bash legacy/scripts/run_blastdt2_backfill.sh
 
       - name: Commit and push updated outputs
         run: |
