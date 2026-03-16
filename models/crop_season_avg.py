@@ -87,8 +87,9 @@ def daterange(start: date, end: date):
         yield start + timedelta(days=i)
 
 def safe_read_csv(path: str) -> Optional[pd.DataFrame]:
-    """讀 CSV，失敗回 None"""
-    if not os.path.exists(path):
+    """讀 CSV，失敗回 None。支援本機路徑與 http(s) URL。"""
+    is_remote = str(path).startswith("http://") or str(path).startswith("https://")
+    if (not is_remote) and (not os.path.exists(path)):
         return None
     try:
         return pd.read_csv(path)
