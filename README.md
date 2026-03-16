@@ -275,5 +275,6 @@ C0R880,後壁湖,120.7457,21.9457
 - `scripts/`：目前每日自動化仍在用的主腳本
 - `legacy/`：一次性 backfill 與舊流程（不影響每日排程）
 - `.github/workflows/`：排程與手動 workflow 定義
+- `.github/workflows/one-time-planthopper-baseline.yml`：一鍵初始化 planthopper baseline（手動執行一次）
 - `models/`：模型與整併邏輯
 
