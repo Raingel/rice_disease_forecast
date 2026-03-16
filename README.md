@@ -1,105 +1,276 @@
-# rice_disease_forecast
-run rice disease forecast on cloud
+# 水稻病害預報自動化（rice_disease_forecast）
 
-## GitHub Actions automation
+這個 repo 是用來做**台灣水稻病害風險的每日自動化更新**，把多模型的預測結果整理成：
 
-This repository now includes a full daily automation workflow at:
+- 逐站逐日檔（`rice_blast_prediction/recent_daily_by_station/*.csv`）
+- 全站摘要檔（`rice_blast_prediction/recent_summary.csv`）
+- 每日模型原始輸出（`rice_blast_prediction/data/*.csv`）
 
-- `.github/workflows/daily-forecast.yml`
+---
 
-### What it does
+## 1) 每日會在什麼時間自動做什麼？
 
-1. Installs Python dependencies from `requirements-github-actions.txt`.
-2. Runs the full pipeline via `scripts/run_daily_pipeline.sh`:
-   - ERA5/Open-Meteo download
-   - BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF predictions
-   - BlastDT2 repository fetch + conversion
-   - recent forecast organizer
-   - crop season summary generation
-3. Commits and pushes generated/updated files automatically when changes exist.
+### A. 每日主流程（全模型，不含 BLASTAM）
 
-### Trigger
+- Workflow：`.github/workflows/daily-forecast.yml`
+- 觸發：**每天台灣時間 00:00**（cron: `0 16 * * *`，UTC）
+- 執行腳本：`scripts/run_daily_pipeline.sh`
+- 依序執行：
+  1. `models/ERA5_current_download_cron.py`
+  2. `models/BlastLSTLS/cron_predict.py`
+  3. `models/230127_GRU/predictor.py`
+  4. `models/BLBTSLS/predict.py`
+  5. `models/230128_Transformer/predictor_250628.py`（欄位名 `BlastTF`）
+  6. `models/BlastDT2/fetch_and_convert.py`
+  7. `models/recent_forecast_organizer.py`
+  8. `models/crop_season_avg.py`
 
-- Scheduled daily at **00:00 Asia/Taipei** (`0 16 * * *` UTC)
-- Manual trigger through **workflow_dispatch**
+### B. 每日 BLASTAM 流程（獨立）
 
-### Notes
+- Workflow：`.github/workflows/blastam-forecast.yml`
+- 觸發：**每天台灣時間 00:30**（cron: `30 16 * * *`，UTC）
+- 執行腳本：`scripts/run_blastam_pipeline.sh`
+- 依序執行：
+  1. `models/BLASTAM/run_blastam.py`
+  2. `models/recent_forecast_organizer.py`
+  3. `models/crop_season_avg.py`
 
-- `PLAN_FOLDER` is optional in GitHub Actions and defaults to empty.
-- Path settings are now environment-variable driven for portability:
-  - `PIPELINE_ROOT`
-  - `DATA_FOLDER`
-  - `RECENT_OUTPUT_FOLDER`
-  - `OUTPUT_CSV`
-  - `PLAN_FOLDER`
+---
 
+## 2) Workflow 圖（每日自動化）
 
-## One-time ERA5 archive run (GitHub Actions)
+```mermaid
+flowchart TD
+    A[GitHub Actions<br/>daily-forecast.yml 00:00] --> B[scripts/run_daily_pipeline.sh]
+    A2[GitHub Actions<br/>blastam-forecast.yml 00:30] --> B2[scripts/run_blastam_pipeline.sh]
 
-Use workflow `.github/workflows/era5-archive-once.yml` (manual trigger) to run `models/ERA5_archive_download.py` once.
+    B --> C[ERA5_current_download_cron.py<br/>抓 Open-Meteo 歷史+預報]
+    C --> D[ERA5/*.csv<br/>每站小時資料]
 
-- Default max runtime is 5 hours (`18000` seconds).
-- If archive API repeatedly fails (e.g., rate limit), the script stops early and keeps already-downloaded results.
-- Workflow still attempts to commit/push partial outputs (`ERA5_archive/`) even when the run step reports an error.
+    D --> E1[BlastLSTLS]
+    D --> E2[BlastGRU-TW]
+    D --> E3[BLBTSLS]
+    D --> E4[BlastTF]
 
+    E1 --> F[rice_blast_prediction/data/YYYYMMDD_BlastLSTLS.csv]
+    E2 --> G[rice_blast_prediction/data/YYYYMMDD_BlastGRU-TW.csv]
+    E3 --> H[rice_blast_prediction/data/YYYYMMDD_BLBTSLS.csv]
+    E4 --> I[rice_blast_prediction/data/YYYYMMDD_BlastTF.csv]
 
-## BLASTAM workflow (independent)
+    B --> J[BlastDT2/fetch_and_convert.py]
+    J --> K[rice_blast_prediction/data/YYYYMMDD_BlastDT2.csv]
 
-A separate workflow was added at:
+    B2 --> L[BLASTAM/run_blastam.py<br/>Open-Meteo資料 + 規則模型]
+    L --> M[rice_blast_prediction/data/YYYYMMDD_BLASTAM.csv]
 
-- `.github/workflows/blastam-forecast.yml`
+    F --> N[recent_forecast_organizer.py]
+    G --> N
+    H --> N
+    K --> N
+    M --> N
+    N --> O[rice_blast_prediction/recent_daily_by_station/*.csv]
+    N --> P[rice_blast_prediction/recent_daily_by_station/station_list.csv]
 
-### Why separate?
+    O --> Q[crop_season_avg.py]
+    F --> Q
+    G --> Q
+    H --> Q
+    K --> Q
+    M --> Q
+    Q --> R[rice_blast_prediction/recent_summary.csv]
+```
 
-BLASTAM needs sunshine information in addition to temperature/wind/rain. To avoid coupling this requirement into the existing ERA5 pipeline, BLASTAM runs in its own pipeline (`scripts/run_blastam_pipeline.sh`) and model runner (`models/BLASTAM/run_blastam.py`).
+---
 
-### Sunshine design notes
+## 3) 各模型資料從哪裡來？做了哪些前處理？
 
-- BLASTAM requires hourly sunshine duration (0–1 hour fraction).
-- The implementation now **prefers `sunshine_duration`** from Open-Meteo and converts it by `sunshine_duration / 3600`.
-- If `sunshine_duration` is unavailable, it falls back to the legacy approximation `direct_radiation / 120` (clipped to 0–1).
+> 下方是「每天自動化」路徑。一次性 backfill/舊流程已整理在 `legacy/`。
 
-This is generally more faithful to the model hypothesis than using radiation-only scaling.
+### 3.1 ERA5 小時資料製備（`models/ERA5_current_download_cron.py`）
 
+**資料來源**
+- 站點清單：`weather_station_list`（GitHub raw CSV）
+- 氣象資料：Open-Meteo
+  - 歷史：`archive-api.open-meteo.com`
+  - 預報：`api.open-meteo.com`（含 `models=ecmwf_aifs025_single`）
 
-## BLASTAM one-time backfill (2024-2025)
+**抓取欄位（小時）**
+- `time`
+- `temperature_2m`
+- `relativehumidity_2m`
+- `precipitation`
+- `windspeed_10m`
+- `winddirection_10m`
 
-Use workflow `.github/workflows/blastam-backfill-2024-2025.yml` (manual trigger) to backfill BLASTAM outputs for historical dates.
+**前處理**
+- 計算風場分量：
+  - `u = windspeed_10m * cos(270 - winddirection_10m)`
+  - `v = windspeed_10m * sin(270 - winddirection_10m)`
+- 合併歷史與預報後，以 `time` 去重。
 
-- Default window: `2024-01-01` to `2025-12-31`
-- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
-- Archive download is chunked by date range to improve reliability for long windows; chunk size can be tuned via `BLASTAM_ARCHIVE_CHUNK_DAYS` (default `60`).
-- Runs `scripts/run_blastam_backfill_2024_2025.sh`, which executes:
-  - `models/BLASTAM/backfill_2024_2025.py`
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
+**暫存/輸出位置**
+- 輸出到：`ERA5/`（可由 `ERA5_OUTPUT_DIR` 覆寫）
+- 檔名格式：`站號_站名_緯度_經度.csv`
 
+**檔案格式範例（`ERA5/*.csv`）**
 
+```csv
+time,temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,winddirection_10m,u,v
+2025-12-15 00:00:00,13.9,79.0,0.0,2.6,74.0,-2.4992804094,-0.7166571251
+```
 
+---
 
-## One-time all-model backfill
+### 3.2 BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF
 
-Use workflow `.github/workflows/one-time-backfill-all-models.yml` (manual trigger) to run a full historical backfill once.
+**共同輸入來源**
+- `ERA5/*.csv`（每站小時序列）
 
-- ERA5 model backfill is chunked by date window (`era5_chunk_days`, default `180`) to reduce memory pressure and avoid long single-run kills.
-- Workflow uses soft runtime stop (`max_runtime_seconds`, default `19800` = 5.5h). When reached, it exits gracefully and commits partial outputs + progress state for next rerun.
-- Resume state is stored at `rice_blast_prediction/data/.one_time_backfill_progress.json`; rerun with same inputs will continue from the next unfinished ERA5 chunk.
+**共同前處理概念（依模型程式略有差異）**
+- 小時資料轉日尺度特徵（例如 max/mean/min）
+- 特徵標準化（依各模型的參考統計檔）
+- 以滑動視窗組成時序輸入，再輸出每日每站風險值
 
-- ERA5-based models (BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF) read from `ERA5_archive` by default (`era5_input_dir` input can be changed).
-- BlastDT2 uses upstream `BlastDT` repo data and imports whatever dates exist in the selected window.
-- BLASTAM imports legacy daily outputs from `Raingel/rice_blast_prediction` raw CSV files for the selected date window.
-- After model outputs are generated/imported, workflow also runs:
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
+**輸出位置**
+- `rice_blast_prediction/data/`
 
-## BlastDT2 one-time backfill
+**輸出檔名/欄位**
+- `YYYYMMDD_BlastLSTLS.csv`：`站號,站名,日期,lat,lon,BlastLSTLS`
+- `YYYYMMDD_BlastGRU-TW.csv`：`站號,站名,日期,lat,lon,BlastGRU-TW`
+- `YYYYMMDD_BLBTSLS.csv`：`站號,站名,日期,lat,lon,BLBTSLS`
+- `YYYYMMDD_BlastTF.csv`：`站號,站名,lat,lon,日期,BlastTF`
 
-Use workflow `.github/workflows/blastdt2-backfill.yml` (manual trigger) to backfill BlastDT2 outputs for historical dates.
+**檔案格式範例**
 
-- Default window: `2025-01-01` to `2026-12-31`
-- Inputs can be adjusted in `workflow_dispatch` (`start_date`, `end_date`).
-- Runs `scripts/run_blastdt2_backfill.sh`, which executes:
-  - `models/BlastDT2/fetch_and_convert.py` (with date-range env vars)
-  - `models/recent_forecast_organizer.py`
-  - `models/crop_season_avg.py`
-- Daily pipeline BlastDT2 conversion now defaults to process **previous + current year** to avoid missing early-year dates after incubation shift.
+```csv
+站號,站名,日期,lat,lon,BlastLSTLS
+C0F9M0,豐原,2013-01-01,24.254322,120.720692,0.02
+```
+
+```csv
+站號,站名,日期,lat,lon,BlastGRU-TW
+C0F9M0,豐原,2013-01-01,24.254322,120.720692,0.0017619862
+```
+
+```csv
+站號,站名,日期,lat,lon,BLBTSLS
+C0F9M0,豐原,2013-01-01,24.254322,120.720692,1.0862185e-08
+```
+
+```csv
+站號,站名,lat,lon,日期,BlastTF
+C0F9M0,豐原,24.254322,120.720692,2013-01-01,0.0104
+```
+
+---
+
+### 3.3 BlastDT2（`models/BlastDT2/fetch_and_convert.py`）
+
+**資料來源**
+- 由 `fetch_and_convert.py` 抓取上游 BlastDT2 資料並轉成本 repo 的標準格式。
+
+**前處理**
+- 日期欄位正規化
+- 站點欄位對應
+- 按日期分檔輸出
+
+**輸出位置/格式**
+- `rice_blast_prediction/data/YYYYMMDD_BlastDT2.csv`
+- 欄位：`站號,站名,日期,lat,lon,BlastDT2`
+
+```csv
+站號,站名,日期,lat,lon,BlastDT2
+C0E820,獅潭,2013-01-05,24.539133,120.920042,0.0
+```
+
+---
+
+### 3.4 BLASTAM（`models/BLASTAM/run_blastam.py`）
+
+**資料來源**
+- 站點清單：`weather_station_list`（GitHub raw CSV）
+- 氣象：Open-Meteo archive + forecast
+
+**抓取欄位（小時）**
+- `temperature_2m`
+- `precipitation`
+- `windspeed_10m`
+- `winddirection_10m`
+- `sunshine_duration`
+- `direct_radiation`
+
+**前處理與規則**
+- 5 天（120 小時）視窗，每 24 小時滑動一次
+- 風速換算：`km/h -> m/s`（除以 3.6）
+- 日照換算：
+  - 優先 `sunshine_duration / 3600`（0~1）
+  - 若無則回退 `direct_radiation / 120`（0~1）
+- 使用 `koshimizu_model` 產生 `BLASTAM` 風險分數
+- 最終日期會再加上 `BLASTAM_INCUBATION_DAYS`（預設 7 天）
+
+**輸出位置/格式**
+- `rice_blast_prediction/data/YYYYMMDD_BLASTAM.csv`
+- 欄位：`站名,站號,日期,lat,lon,BLASTAM`
+
+```csv
+站名,站號,日期,lat,lon,BLASTAM
+口湖工作站,12J990,2018-04-05,23.589978,120.180394,0.0
+```
+
+---
+
+## 4) 中間整併檔與最終檔（你要的「中間檔格式」）
+
+### 4.1 中間整併：`recent_forecast_organizer.py`
+
+**輸入**
+- `rice_blast_prediction/data/YYYYMMDD_{BlastGRU-TW|BlastDT2|BlastLSTLS|BLBTSLS|BLASTAM}.csv`
+- （可選）planthopper 資料（由 `PLAN_FOLDER` 提供）
+
+**處理**
+- 把同一天不同模型按 `站號` 合併
+- 再彙整為「每站一個檔」
+
+**輸出**
+- `rice_blast_prediction/recent_daily_by_station/<站號>.csv`
+- `rice_blast_prediction/recent_daily_by_station/station_list.csv`
+
+**格式範例：每站檔**
+
+```csv
+站號,站名,日期,lat,lon,BlastGRU-TW,BlastDT2,BlastLSTLS,BLBTSLS,BLASTAM,planthopper
+C0R490,九如,2026-02-14,22.7405,120.490503,0.29004195,0.0,0.41,1.2132391e-07,0.0,0.0
+```
+
+**格式範例：站點清單**
+
+```csv
+站號,站名,lon,lat
+C0R880,後壁湖,120.7457,21.9457
+```
+
+### 4.2 最終摘要：`crop_season_avg.py`
+
+**輸入**
+- 讀取 `rice_blast_prediction/data/` 的每日模型檔
+- 依作期期間計算今年高風險日數 + 近十年平均
+
+**輸出**
+- `rice_blast_prediction/recent_summary.csv`
+
+**格式範例**
+
+```csv
+站號,站名,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BLASTAM_avg,planthopper_avg
+467571,新竹,24.827853,121.014219,0.0,22.0,8.0,7.0,0.0,0.0,0.0,18.3,27.2,9.8,0.42857142857142855,
+```
+
+---
+
+## 5) 目錄整理原則
+
+- `scripts/`：目前每日自動化仍在用的主腳本
+- `legacy/`：一次性 backfill 與舊流程（不影響每日排程）
+- `.github/workflows/`：排程與手動 workflow 定義
+- `models/`：模型與整併邏輯
+

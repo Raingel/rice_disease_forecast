@@ -47,7 +47,7 @@ jobs:
           PLAN_FOLDER: ""
           BLASTAM_BACKFILL_START_DATE: ${{ inputs.start_date }}
           BLASTAM_BACKFILL_END_DATE: ${{ inputs.end_date }}
-        run: bash scripts/run_blastam_backfill_2024_2025.sh
+        run: bash legacy/scripts/run_blastam_backfill_2024_2025.sh
 
       - name: Commit and push updated outputs
         run: |
