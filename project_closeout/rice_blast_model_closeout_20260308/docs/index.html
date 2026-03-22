@@ -1,0 +1,172 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>稻熱病預測模型結案文件</title>
+  <style>
+    :root { --bg:#f4f7fb; --card:#ffffff; --ink:#123; --muted:#4d5b6a; --line:#d9e2ec; --accent:#0f766e; }
+    body { margin:0; font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif; background:var(--bg); color:var(--ink); }
+    .wrap { max-width:1100px; margin:0 auto; padding:24px; }
+    .hero { background:linear-gradient(135deg,#0f766e,#1d4ed8); color:#fff; border-radius:14px; padding:24px; }
+    .hero h1 { margin:0 0 8px 0; font-size:30px; }
+    .hero p { margin:0; opacity:.95; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
+    h2 { margin:0 0 8px 0; font-size:20px; }
+    ul { margin:8px 0 0 18px; }
+    code { background:#eef2ff; padding:1px 5px; border-radius:6px; }
+    .kpi { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px; }
+    .kpi .card { text-align:center; }
+    .num { font-size:22px; font-weight:700; color:var(--accent); }
+    .muted { color:var(--muted); }
+    .wide { margin-top:14px; }
+    .img2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    img { width:100%; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .footer { margin-top:16px; color:var(--muted); font-size:13px; }
+    @media (max-width:900px){ .grid,.img2,.kpi { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>台灣稻熱病預測模型結案包</h1>
+      <p>定版日期：2026-03-08｜用途：部署交接、後續維運、給 ChatGPT/Codex 快速接手</p>
+    </section>
+
+    <section class="kpi">
+      <div class="card"><div class="muted">主模型</div><div class="num">TCN+Attention</div></div>
+      <div class="card"><div class="muted">Held-out 年份</div><div class="num">2024/2025</div></div>
+      <div class="card"><div class="muted">最佳 MCC</div><div class="num">0.6872</div></div>
+      <div class="card"><div class="muted">決策門檻</div><div class="num">0.23</div></div>
+    </section>
+
+    <section class="grid wide">
+      <div class="card">
+        <h2>1. 結案交付內容</h2>
+        <ul>
+          <li>模型：<code>../model/final_model.pt</code></li>
+          <li>Metadata：<code>../model/model_metadata.json</code></li>
+          <li>證據資料：<code>../evidence/*.csv</code></li>
+          <li>結案清單：<code>../CLOSEOUT_MANIFEST.json</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>2. 流程摘要（到訓練定版）</h2>
+        <ul>
+          <li>調查資料清理與標註（class 0/1）</li>
+          <li>氣象資料對齊與特徵打包</li>
+          <li>模型搜尋（GRU/BiGRU/LSTM/TCN + Attention）</li>
+          <li>以 MCC 為主選定 TCN+Attention 作為主模型</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>3. 模型重點說明（部署端）</h2>
+      <ul>
+        <li>任務：稻熱病二元風險預測（發生/不發生）。</li>
+        <li>輸入視窗：監測日前 -30 至 -3 天，共 28 time steps。</li>
+        <li>特徵數：10（溫度、濕度、風速、降雨）。</li>
+        <li>輸出：<code>risk_prob</code>，並以 <code>threshold=0.23</code> 產生 class。</li>
+        <li>業務偏好：接受較高 FPR 以降低 FNR（漏報風險）。</li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <h2>4. 高低發年固定比較（2013/2019 vs 2016/2020）</h2>
+      <p class="muted">此區展示西南部關鍵田區的年初風險起升與氣象差異，作為風險營運判讀輔助。</p>
+      <div class="img2">
+        <img src="assets/fig_fixed_years_sw_early_risk_main.png" alt="固定年度主圖">
+        <img src="assets/fig_fixed_years_sw_by_site_with_location.png" alt="固定年度分田區圖">
+      </div>
+      <div class="img2" style="margin-top:10px;">
+        <img src="assets/fig_fixed_years_weather_topdiff.png" alt="固定年度氣象差異圖">
+        <img src="assets/fig_confusion_matrix.png" alt="混淆矩陣">
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>5. 一致性重跑範例（2008/08/16-2009/09/13）</h2>
+      <ul>
+        <li>用途：讓人員與 Codex 在新環境可重跑下載與預測流程，逐步比對是否一致。</li>
+        <li>下載來源：Open-Meteo Archive API（固定時間區間與座標）。</li>
+        <li>流程：下載日資料 -> 前處理/標準化 -> 28-step 視窗 -> 模型推論 -> 門檻分類。</li>
+        <li>文件：<code>REPLAY_20080816_20090913.md</code></li>
+        <li>範例輸入：<code>../evidence/replay_example_input_weather.csv</code></li>
+        <li>範例輸出：<code>../evidence/replay_example_output_prediction.csv</code></li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <h2>6. 對 ChatGPT/Codex 的接手指引</h2>
+      <ul>
+        <li>先讀：<code>../CLOSEOUT_MANIFEST.json</code></li>
+        <li>再讀：<code>../model/model_metadata.json</code> 取得模型契約</li>
+        <li>部署前檢查：<code>DEPLOYMENT_QUICKSTART.md</code></li>
+        <li>重跑比對：<code>REPLAY_20080816_20090913.md</code></li>
+      </ul>
+    </section>
+
+    <div class="footer">檔案編碼：UTF-8。若瀏覽器顯示舊圖或破圖，請用 Ctrl+F5 強制重整。</div>
+  </div>
+
+  <script id="project-context-json" type="application/json">
+  {
+    "project": "台灣稻熱病預測模型",
+    "status": "closed",
+    "closeout_date": "2026-03-08",
+    "objective": "binary blast risk forecasting",
+    "best_model": {
+      "path": "../model/final_model.pt",
+      "metadata": "../model/model_metadata.json",
+      "architecture": "tcn_attn",
+      "metric": "mcc",
+      "mcc": 0.6871998186193661,
+      "threshold": 0.23,
+      "val_years": [2024, 2025]
+    }
+  }
+  </script>
+
+  <script id="deployment-contract-json" type="application/json">
+  {
+    "input_contract": {
+      "time_steps": 28,
+      "feature_count": 10,
+      "feature_order_source": "../model/model_metadata.json -> feature_selection.selected_z_features"
+    },
+    "output_contract": {
+      "risk_prob": "float in [0,1]",
+      "decision_threshold": 0.23,
+      "pred_class": "0 or 1"
+    },
+    "ops_preferences": {
+      "optimize_for": "high recall / low FNR",
+      "allow_higher_fpr": true
+    }
+  }
+  </script>
+
+  <script id="replay-contract-json" type="application/json">
+  {
+    "replay_case": {
+      "start_date": "2008-08-16",
+      "end_date": "2009-09-13",
+      "lat": 23.5948,
+      "lon": 120.442,
+      "weather_source": "open-meteo archive",
+      "doc": "REPLAY_20080816_20090913.md",
+      "example_input": "../evidence/replay_example_input_weather.csv",
+      "example_output": "../evidence/replay_example_output_prediction.csv"
+    },
+    "equivalence_checks": [
+      "row_count_and_date_continuity",
+      "feature_order_match_metadata",
+      "risk_prob_abs_diff_lt_1e-6_or_1e-5_cross_hardware",
+      "pred_class_exact_match"
+    ]
+  }
+  </script>
+</body>
+</html>

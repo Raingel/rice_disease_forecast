@@ -1,0 +1,18 @@
+﻿{
+  "checkpoint_type": "state_dict",
+  "param_keys": {
+    "net.0.weight": [32, 10, 3],
+    "net.0.bias": [32],
+    "net.2.weight": [32, 32, 3],
+    "net.2.bias": [32],
+    "attn.weight": [1, 32],
+    "attn.bias": [1],
+    "out.weight": [1, 32],
+    "out.bias": [1]
+  },
+  "validation": {
+    "decision_threshold": 0.23,
+    "mcc": 0.6871998186193661,
+    "acc": 0.8629032258064516
+  }
+}

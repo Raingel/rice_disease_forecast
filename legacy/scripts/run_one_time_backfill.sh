@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 LOG_FILE="${LOG_FILE:-$ROOT_DIR/debug.log}"
 
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -123,6 +123,7 @@ run_era5_models_for_window() {
   BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/230127_GRU" "predictor.py"
   BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
   BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
+  BACKFILL_START_DATE="$chunk_start" BACKFILL_END_DATE="$chunk_end" run_py "$ROOT_DIR/models/BlastGAT" "predict.py"
 }
 
 load_progress_state
@@ -196,3 +197,4 @@ run_py "$ROOT_DIR/models" "recent_forecast_organizer.py"
 run_py "$ROOT_DIR/models" "crop_season_avg.py"
 
 echo "[INFO] One-time backfill completed at $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+

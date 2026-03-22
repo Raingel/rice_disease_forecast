@@ -1,0 +1,13 @@
+{
+  "model_name": "BlastGAT",
+  "raw_score_field": "BlastGAT",
+  "raw_score_semantics": "model probability-like score from the closeout PyTorch inference contract",
+  "decision_threshold": 0.23,
+  "summary_threshold_usage": "This repo uses 0.23 only when counting BlastGAT high-risk days in recent_summary.csv.",
+  "frontend_guidance": {
+    "store_and_exchange": "Use the raw BlastGAT score as the canonical value in APIs/files.",
+    "display_score": "If the frontend wants a 0.5 visual cutoff, compute a separate display_score there instead of overwriting the raw BlastGAT value.",
+    "do_not_overwrite_raw_score": true
+  },
+  "source_closeout_dir": "project_closeout/rice_blast_model_closeout_20260308"
+}

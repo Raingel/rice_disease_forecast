@@ -1,0 +1,68 @@
+{
+  "model_name": "best_model_extended_search",
+  "architecture": {
+    "type": "tcn_attn",
+    "channels": 32,
+    "dropout": 0.2,
+    "lr": 0.0008,
+    "weight_decay": 0.0001
+  },
+  "training": {
+    "seed": 456,
+    "best_epoch": 18,
+    "batch_size": 64,
+    "max_epochs": 100,
+    "patience": 15,
+    "device": "cpu",
+    "pos_weight": 0.5730027548209367
+  },
+  "data_split": {
+    "val_years": [
+      2024,
+      2025
+    ],
+    "n_train": 571,
+    "n_val": 124
+  },
+  "window": {
+    "lookback_days": 30,
+    "gap_days": 3,
+    "rel_day_start": -30,
+    "rel_day_end": -3,
+    "time_steps": 28
+  },
+  "feature_selection": {
+    "selected_z_features": [
+      "temperature_2m_max_z",
+      "temperature_2m_mean_z",
+      "temperature_2m_min_z",
+      "relative_humidity_2m_max_z",
+      "relative_humidity_2m_mean_z",
+      "relative_humidity_2m_min_z",
+      "wind_speed_10m_max_z",
+      "wind_speed_10m_mean_z",
+      "wind_speed_10m_min_z",
+      "precipitation_sum_log1p_z"
+    ]
+  },
+  "inference_contract": {
+    "decision_threshold": 0.23
+  },
+  "val_metrics": {
+    "threshold": 0.23,
+    "mcc": 0.6871998186193661,
+    "accuracy": 0.8629032258064516,
+    "precision": 0.8571428571428571,
+    "recall": 0.9512195121951219,
+    "fpr": 0.30952380952380953,
+    "fnr": 0.04878048780487805,
+    "tp": 78,
+    "tn": 29,
+    "fp": 13,
+    "fn": 4
+  },
+  "comparison": {
+    "previous_main_mcc": 0.6682995203134476,
+    "improved_over_previous": true
+  }
+}

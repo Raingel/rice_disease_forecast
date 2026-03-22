@@ -20,10 +20,11 @@
   2. `models/BlastLSTLS/cron_predict.py`
   3. `models/230127_GRU/predictor.py`
   4. `models/BLBTSLS/predict.py`
-  5. `models/230128_Transformer/predictor_250628.py`（欄位名 `BlastTF`）
-  6. `models/BlastDT2/fetch_and_convert.py`
-  7. `models/recent_forecast_organizer.py`
-  8. `models/crop_season_avg.py`
+  5. `models/230128_Transformer/predictor_250628.py` (column `BlastTF`)
+  6. `models/BlastGAT/predict.py` (column `BlastGAT`; closeout-based PyTorch inference)
+  7. `models/BlastDT2/fetch_and_convert.py`
+  8. `models/recent_forecast_organizer.py`
+  9. `models/crop_season_avg.py`
 
 ### B. 每日 BLASTAM 流程（獨立）
 
@@ -51,11 +52,13 @@ flowchart TD
     D --> E2[BlastGRU-TW]
     D --> E3[BLBTSLS]
     D --> E4[BlastTF]
+    D --> E5[BlastGAT]
 
     E1 --> F[rice_blast_prediction/data/YYYYMMDD_BlastLSTLS.csv]
     E2 --> G[rice_blast_prediction/data/YYYYMMDD_BlastGRU-TW.csv]
     E3 --> H[rice_blast_prediction/data/YYYYMMDD_BLBTSLS.csv]
     E4 --> I[rice_blast_prediction/data/YYYYMMDD_BlastTF.csv]
+    E5 --> I2[rice_blast_prediction/data/YYYYMMDD_BlastGAT.csv]
 
     B --> J[BlastDT2/fetch_and_convert.py]
     J --> K[rice_blast_prediction/data/YYYYMMDD_BlastDT2.csv]
@@ -66,6 +69,8 @@ flowchart TD
     F --> N[recent_forecast_organizer.py]
     G --> N
     H --> N
+    I --> N
+    I2 --> N
     K --> N
     M --> N
     N --> O[rice_blast_prediction/recent_daily_by_station/*.csv]
@@ -75,6 +80,8 @@ flowchart TD
     F --> Q
     G --> Q
     H --> Q
+    I --> Q
+    I2 --> Q
     K --> Q
     M --> Q
     Q --> R[rice_blast_prediction/recent_summary.csv]
@@ -121,13 +128,14 @@ time,temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,winddirectio
 
 ---
 
-### 3.2 BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF
+### 3.2 BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF / BlastGAT
 
 **共同輸入來源**
 - `ERA5/*.csv`（每站小時序列）
 
 **共同前處理概念（依模型程式略有差異）**
 - 小時資料轉日尺度特徵（例如 max/mean/min）
+- `BlastGAT` uses the closeout contract in `project_closeout/rice_blast_model_closeout_20260308` for transform / norm / 28-step window / PyTorch state_dict inference
 - 特徵標準化（依各模型的參考統計檔）
 - 以滑動視窗組成時序輸入，再輸出每日每站風險值
 
@@ -135,30 +143,41 @@ time,temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,winddirectio
 - `rice_blast_prediction/data/`
 
 **輸出檔名/欄位**
-- `YYYYMMDD_BlastLSTLS.csv`：`站號,站名,日期,lat,lon,BlastLSTLS`
-- `YYYYMMDD_BlastGRU-TW.csv`：`站號,站名,日期,lat,lon,BlastGRU-TW`
-- `YYYYMMDD_BLBTSLS.csv`：`站號,站名,日期,lat,lon,BLBTSLS`
-- `YYYYMMDD_BlastTF.csv`：`站號,站名,lat,lon,日期,BlastTF`
+- `YYYYMMDD_BlastLSTLS.csv`?`??,??,??,lat,lon,BlastLSTLS`
+- `YYYYMMDD_BlastGRU-TW.csv`?`??,??,??,lat,lon,BlastGRU-TW`
+- `YYYYMMDD_BLBTSLS.csv`?`??,??,??,lat,lon,BLBTSLS`
+- `YYYYMMDD_BlastTF.csv`?`??,??,lat,lon,??,BlastTF`
+- `YYYYMMDD_BlastGAT.csv`?`??,??,lat,lon,??,BlastGAT`
 
-**檔案格式範例**
+**??????**
 
 ```csv
-站號,站名,日期,lat,lon,BlastLSTLS
-C0F9M0,豐原,2013-01-01,24.254322,120.720692,0.02
+??,??,??,lat,lon,BlastLSTLS
+C0F9M0,??,2013-01-01,24.254322,120.720692,0.02
 ```
 
 ```csv
-站號,站名,日期,lat,lon,BlastGRU-TW
-C0F9M0,豐原,2013-01-01,24.254322,120.720692,0.0017619862
+??,??,??,lat,lon,BlastGRU-TW
+C0F9M0,??,2013-01-01,24.254322,120.720692,0.0017619862
 ```
 
 ```csv
-站號,站名,日期,lat,lon,BLBTSLS
-C0F9M0,豐原,2013-01-01,24.254322,120.720692,1.0862185e-08
+??,??,??,lat,lon,BLBTSLS
+C0F9M0,??,2013-01-01,24.254322,120.720692,1.0862185e-08
 ```
 
 ```csv
-站號,站名,lat,lon,日期,BlastTF
+??,??,lat,lon,??,BlastTF
+C0F9M0,??,24.254322,120.720692,2013-01-01,0.0104
+```
+
+```csv
+??,??,lat,lon,??,BlastGAT
+12J990,KouhuStation,23.589978,120.180394,2026-03-20,0.3303418159
+```
+
+---
+
 C0F9M0,豐原,24.254322,120.720692,2013-01-01,0.0104
 ```
 
@@ -224,22 +243,24 @@ C0E820,獅潭,2013-01-05,24.539133,120.920042,0.0
 ### 4.1 中間整併：`recent_forecast_organizer.py`
 
 **輸入**
-- `rice_blast_prediction/data/YYYYMMDD_{BlastGRU-TW|BlastDT2|BlastLSTLS|BLBTSLS|BLASTAM}.csv`
+- `rice_blast_prediction/data/YYYYMMDD_{BlastGRU-TW|BlastDT2|BlastLSTLS|BLBTSLS|BlastTF|BlastGAT|BLASTAM}.csv`
 - （可選）planthopper 資料（由 `PLAN_FOLDER` 提供）
 
 **處理**
 - 把同一天不同模型按 `站號` 合併
 - 再彙整為「每站一個檔」
-
-**輸出**
-- `rice_blast_prediction/recent_daily_by_station/<站號>.csv`
-- `rice_blast_prediction/recent_daily_by_station/station_list.csv`
-
-**格式範例：每站檔**
+**????????**
 
 ```csv
-站號,站名,日期,lat,lon,BlastGRU-TW,BlastDT2,BlastLSTLS,BLBTSLS,BLASTAM,planthopper
-C0R490,九如,2026-02-14,22.7405,120.490503,0.29004195,0.0,0.41,1.2132391e-07,0.0,0.0
+??,??,??,lat,lon,BlastGRU-TW,BlastDT2,BlastLSTLS,BLBTSLS,BlastTF,BlastGAT,BLASTAM,planthopper
+C0R490,Jiuru,2026-02-14,22.7405,120.490503,0.29004195,0.0,0.41,1.2132391e-07,0.38,0.44,0.0,0.0
+```
+
+**?????????**
+
+```csv
+??,??,lon,lat
+C0R880,???,120.7457,21.9457
 ```
 
 **格式範例：站點清單**
@@ -254,18 +275,16 @@ C0R880,後壁湖,120.7457,21.9457
 **輸入**
 - 讀取 `rice_blast_prediction/data/` 的每日模型檔
 - planthopper 來源：優先 `PLAN_FOLDER` 本機檔，否則 fallback 到 `HYSPLIT-Planthopper-Forecast` 遠端日檔
-- 可選：若存在 `rice_blast_prediction/planthopper_avg_snapshot.csv`（或 `PLAN_AVG_SNAPSHOT_CSV` 指定）則直接帶入 `planthopper_avg`，避免每次重算歷史
-- 可用 `python models/build_planthopper_avg_snapshot.py` 從 `recent_summary.csv` 萃取快照檔
-- 依作期期間計算今年高風險日數 + 近十年平均
-
-**輸出**
-- `rice_blast_prediction/recent_summary.csv`
-
-**格式範例**
+**????**
 
 ```csv
-站號,站名,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BLASTAM_avg,planthopper_avg
-467571,新竹,24.827853,121.014219,0.0,22.0,8.0,7.0,0.0,0.0,0.0,18.3,27.2,9.8,0.42857142857142855,
+??,??,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BlastTF_this_year,BlastGAT_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BlastTF_avg,BlastGAT_avg,BLASTAM_avg,planthopper_avg
+467571,Hsinchu,24.827853,121.014219,0.0,22.0,8.0,7.0,5.0,11.0,0.0,0.0,0.0,18.3,27.2,9.8,6.4,10.2,0.42857142857142855,
+```
+
+---
+站號,站名,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BlastTF_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BlastTF_avg,BLASTAM_avg,planthopper_avg
+467571,新竹,24.827853,121.014219,0.0,22.0,8.0,7.0,5.0,0.0,0.0,0.0,18.3,27.2,9.8,6.4,0.42857142857142855,
 ```
 
 ---

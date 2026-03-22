@@ -34,8 +34,10 @@ run_py "$ROOT_DIR/models/BlastLSTLS" "cron_predict.py"
 run_py "$ROOT_DIR/models/230127_GRU" "predictor.py"
 run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
 run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
+run_py "$ROOT_DIR/models/BlastGAT" "predict.py"
 run_py "$ROOT_DIR/models/BlastDT2" "fetch_and_convert.py"
 run_py "$ROOT_DIR/models" "recent_forecast_organizer.py"
 run_py "$ROOT_DIR/models" "crop_season_avg.py"
 
 echo "[INFO] Daily pipeline completed at $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+

@@ -1,0 +1,57 @@
+﻿{
+    "project_name":  "台灣稻熱病深度學習預測模型",
+    "closeout_date":  "2026-03-08",
+    "package_version":  "v1.2-deployable-fixed",
+    "model":  {
+                  "path":  "model/final_model.pt",
+                  "metadata_path":  "model/model_metadata.json",
+                  "architecture":  "TCN+Attention",
+                  "val_years":  [
+                                    2024,
+                                    2025
+                                ],
+                  "primary_metric":  "MCC",
+                  "best_val_mcc":  0.68719981861936608,
+                  "decision_threshold":  0.23
+              },
+    "evidence_files":  [
+                           "evidence/search_results_extended.csv",
+                           "evidence/feature_importance_permutation.csv",
+                           "evidence/taiwan_year_severity_overall.csv",
+                           "evidence/earlyrise_metrics_fixed_years.csv",
+                           "evidence/weather_diff_fixed_years.csv",
+                           "evidence/replay_example_input_weather.csv",
+                           "evidence/replay_example_output_prediction.csv",
+                           "model/preprocess/norm_params.json",
+                           "model/preprocess/transform_rules.json",
+                           "model/preprocess/norm_params.csv",
+                           "model/final_model_config.json",
+                           "model/final_metrics.csv",
+                           "model/final_metrics_legacy_conflict.csv",
+                           "model/model_state_fingerprint.json",
+                           "model/inference/reference_tcn_attn.py",
+                           "model/inference/replay_check.py"
+                       ],
+    "documentation":  [
+                          "docs/index.html",
+                          "docs/DEPLOYMENT_QUICKSTART.md",
+                          "docs/PROCESS_SPEC.md",
+                          "docs/REPLAY_20080816_20090913.md",
+                          "docs/AGENT_HANDOFF.md",
+                          "docs/INFERENCE_CONTRACT.json",
+                          "docs/MODEL_ARCHITECTURE_SPEC.md"
+                      ],
+    "encoding_policy":  {
+                            "text_files":  "UTF-8",
+                            "html_has_meta_charset_utf8":  true
+                        },
+    "for_llm_handoff":  {
+                            "entrypoint":  "docs/index.html",
+                            "machine_readable_blocks":  [
+                                                            "script#project-context-json",
+                                                            "script#deployment-contract-json",
+                                                            "script#replay-contract-json",
+                                                            "docs/INFERENCE_CONTRACT.json"
+                                                        ]
+                        }
+}

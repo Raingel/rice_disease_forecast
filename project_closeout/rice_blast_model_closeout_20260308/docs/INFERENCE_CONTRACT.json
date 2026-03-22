@@ -1,0 +1,24 @@
+﻿{
+    "model_file":  "model/final_model.pt",
+    "metadata_file":  "model/model_metadata.json",
+    "preprocess":  {
+                       "norm_params":  "model/preprocess/norm_params.json",
+                       "transform_rules":  "model/preprocess/transform_rules.json"
+                   },
+    "input":  {
+                  "time_steps":  28,
+                  "relative_day_range":  [
+                                             -30,
+                                             -3
+                                         ],
+                  "feature_order_source":  "model/model_metadata.json#feature_selection.selected_z_features"
+              },
+    "output":  {
+                   "probability":  "risk_prob",
+                   "decision_threshold":  0.23,
+                   "binary_label":  "pred_class"
+               },
+    "model_loader":  "model/inference/reference_tcn_attn.py",
+    "architecture_spec":  "docs/MODEL_ARCHITECTURE_SPEC.md",
+    "state_fingerprint":  "model/model_state_fingerprint.json"
+}
