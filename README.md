@@ -1,299 +1,268 @@
-# 水稻病害預報自動化（rice_disease_forecast）
+# rice_disease_forecast
 
-這個 repo 是用來做**台灣水稻病害風險的每日自動化更新**，把多模型的預測結果整理成：
+Automated rice disease forecasting for Taiwan  
+台灣水稻病害風險自動化預報系統
 
-- 逐站逐日檔（`rice_blast_prediction/recent_daily_by_station/*.csv`）
-- 全站摘要檔（`rice_blast_prediction/recent_summary.csv`）
-- 每日模型原始輸出（`rice_blast_prediction/data/*.csv`）
+## Overview | 專案簡介
 
----
+This repository is an operational pipeline for daily rice disease forecasting in Taiwan. It uses GitHub Actions to fetch weather data, run multiple forecasting models, organize station-based outputs, and write updated results back to the repository.
 
-## 1) 每日會在什麼時間自動做什麼？
+本 repository 用於台灣水稻病害風險的每日自動化更新。系統會透過 GitHub Actions 定期抓取氣象資料、執行多個預報模型、整理逐站結果，並將更新後的輸出檔回寫到 repository。
 
-### A. 每日主流程（全模型，不含 BLASTAM）
+At present, the operational pipeline includes the following forecast outputs:
 
-- Workflow：`.github/workflows/daily-forecast.yml`
-- 觸發：**每天台灣時間 00:00**（cron: `0 16 * * *`，UTC）
-- 執行腳本：`scripts/run_daily_pipeline.sh`
-- 依序執行：
-  1. `models/ERA5_current_download_cron.py`
-  2. `models/BlastLSTLS/cron_predict.py`
-  3. `models/230127_GRU/predictor.py`
-  4. `models/BLBTSLS/predict.py`
-  5. `models/230128_Transformer/predictor_250628.py` (column `BlastTF`)
-  6. `models/BlastGAT/predict.py` (column `BlastGAT`; closeout-based PyTorch inference)
-  7. `models/BlastDT2/fetch_and_convert.py`
-  8. `models/recent_forecast_organizer.py`
-  9. `models/crop_season_avg.py`
+- BlastGRU-TW
+- BlastDT2
+- BlastLSTLS
+- BLBTSLS
+- BlastTF
+- BlastGAT
+- BLASTAM
+- optional planthopper integration in summary outputs
 
-### B. 每日 BLASTAM 流程（獨立）
-
-- Workflow：`.github/workflows/blastam-forecast.yml`
-- 觸發：**每天台灣時間 00:30**（cron: `30 16 * * *`，UTC）
-- 執行腳本：`scripts/run_blastam_pipeline.sh`
-- 依序執行：
-  1. `models/BLASTAM/run_blastam.py`
-  2. `models/recent_forecast_organizer.py`
-  3. `models/crop_season_avg.py`
+目前的自動化流程以實際每日運行與結果整理為主。一次性回填、初始化或舊版流程則保留在 `legacy/` 或其他手動 workflow 中。
 
 ---
 
-## 2) Workflow 圖（每日自動化）
+## Automated workflows | 自動化排程
 
-```mermaid
-flowchart TD
-    A[GitHub Actions<br/>daily-forecast.yml 00:00] --> B[scripts/run_daily_pipeline.sh]
-    A2[GitHub Actions<br/>blastam-forecast.yml 00:30] --> B2[scripts/run_blastam_pipeline.sh]
+### 1. Daily forecast pipeline
 
-    B --> C[ERA5_current_download_cron.py<br/>抓 Open-Meteo 歷史+預報]
-    C --> D[ERA5/*.csv<br/>每站小時資料]
+- Workflow: `.github/workflows/daily-forecast.yml`
+- Schedule: **00:00 Asia/Taipei every day**
+- Entry script: `scripts/run_daily_pipeline.sh`
 
-    D --> E1[BlastLSTLS]
-    D --> E2[BlastGRU-TW]
-    D --> E3[BLBTSLS]
-    D --> E4[BlastTF]
-    D --> E5[BlastGAT]
+Execution order:
 
-    E1 --> F[rice_blast_prediction/data/YYYYMMDD_BlastLSTLS.csv]
-    E2 --> G[rice_blast_prediction/data/YYYYMMDD_BlastGRU-TW.csv]
-    E3 --> H[rice_blast_prediction/data/YYYYMMDD_BLBTSLS.csv]
-    E4 --> I[rice_blast_prediction/data/YYYYMMDD_BlastTF.csv]
-    E5 --> I2[rice_blast_prediction/data/YYYYMMDD_BlastGAT.csv]
+1. `models/ERA5_current_download_cron.py`
+2. `models/BlastLSTLS/cron_predict.py`
+3. `models/230127_GRU/predictor.py`
+4. `models/BLBTSLS/predict.py`
+5. `models/230128_Transformer/predictor_250628.py`
+6. `models/BlastGAT/predict.py`
+7. `models/BlastDT2/fetch_and_convert.py`
+8. `models/recent_forecast_organizer.py`
+9. `models/crop_season_avg.py`
 
-    B --> J[BlastDT2/fetch_and_convert.py]
-    J --> K[rice_blast_prediction/data/YYYYMMDD_BlastDT2.csv]
+### 2. Daily BLASTAM pipeline
 
-    B2 --> L[BLASTAM/run_blastam.py<br/>Open-Meteo資料 + 規則模型]
-    L --> M[rice_blast_prediction/data/YYYYMMDD_BLASTAM.csv]
+- Workflow: `.github/workflows/blastam-forecast.yml`
+- Schedule: **01:30 Asia/Taipei every day**
+- Entry script: `scripts/run_blastam_pipeline.sh`
 
-    F --> N[recent_forecast_organizer.py]
-    G --> N
-    H --> N
-    I --> N
-    I2 --> N
-    K --> N
-    M --> N
-    N --> O[rice_blast_prediction/recent_daily_by_station/*.csv]
-    N --> P[rice_blast_prediction/recent_daily_by_station/station_list.csv]
+Execution order:
 
-    O --> Q[crop_season_avg.py]
-    F --> Q
-    G --> Q
-    H --> Q
-    I --> Q
-    I2 --> Q
-    K --> Q
-    M --> Q
-    Q --> R[rice_blast_prediction/recent_summary.csv]
-```
+1. `models/BLASTAM/run_blastam.py`
+2. `models/recent_forecast_organizer.py`
+3. `models/crop_season_avg.py`
 
 ---
 
-## 3) 各模型資料從哪裡來？做了哪些前處理？
+## Data sources | 資料來源
 
-> 下方是「每天自動化」路徑。一次性 backfill/舊流程已整理在 `legacy/`。
+### Weather data
 
-### 3.1 ERA5 小時資料製備（`models/ERA5_current_download_cron.py`）
+The daily downloader uses Open-Meteo APIs for both archive and forecast data.
 
-**資料來源**
-- 站點清單：`weather_station_list`（GitHub raw CSV）
-- 氣象資料：Open-Meteo
-  - 歷史：`archive-api.open-meteo.com`
-  - 預報：`api.open-meteo.com`（含 `models=ecmwf_aifs025_single`）
+- Archive: `https://archive-api.open-meteo.com`
+- Forecast: `https://api.open-meteo.com`
 
-**抓取欄位（小時）**
-- `time`
+The downloaded hourly weather variables currently include:
+
 - `temperature_2m`
 - `relativehumidity_2m`
 - `precipitation`
 - `windspeed_10m`
 - `winddirection_10m`
 
-**前處理**
-- 計算風場分量：
-  - `u = windspeed_10m * cos(270 - winddirection_10m)`
-  - `v = windspeed_10m * sin(270 - winddirection_10m)`
-- 合併歷史與預報後，以 `time` 去重。
+The downloader also computes wind vector components `u` and `v` and stores per-station hourly files in the `ERA5/` folder.
 
-**暫存/輸出位置**
-- 輸出到：`ERA5/`（可由 `ERA5_OUTPUT_DIR` 覆寫）
-- 檔名格式：`站號_站名_緯度_經度.csv`
+雖然資料夾名稱為 `ERA5/`，但目前每日自動化下載腳本實際上是透過 Open-Meteo 的 archive 與 forecast API 取得資料，再整理成每站一個 CSV 檔。
 
-**檔案格式範例（`ERA5/*.csv`）**
+### Station list
 
-```csv
-time,temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,winddirection_10m,u,v
-2025-12-15 00:00:00,13.9,79.0,0.0,2.6,74.0,-2.4992804094,-0.7166571251
+Weather station metadata are loaded from:
+
+- `Raingel/weather_station_list`
+
+Only active stations are retained in the daily downloader.
+
+### Planthopper data
+
+Planthopper data are optional.
+
+- local source: `PLAN_FOLDER`
+- remote fallback: `Raingel/HYSPLIT-Planthopper-Forecast`
+
+These values are merged into station summaries when available.
+
+---
+
+## Output files | 主要輸出檔案
+
+### 1. Daily model outputs
+
+Daily model outputs are written to:
+
+```text
+rice_blast_prediction/data/YYYYMMDD_<model>.csv
+```
+
+Examples:
+
+- `YYYYMMDD_BlastGRU-TW.csv`
+- `YYYYMMDD_BlastDT2.csv`
+- `YYYYMMDD_BlastLSTLS.csv`
+- `YYYYMMDD_BLBTSLS.csv`
+- `YYYYMMDD_BlastTF.csv`
+- `YYYYMMDD_BlastGAT.csv`
+- `YYYYMMDD_BLASTAM.csv`
+
+### 2. Station-based recent daily files
+
+Merged station-based daily outputs are written to:
+
+```text
+rice_blast_prediction/recent_daily_by_station/<station_id>.csv
+```
+
+A station list file is also generated at:
+
+```text
+rice_blast_prediction/recent_daily_by_station/station_list.csv
+```
+
+### 3. Summary output
+
+The main summary file is:
+
+```text
+rice_blast_prediction/recent_summary.csv
+```
+
+This file contains station metadata and seasonal summary fields such as:
+
+- `BlastGRU-TW_this_year`
+- `BlastDT2_this_year`
+- `BlastLSTLS_this_year`
+- `BLBTSLS_this_year`
+- `BlastTF_this_year`
+- `BlastGAT_this_year`
+- `BLASTAM_this_year`
+- `planthopper_this_year`
+- corresponding `*_avg` fields for historical same-period averages
+
+中文說明如下：
+
+- `*_this_year` 代表目前季節視窗內的高風險日數
+- `*_avg` 代表歷史同期間的平均高風險日數
+
+For the summary script, the current period is defined as:
+
+- **January 1 to today**, when today is before July 1
+- **July 1 to today**, when today is on or after July 1
+
+這樣的設計是為了對應一年中的前後兩段主要作期視窗。
+
+---
+
+## Processing logic | 處理流程
+
+The operational logic of this repository can be summarized as follows:
+
+1. Load active weather stations
+2. Download recent archive and forecast weather data
+3. Save hourly weather files for each station
+4. Run each disease model
+5. Convert or normalize model outputs into a common daily station format
+6. Merge daily outputs across models
+7. Produce station-level recent daily files
+8. Generate a seasonal summary with current counts and historical averages
+9. Commit updated outputs back to the repository through GitHub Actions when changes are detected
+
+簡單來說，這個 repo 的角色不是單一模型程式，而是把資料下載、模型推論、結果整併與輸出更新接成一條可每天自動執行的雲端流程。
+
+---
+
+## Repository structure | 目錄說明
+
+```text
+.github/workflows/        GitHub Actions workflows
+scripts/                  pipeline entry scripts
+models/                   model runners and organizing logic
+legacy/                   one-time backfill or older workflows
+ERA5/                     per-station hourly weather files
+rice_blast_prediction/    generated prediction outputs
+project_closeout/         model-related closeout assets
+docs/                     supplementary documentation
 ```
 
 ---
 
-### 3.2 BlastLSTLS / BlastGRU-TW / BLBTSLS / BlastTF / BlastGAT
+## Attribution and citation | 出處標註與引用方式
 
-**共同輸入來源**
-- `ERA5/*.csv`（每站小時序列）
+### Required attribution | 使用時請註明之出處
 
-**共同前處理概念（依模型程式略有差異）**
-- 小時資料轉日尺度特徵（例如 max/mean/min）
-- `BlastGAT` uses the closeout contract in `project_closeout/rice_blast_model_closeout_20260308` for transform / norm / 28-step window / PyTorch state_dict inference
-- 特徵標準化（依各模型的參考統計檔）
-- 以滑動視窗組成時序輸入，再輸出每日每站風險值
+If this repository, any part of its workflow, or any forecasting outputs generated from it are used in research, reports, services, presentations, dashboards, or derivative systems, please clearly acknowledge the source as:
 
-**輸出位置**
-- `rice_blast_prediction/data/`
+**臺灣水稻防疫工作團隊**  
+**Taiwan Rice Disease Management Task Force**
 
-**輸出檔名/欄位**
-- `YYYYMMDD_BlastLSTLS.csv`?`??,??,??,lat,lon,BlastLSTLS`
-- `YYYYMMDD_BlastGRU-TW.csv`?`??,??,??,lat,lon,BlastGRU-TW`
-- `YYYYMMDD_BLBTSLS.csv`?`??,??,??,lat,lon,BLBTSLS`
-- `YYYYMMDD_BlastTF.csv`?`??,??,lat,lon,??,BlastTF`
-- `YYYYMMDD_BlastGAT.csv`?`??,??,lat,lon,??,BlastGAT`
+若使用本 repository、其中任一部分工作流程，或由本系統產生之預報結果於研究、報告、簡報、網站、儀表板、服務或衍生系統中，請清楚註明出處為：
 
-**??????**
+**臺灣水稻防疫工作團隊**  
+**Taiwan Rice Disease Management Task Force**
 
-```csv
-??,??,??,lat,lon,BlastLSTLS
-C0F9M0,??,2013-01-01,24.254322,120.720692,0.02
-```
+### Citation | 學術引用
 
-```csv
-??,??,??,lat,lon,BlastGRU-TW
-C0F9M0,??,2013-01-01,24.254322,120.720692,0.0017619862
-```
+This repository includes a `CITATION.cff` file for GitHub citation support.
 
-```csv
-??,??,??,lat,lon,BLBTSLS
-C0F9M0,??,2013-01-01,24.254322,120.720692,1.0862185e-08
-```
+If you use this repository in academic work, please cite the following publication:
 
-```csv
-??,??,lat,lon,??,BlastTF
-C0F9M0,??,24.254322,120.720692,2013-01-01,0.0104
-```
+Ou, J. H., Kuo, C. H., Wu, Y. F., Lin, G. C., Lee, M. H., Chen, R. K., ... & Chen, C. Y. (2023).  
+**Application-oriented deep learning model for early warning of rice blast in Taiwan.**  
+*Ecological Informatics, 73*, 101950.  
+https://doi.org/10.1016/j.ecoinf.2022.101950
 
-```csv
-??,??,lat,lon,??,BlastGAT
-12J990,KouhuStation,23.589978,120.180394,2026-03-20,0.3303418159
-```
+若於學術研究中使用本 repository，請引用下列論文：
+
+Ou, J. H., Kuo, C. H., Wu, Y. F., Lin, G. C., Lee, M. H., Chen, R. K., ... & Chen, C. Y. (2023).  
+**Application-oriented deep learning model for early warning of rice blast in Taiwan.**  
+*Ecological Informatics, 73*, 101950.  
+https://doi.org/10.1016/j.ecoinf.2022.101950
+
+Repository URL:  
+https://github.com/Raingel/rice_disease_forecast
+
+### Recommended acknowledgement text | 建議致謝文字
+
+**English**
+
+This work used the `rice_disease_forecast` repository and/or forecasting outputs developed by the **Taiwan Rice Disease Management Task Force**. Please also cite Ou et al. (2023).
+
+**中文**
+
+本工作使用了由 **臺灣水稻防疫工作團隊** 開發之 `rice_disease_forecast` repository 及／或其預報結果，並請一併引用 Ou et al. (2023)。
 
 ---
 
-C0F9M0,豐原,24.254322,120.720692,2013-01-01,0.0104
-```
+## License | 授權
+
+The source code in this repository is licensed under the **Apache License 2.0**.  
+See [`LICENSE`](./LICENSE) for details.
+
+本 repository 的原始程式碼採用 **Apache License 2.0**。詳細內容請參見 `LICENSE`。
 
 ---
 
-### 3.3 BlastDT2（`models/BlastDT2/fetch_and_convert.py`）
+## Notes | 備註
 
-**資料來源**
-- 由 `fetch_and_convert.py` 抓取上游 BlastDT2 資料並轉成本 repo 的標準格式。
+- This repository is designed for operational daily updates.
+- Historical backfill or one-time setup jobs are separated from the daily pipeline.
+- Output files may change as models, station lists, or data availability are updated.
+- For scientific background of the rice blast forecasting framework, please refer to the cited publication above.
 
-**前處理**
-- 日期欄位正規化
-- 站點欄位對應
-- 按日期分檔輸出
-
-**輸出位置/格式**
-- `rice_blast_prediction/data/YYYYMMDD_BlastDT2.csv`
-- 欄位：`站號,站名,日期,lat,lon,BlastDT2`
-
-```csv
-站號,站名,日期,lat,lon,BlastDT2
-C0E820,獅潭,2013-01-05,24.539133,120.920042,0.0
-```
-
----
-
-### 3.4 BLASTAM（`models/BLASTAM/run_blastam.py`）
-
-**資料來源**
-- 站點清單：`weather_station_list`（GitHub raw CSV）
-- 氣象：Open-Meteo archive + forecast
-
-**抓取欄位（小時）**
-- `temperature_2m`
-- `precipitation`
-- `windspeed_10m`
-- `winddirection_10m`
-- `sunshine_duration`
-- `direct_radiation`
-
-**前處理與規則**
-- 5 天（120 小時）視窗，每 24 小時滑動一次
-- 風速換算：`km/h -> m/s`（除以 3.6）
-- 日照換算：
-  - 優先 `sunshine_duration / 3600`（0~1）
-  - 若無則回退 `direct_radiation / 120`（0~1）
-- 使用 `koshimizu_model` 產生 `BLASTAM` 風險分數
-- 最終日期會再加上 `BLASTAM_INCUBATION_DAYS`（預設 7 天）
-
-**輸出位置/格式**
-- `rice_blast_prediction/data/YYYYMMDD_BLASTAM.csv`
-- 欄位：`站名,站號,日期,lat,lon,BLASTAM`
-
-```csv
-站名,站號,日期,lat,lon,BLASTAM
-口湖工作站,12J990,2018-04-05,23.589978,120.180394,0.0
-```
-
----
-
-## 4) 中間整併檔與最終檔（你要的「中間檔格式」）
-
-### 4.1 中間整併：`recent_forecast_organizer.py`
-
-**輸入**
-- `rice_blast_prediction/data/YYYYMMDD_{BlastGRU-TW|BlastDT2|BlastLSTLS|BLBTSLS|BlastTF|BlastGAT|BLASTAM}.csv`
-- （可選）planthopper 資料（由 `PLAN_FOLDER` 提供）
-
-**處理**
-- 把同一天不同模型按 `站號` 合併
-- 再彙整為「每站一個檔」
-**????????**
-
-```csv
-??,??,??,lat,lon,BlastGRU-TW,BlastDT2,BlastLSTLS,BLBTSLS,BlastTF,BlastGAT,BLASTAM,planthopper
-C0R490,Jiuru,2026-02-14,22.7405,120.490503,0.29004195,0.0,0.41,1.2132391e-07,0.38,0.44,0.0,0.0
-```
-
-**?????????**
-
-```csv
-??,??,lon,lat
-C0R880,???,120.7457,21.9457
-```
-
-**格式範例：站點清單**
-
-```csv
-站號,站名,lon,lat
-C0R880,後壁湖,120.7457,21.9457
-```
-
-### 4.2 最終摘要：`crop_season_avg.py`
-
-**輸入**
-- 讀取 `rice_blast_prediction/data/` 的每日模型檔
-- planthopper 來源：優先 `PLAN_FOLDER` 本機檔，否則 fallback 到 `HYSPLIT-Planthopper-Forecast` 遠端日檔
-**????**
-
-```csv
-??,??,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BlastTF_this_year,BlastGAT_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BlastTF_avg,BlastGAT_avg,BLASTAM_avg,planthopper_avg
-467571,Hsinchu,24.827853,121.014219,0.0,22.0,8.0,7.0,5.0,11.0,0.0,0.0,0.0,18.3,27.2,9.8,6.4,10.2,0.42857142857142855,
-```
-
----
-站號,站名,lat,lon,BlastGRU-TW_this_year,BlastDT2_this_year,BlastLSTLS_this_year,BLBTSLS_this_year,BlastTF_this_year,BLASTAM_this_year,planthopper_this_year,BlastGRU-TW_avg,BlastDT2_avg,BlastLSTLS_avg,BLBTSLS_avg,BlastTF_avg,BLASTAM_avg,planthopper_avg
-467571,新竹,24.827853,121.014219,0.0,22.0,8.0,7.0,5.0,0.0,0.0,0.0,18.3,27.2,9.8,6.4,0.42857142857142855,
-```
-
----
-
-## 5) 目錄整理原則
-
-- `scripts/`：目前每日自動化仍在用的主腳本
-- `legacy/`：一次性 backfill 與舊流程（不影響每日排程）
-- `.github/workflows/`：排程與手動 workflow 定義
-- `.github/workflows/one-time-planthopper-baseline.yml`：一鍵初始化 planthopper baseline（手動執行一次）
-- `models/`：模型與整併邏輯
-
+- 本 repository 主要面向每日運行與結果更新。
+- 歷史回填、初始化與部分舊流程已另外整理，不直接影響每日排程。
+- 隨著模型版本、站點清單或資料來源更新，輸出內容可能會調整。
+- 若需要了解稻熱病預報模型的研究背景，請參考上方引用論文。
