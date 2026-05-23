@@ -54,7 +54,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add .
+            git add rice_blast_prediction/data rice_blast_prediction/recent_daily_by_station rice_blast_prediction/recent_summary.csv ERA5 ERA5_archive
             git commit -m "chore: BlastDT2 backfill ${{ inputs.start_date }} to ${{ inputs.end_date }}"
             git push
           else
