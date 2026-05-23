@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import math
 import os
 import time
+from urllib.error import HTTPError, URLError
 
 ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 ERA5_OUTPUT_DIR = os.getenv("ERA5_OUTPUT_DIR", os.path.join(ROOT_DIR, "ERA5"))
@@ -23,7 +24,7 @@ def fetch_openmeteo_archive_batch(lat_list, lon_list, start="2014-02-12", end="2
         "&hourly=temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,winddirection_10m"
         "&timezone=Asia%2FSingapore"
     )
-    df = pd.read_json(url)
+    df = read_json_with_retry(url, api_name="archive")
     results = []
     for _, row in df.iterrows():
         hourly = row['hourly']
@@ -54,7 +55,7 @@ def fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_day
         f"&past_days={past_days}&forecast_days={forecast_days}&models=ecmwf_aifs025_single"
         "&timezone=Asia%2FSingapore"
     )
-    df = pd.read_json(url)
+    df = read_json_with_retry(url, api_name="forecast")
     results = []
     for _, row in df.iterrows():
         hourly = row['hourly']
@@ -70,6 +71,28 @@ def fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_day
         df_hourly = df_hourly.dropna()
         results.append(df_hourly)
     return results
+
+
+def read_json_with_retry(url, api_name="api", retries=4, base_sleep=8):
+    """
+    讀取 API JSON，遇到暫時性網路錯誤（例如 429/5xx）時自動重試。
+    """
+    for attempt in range(1, retries + 1):
+        try:
+            return pd.read_json(url)
+        except HTTPError as e:
+            transient = e.code in (429, 500, 502, 503, 504)
+            if attempt == retries or not transient:
+                raise
+            wait_s = base_sleep * attempt
+            print(f"[WARN] {api_name} HTTP {e.code}, retry {attempt}/{retries} after {wait_s}s")
+            time.sleep(wait_s)
+        except URLError as e:
+            if attempt == retries:
+                raise
+            wait_s = base_sleep * attempt
+            print(f"[WARN] {api_name} URL error ({e}), retry {attempt}/{retries} after {wait_s}s")
+            time.sleep(wait_s)
 
 # %%
 # 取得要下載的氣象站列表
@@ -97,8 +120,12 @@ for i in range(0, len(df_sta), batch_size):
     lon_list = group['經度'].tolist()
     
     # 批次下載歷史與預報資料
-    archive_results = fetch_openmeteo_archive_batch(lat_list, lon_list, start=past_days_start, end=past_days_end)
-    forecast_results = fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_days=16)
+    try:
+        archive_results = fetch_openmeteo_archive_batch(lat_list, lon_list, start=past_days_start, end=past_days_end)
+        forecast_results = fetch_openmeteo_forecast_batch(lat_list, lon_list, past_days=7, forecast_days=16)
+    except Exception as e:
+        print(f"[WARN] 批次下載失敗，略過此批次 stations {i}~{i+len(group)-1}: {e}")
+        continue
     
     # 依序將每個站點的資料合併並儲存成 CSV
     for idx, (index, row) in enumerate(group.iterrows()):
