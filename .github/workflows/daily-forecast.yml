@@ -5,6 +5,15 @@ on:
     # 00:00 Asia/Taipei = 16:00 UTC (previous day)
     - cron: '0 16 * * *'
   workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Optional backfill start date (YYYY-MM-DD). Leave empty for normal daily mode.'
+        required: false
+        default: ''
+      end_date:
+        description: 'Optional backfill end date (YYYY-MM-DD). Leave empty for normal daily mode.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -40,6 +49,10 @@ jobs:
           OUTPUT_CSV: ${{ github.workspace }}/rice_blast_prediction/recent_summary.csv
           PLAN_FOLDER: ""
           ERA5_OUTPUT_DIR: ${{ github.workspace }}/ERA5
+          BACKFILL_START_DATE: ${{ inputs.start_date || '' }}
+          BACKFILL_END_DATE: ${{ inputs.end_date || '' }}
+          BLASTDT2_BACKFILL_START_DATE: ${{ inputs.start_date || '' }}
+          BLASTDT2_BACKFILL_END_DATE: ${{ inputs.end_date || '' }}
         run: bash scripts/run_daily_pipeline.sh
 
       - name: Commit and push updated outputs
