@@ -16,7 +16,7 @@ export PLAN_FOLDER="${PLAN_FOLDER:-}"
 export ERA5_OUTPUT_DIR="${ERA5_OUTPUT_DIR:-$ROOT_DIR/ERA5}"
 
 # Daily scheduled runs rebuild only the latest rolling forecast window.
-# The furthest in-repo model output is the latest downloaded weather day + 4 days.
+# The furthest Open-Meteo-based model output is the latest downloaded weather day + 4 days.
 BACKFILL_WINDOW_DAYS="${BACKFILL_WINDOW_DAYS:-14}"
 FORECAST_MAX_SHIFT_DAYS="${FORECAST_MAX_SHIFT_DAYS:-4}"
 
@@ -37,12 +37,14 @@ run_py() {
 configure_backfill_window() {
   local supplied_start="${BACKFILL_START_DATE:-}"
   local supplied_end="${BACKFILL_END_DATE:-}"
+  local manual_backfill_window=0
 
   if [[ -n "$supplied_start" || -n "$supplied_end" ]]; then
     if [[ -z "$supplied_start" || -z "$supplied_end" ]]; then
       echo "[ERROR] BACKFILL_START_DATE and BACKFILL_END_DATE must be provided together."
       exit 1
     fi
+    manual_backfill_window=1
     export BACKFILL_START_DATE="$supplied_start"
     export BACKFILL_END_DATE="$supplied_end"
     echo "[INFO] Using requested backfill window: ${BACKFILL_START_DATE} ~ ${BACKFILL_END_DATE}"
@@ -91,9 +93,18 @@ PY
     echo "[INFO] Latest downloaded weather day: ${LATEST_WEATHER_DATE}; max model shift: +${FORECAST_MAX_SHIFT_DAYS} days"
   fi
 
-  # BlastDT2 has its own optional filter names. Use the same rolling window by default.
-  export BLASTDT2_BACKFILL_START_DATE="${BLASTDT2_BACKFILL_START_DATE:-$BACKFILL_START_DATE}"
-  export BLASTDT2_BACKFILL_END_DATE="${BLASTDT2_BACKFILL_END_DATE:-$BACKFILL_END_DATE}"
+  # BlastDT2 is based on a separate upstream repository and has a shorter date horizon.
+  # Scheduled runs let its importer auto-detect its own latest valid 14-day window.
+  # Explicit manual backfills still use the requested common window unless BlastDT2-specific values are supplied.
+  if [[ -n "${BLASTDT2_BACKFILL_START_DATE:-}" || -n "${BLASTDT2_BACKFILL_END_DATE:-}" ]]; then
+    echo "[INFO] BlastDT2 will use its requested own backfill window."
+  elif [[ "$manual_backfill_window" -eq 1 ]]; then
+    export BLASTDT2_BACKFILL_START_DATE="$BACKFILL_START_DATE"
+    export BLASTDT2_BACKFILL_END_DATE="$BACKFILL_END_DATE"
+    echo "[INFO] BlastDT2 will use the requested common backfill window."
+  else
+    echo "[INFO] BlastDT2 will auto-detect its own rolling window."
+  fi
 }
 
 run_py "$ROOT_DIR/models" "ERA5_current_download_cron.py"
