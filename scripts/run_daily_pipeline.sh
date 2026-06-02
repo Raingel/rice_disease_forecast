@@ -15,10 +15,10 @@ export OUTPUT_CSV="${OUTPUT_CSV:-$ROOT_DIR/rice_blast_prediction/recent_summary.
 export PLAN_FOLDER="${PLAN_FOLDER:-}"
 export ERA5_OUTPUT_DIR="${ERA5_OUTPUT_DIR:-$ROOT_DIR/ERA5}"
 
-# GitHub Actions scheduled runs may pass optional workflow inputs as empty strings.
-# Use the broad default window when backfill dates are omitted.
-export BACKFILL_START_DATE="${BACKFILL_START_DATE:-1900-01-01}"
-export BACKFILL_END_DATE="${BACKFILL_END_DATE:-2100-12-31}"
+# Daily scheduled runs rebuild only the latest rolling forecast window.
+# The furthest in-repo model output is the latest downloaded weather day + 4 days.
+BACKFILL_WINDOW_DAYS="${BACKFILL_WINDOW_DAYS:-14}"
+FORECAST_MAX_SHIFT_DAYS="${FORECAST_MAX_SHIFT_DAYS:-4}"
 
 # Compatibility directories for legacy relative outputs (../../rice_blast_prediction/...)
 mkdir -p "$ERA5_OUTPUT_DIR" "$ROOT_DIR/rice_blast_prediction/data" "$ROOT_DIR/rice_blast_prediction/recent_daily_by_station"
@@ -34,7 +34,70 @@ run_py() {
   )
 }
 
+configure_backfill_window() {
+  local supplied_start="${BACKFILL_START_DATE:-}"
+  local supplied_end="${BACKFILL_END_DATE:-}"
+
+  if [[ -n "$supplied_start" || -n "$supplied_end" ]]; then
+    if [[ -z "$supplied_start" || -z "$supplied_end" ]]; then
+      echo "[ERROR] BACKFILL_START_DATE and BACKFILL_END_DATE must be provided together."
+      exit 1
+    fi
+    export BACKFILL_START_DATE="$supplied_start"
+    export BACKFILL_END_DATE="$supplied_end"
+    echo "[INFO] Using requested backfill window: ${BACKFILL_START_DATE} ~ ${BACKFILL_END_DATE}"
+  else
+    local detected_window
+    detected_window="$(python - "$ERA5_OUTPUT_DIR" "$BACKFILL_WINDOW_DAYS" "$FORECAST_MAX_SHIFT_DAYS" <<'PY'
+from pathlib import Path
+import sys
+import pandas as pd
+
+era5_dir = Path(sys.argv[1])
+window_days = int(sys.argv[2])
+max_shift_days = int(sys.argv[3])
+
+if window_days < 1:
+    raise SystemExit("BACKFILL_WINDOW_DAYS must be at least 1")
+
+latest_weather_day = None
+for csv_path in era5_dir.glob("*.csv"):
+    try:
+        times = pd.read_csv(csv_path, usecols=["time"])["time"]
+    except Exception:
+        continue
+    parsed = pd.to_datetime(times, errors="coerce").dropna()
+    if parsed.empty:
+        continue
+    station_latest = parsed.max().normalize()
+    if latest_weather_day is None or station_latest > latest_weather_day:
+        latest_weather_day = station_latest
+
+if latest_weather_day is None:
+    raise SystemExit(f"No valid time values found in {era5_dir}")
+
+latest_output_day = latest_weather_day + pd.Timedelta(days=max_shift_days)
+start_output_day = latest_output_day - pd.Timedelta(days=window_days - 1)
+print(
+    start_output_day.strftime("%Y-%m-%d"),
+    latest_output_day.strftime("%Y-%m-%d"),
+    latest_weather_day.strftime("%Y-%m-%d"),
+)
+PY
+)"
+    read -r BACKFILL_START_DATE BACKFILL_END_DATE LATEST_WEATHER_DATE <<< "$detected_window"
+    export BACKFILL_START_DATE BACKFILL_END_DATE
+    echo "[INFO] Auto backfill window: ${BACKFILL_START_DATE} ~ ${BACKFILL_END_DATE}"
+    echo "[INFO] Latest downloaded weather day: ${LATEST_WEATHER_DATE}; max model shift: +${FORECAST_MAX_SHIFT_DAYS} days"
+  fi
+
+  # BlastDT2 has its own optional filter names. Use the same rolling window by default.
+  export BLASTDT2_BACKFILL_START_DATE="${BLASTDT2_BACKFILL_START_DATE:-$BACKFILL_START_DATE}"
+  export BLASTDT2_BACKFILL_END_DATE="${BLASTDT2_BACKFILL_END_DATE:-$BACKFILL_END_DATE}"
+}
+
 run_py "$ROOT_DIR/models" "ERA5_current_download_cron.py"
+configure_backfill_window
 run_py "$ROOT_DIR/models/BlastLSTLS" "cron_predict.py"
 run_py "$ROOT_DIR/models/230127_GRU" "predictor.py"
 run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
