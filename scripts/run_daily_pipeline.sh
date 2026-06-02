@@ -15,6 +15,11 @@ export OUTPUT_CSV="${OUTPUT_CSV:-$ROOT_DIR/rice_blast_prediction/recent_summary.
 export PLAN_FOLDER="${PLAN_FOLDER:-}"
 export ERA5_OUTPUT_DIR="${ERA5_OUTPUT_DIR:-$ROOT_DIR/ERA5}"
 
+# GitHub Actions scheduled runs may pass optional workflow inputs as empty strings.
+# Use the broad default window when backfill dates are omitted.
+export BACKFILL_START_DATE="${BACKFILL_START_DATE:-1900-01-01}"
+export BACKFILL_END_DATE="${BACKFILL_END_DATE:-2100-12-31}"
+
 # Compatibility directories for legacy relative outputs (../../rice_blast_prediction/...)
 mkdir -p "$ERA5_OUTPUT_DIR" "$ROOT_DIR/rice_blast_prediction/data" "$ROOT_DIR/rice_blast_prediction/recent_daily_by_station"
 mkdir -p "$DATA_FOLDER" "$RECENT_OUTPUT_FOLDER"
@@ -40,4 +45,3 @@ run_py "$ROOT_DIR/models" "recent_forecast_organizer.py"
 run_py "$ROOT_DIR/models" "crop_season_avg.py"
 
 echo "[INFO] Daily pipeline completed at $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-
