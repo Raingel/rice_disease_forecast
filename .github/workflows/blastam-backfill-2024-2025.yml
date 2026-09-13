@@ -1,4 +1,4 @@
-name: One-time: BLASTAM Backfill 2024-2025
+name: BLASTAM Backfill
 
 on:
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-github-actions.txt
 
-      - name: Run BLASTAM backfill (2024-2025)
+      - name: Run BLASTAM backfill
         env:
           PIPELINE_ROOT: ${{ github.workspace }}
           DATA_FOLDER: ${{ github.workspace }}/rice_blast_prediction/data
