@@ -132,8 +132,11 @@ def koshimizu_model(
     assert len(temp_5d) == len(wind_5d) == len(rainfall_5d) == len(sun_shine_5d) == 24 * 5
 
     rainfall_1600_0700 = rainfall_5d[88:104]
-    sun_shine_1600_0700 = sun_shine_5d[88:104]
-    wind_1600_0700 = wind_5d[88:104]
+    sun_shine_1600_0700 = sun_shine_5d[88:104].copy()
+    wind_1600_0700 = wind_5d[88:104].copy()
+    # Koshimizu criterion 1-4: when rain is recorded in the same hour,
+    # wind of exactly 3 m/s is treated as 2 m/s.
+    wind_1600_0700[(rainfall_1600_0700 > 0) & (wind_1600_0700 == 3)] = 2
 
     hour = 16
     leaf_wet = False
@@ -143,6 +146,8 @@ def koshimizu_model(
 
     for rainfall, sunshine, wind in zip(rainfall_1600_0700, sun_shine_1600_0700, wind_1600_0700):
         if key < 15 and rainfall_1600_0700[key + 1] > 0:
+            if not leaf_wet:
+                accumulate_sunshine = 0
             leaf_wet = True
 
         if rainfall_1600_0700[key] > 0 and sun_shine_1600_0700[key] == 0.1:
@@ -188,7 +193,7 @@ def koshimizu_model(
         leaf_wet_dict[h] = False
 
     for rainfall, sunshine, wind in zip(rainfall_0600_1600, sun_shine_0600_1600, wind_0600_1600):
-        if 7 < hour < 16 and rainfall > 0:
+        if 6 <= hour < 16 and rainfall > 0:
             for offset in [-3, -2, -1, 0, 1, 2, 3]:
                 check_hour = hour + offset
                 if check_hour <= 7 or check_hour >= 16:
@@ -214,12 +219,23 @@ def koshimizu_model(
         hour = (hour + 1) % 24
 
     rainfall_1600_1500 = rainfall_5d[88:112]
-    for hour in range(16, 40):
-        if rainfall_1600_1500[hour - 16] > invalid_hourly_rainfall:
-            for ineffective_hour in range(hour - 9, hour + 10):
-                if 16 <= ineffective_hour <= 40:
-                    hour_now = ineffective_hour % 24
-                    leaf_wet_dict[hour_now] = -2
+    heavy_rain_event_starts = []
+    for idx, rainfall in enumerate(rainfall_1600_1500):
+        if rainfall >= invalid_hourly_rainfall:
+            heavy_rain_event_starts.append(idx)
+        if (
+            rainfall >= 3
+            and idx + 1 < len(rainfall_1600_1500)
+            and rainfall_1600_1500[idx + 1] >= 3
+            and (idx == 0 or rainfall_1600_1500[idx - 1] < 3)
+        ):
+            heavy_rain_event_starts.append(idx)
+    for event_idx in sorted(set(heavy_rain_event_starts)):
+        event_hour = 16 + event_idx
+        for ineffective_hour in range(event_hour - 9, event_hour + 10):
+            if 16 <= ineffective_hour < 40:
+                hour_now = ineffective_hour % 24
+                leaf_wet_dict[hour_now] = -2
 
     start = None
     end = None
@@ -240,7 +256,7 @@ def koshimizu_model(
     if wet_period_hrs != 0:
         temp_avg = temp_avg / wet_period_hrs
 
-    temp_towetness_hour_lower_limit = {15: 17, 16: 15, 17: 14, 18: 13, 19: 12, 20: 11, 21: 10, 22: 10, 23: 10, 24: 10, 25: 10}
+    temp_towetness_hour_lower_limit = {15: 17, 16: 15, 17: 14, 18: 13, 19: 12, 20: 11, 21: 11, 22: 10, 23: 10, 24: 10, 25: 10}
     temp_5d_mean = temp_5d.mean()
     wet_period_hrs += wet_period_hrs_compensation
 
@@ -253,9 +269,9 @@ def koshimizu_model(
         elif temp_5d_mean > 25:
             blast_score = 2
 
-        temp_bucket = int(round(temp_avg))
+        temp_bucket = int(math.floor(temp_avg + 0.5))
         temp_bucket = min(max(temp_bucket, 15), 25)
-        if wet_period_hrs > temp_towetness_hour_lower_limit[temp_bucket]:
+        if wet_period_hrs >= temp_towetness_hour_lower_limit[temp_bucket]:
             blast_score = 10
         else:
             blast_score = max(blast_score, 4)
