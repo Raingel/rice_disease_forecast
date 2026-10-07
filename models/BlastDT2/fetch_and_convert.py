@@ -7,6 +7,8 @@ from typing import Optional
 
 import pandas as pd
 
+from record_normalization import normalize_station_year_predictions, merge_station_predictions
+
 # ----------------------------
 # Logging 設定
 # ----------------------------
@@ -83,19 +85,6 @@ def parse_date_range_from_env() -> tuple[Optional[pd.Timestamp], Optional[pd.Tim
         start_dt, end_dt = end_dt, start_dt
     logging.info(f"啟用指定日期範圍：{start_dt.date()} ~ {end_dt.date()}")
     return start_dt, end_dt
-
-
-def parse_blastdt2_value(value) -> float:
-    """Preserve missing upstream values instead of treating them as low risk."""
-    if pd.isna(value):
-        return float('nan')
-
-    text = str(value).strip().lower()
-    if text in {'true', '1', '1.0'}:
-        return 1.0
-    if text in {'false', '0', '0.0'}:
-        return 0.0
-    return float('nan')
 
 
 def ensure_repo_updated(repo_dir: str) -> None:
@@ -243,11 +232,8 @@ for station, csv_path in iter_station_csv_paths(base_path, YEARS):
         logging.warning(f"欄位不足，跳過：{csv_path}，缺少 {sorted(missing_columns)}")
         continue
 
-    df = df[['站號', '站名', 'Date', 'lat', 'lon', 'BlastDT2']].copy()
-    df['BlastDT2'] = df['BlastDT2'].apply(parse_blastdt2_value)
-    df = df.rename(columns={'Date': '日期'})
-    df['日期'] = pd.to_datetime(df['日期'], errors='coerce') + pd.Timedelta(days=INCUBATION_DAYS)
-    df = df[df['日期'].notna()]
+    source_year = int(os.path.splitext(os.path.basename(csv_path))[0])
+    df = normalize_station_year_predictions(df, source_year, INCUBATION_DAYS)
     all_records.append(df)
 
 if processed_files == 0:
@@ -263,11 +249,10 @@ if not all_records:
 # ----------------------------
 # 合併資料並決定本次更新範圍
 # ----------------------------
-combined = pd.concat(all_records, ignore_index=True)
+combined = merge_station_predictions(all_records)
 combined['日期'] = pd.to_datetime(combined['日期'], errors='coerce').dt.normalize()
 combined = combined[combined['日期'].notna()]
 combined['站號'] = combined['站號'].astype(str)
-combined = combined.drop_duplicates(subset=['站號', '日期'], keep='last')
 logging.info(f"總共合併 {len(combined)} 筆資料")
 
 counts = combined.groupby('日期')['站號'].nunique().sort_index()
