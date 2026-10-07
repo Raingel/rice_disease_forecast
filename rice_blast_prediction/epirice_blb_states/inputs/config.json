@@ -1,0 +1,120 @@
+{
+  "model": "EPIRICE bacterial blight / open-source source-parity mode",
+  "model_version": "EPIRICE_BLB_source2023_guide_v1",
+  "time_step": "daily",
+  "site_unit": "one rice leaf within 1 m2 crop stand",
+  "crop_start_source": "county transplanting timepoint from regional_calendar",
+  "duration_days": 120,
+  "onset_index": 20,
+  "rhlim_percent": 90,
+  "rainlim_mm_day": 5,
+  "H0": 100,
+  "I0": 1,
+  "RcOpt": 0.87,
+  "latent_period_p_days": 5,
+  "infectious_period_i_days": 30,
+  "Sx": 3200,
+  "aggregation_a": 4,
+  "RRS": 0.01,
+  "RRG": 0.1,
+  "RcA_points": [
+    [
+      0,
+      1.0
+    ],
+    [
+      10,
+      1.0
+    ],
+    [
+      20,
+      1.0
+    ],
+    [
+      30,
+      0.9
+    ],
+    [
+      40,
+      0.62
+    ],
+    [
+      50,
+      0.43
+    ],
+    [
+      60,
+      0.41
+    ],
+    [
+      70,
+      0.41
+    ],
+    [
+      80,
+      0.41
+    ],
+    [
+      90,
+      0.41
+    ],
+    [
+      100,
+      0.41
+    ],
+    [
+      110,
+      0.41
+    ],
+    [
+      120,
+      0.41
+    ]
+  ],
+  "RcT_points": [
+    [
+      16,
+      0.0
+    ],
+    [
+      19,
+      0.29
+    ],
+    [
+      22,
+      0.44
+    ],
+    [
+      25,
+      0.9
+    ],
+    [
+      28,
+      0.9
+    ],
+    [
+      31,
+      1.0
+    ],
+    [
+      34,
+      0.88
+    ],
+    [
+      37,
+      0.01
+    ],
+    [
+      40,
+      0.0
+    ]
+  ],
+  "wetness_rule": "RcW=1 if RHUM >= 90 OR RAIN >= 5; otherwise RcW=0",
+  "interpolation": "linear between RcA/RcT points; outside range = 0",
+  "important_source_difference": {
+    "Savary_2012_aggregation_a": 1,
+    "open_source_2023_aggregation_a": 4,
+    "Savary_2012_wetness_RH": "daily maximum RH > 90%",
+    "open_source_2023_weather_field": "mean daily RH (RHUM), threshold >= 90%"
+  }
+}
