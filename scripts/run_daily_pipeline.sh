@@ -14,6 +14,8 @@ export RECENT_OUTPUT_FOLDER="${RECENT_OUTPUT_FOLDER:-$ROOT_DIR/rice_blast_predic
 export OUTPUT_CSV="${OUTPUT_CSV:-$ROOT_DIR/rice_blast_prediction/recent_summary.csv}"
 export PLAN_FOLDER="${PLAN_FOLDER:-}"
 export ERA5_OUTPUT_DIR="${ERA5_OUTPUT_DIR:-$ROOT_DIR/ERA5}"
+# EPIRICE needs its crop start even when writing the recent 30-day interval.
+export ERA5_HISTORY_DAYS="${ERA5_HISTORY_DAYS:-150}"
 
 # Daily scheduled runs rebuild only the latest rolling forecast window.
 # The furthest Open-Meteo-based model output is the latest downloaded weather day + 4 days.
@@ -47,6 +49,8 @@ configure_backfill_window() {
     manual_backfill_window=1
     export BACKFILL_START_DATE="$supplied_start"
     export BACKFILL_END_DATE="$supplied_end"
+    export EPIRICE_BACKFILL_START_DATE="${EPIRICE_BACKFILL_START_DATE:-$supplied_start}"
+    export EPIRICE_BACKFILL_END_DATE="${EPIRICE_BACKFILL_END_DATE:-$supplied_end}"
     echo "[INFO] Using requested backfill window: ${BACKFILL_START_DATE} ~ ${BACKFILL_END_DATE}"
   else
     local detected_window
@@ -115,6 +119,7 @@ run_py "$ROOT_DIR/models/BLBTSLS" "predict.py"
 run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
 run_py "$ROOT_DIR/models/BlastGAT" "predict.py"
 run_py "$ROOT_DIR/models/BlastDT2" "fetch_and_convert.py"
+run_py "$ROOT_DIR/models/EPIRICE_BLB" "predict.py"
 run_py "$ROOT_DIR/models" "recent_forecast_organizer.py"
 run_py "$ROOT_DIR/models" "crop_season_avg.py"
 

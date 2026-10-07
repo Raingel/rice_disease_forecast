@@ -108,7 +108,10 @@ print(f"共有 {len(df_sta)} 個有效氣象站")
 
 # %%
 # 定義歷史資料的日期範圍 (避免包含今天，因為 archive API 會出錯)
-past_days_start = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+history_days = int(os.getenv("ERA5_HISTORY_DAYS", "90"))
+if history_days < 1:
+    raise ValueError("ERA5_HISTORY_DAYS must be positive")
+past_days_start = (datetime.now() - timedelta(days=history_days)).strftime("%Y-%m-%d")
 past_days_end = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
 # 設定每批下載 80 個站點

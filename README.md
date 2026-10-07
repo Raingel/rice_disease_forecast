@@ -18,6 +18,7 @@ At present, the operational pipeline includes the following forecast outputs:
 - BlastTF
 - BlastGAT
 - BLASTAM
+- EPIRICE_BLB (county crop scenarios with full daily states)
 - optional planthopper integration in summary outputs
 
 目前的自動化流程以實際每日運行與結果整理為主。一次性回填、初始化或舊版流程則保留在 `legacy/` 或其他手動 workflow 中。
@@ -41,8 +42,9 @@ Execution order:
 5. `models/230128_Transformer/predictor_250628.py`
 6. `models/BlastGAT/predict.py`
 7. `models/BlastDT2/fetch_and_convert.py`
-8. `models/recent_forecast_organizer.py`
-9. `models/crop_season_avg.py`
+8. `models/EPIRICE_BLB/predict.py`
+9. `models/recent_forecast_organizer.py`
+10. `models/crop_season_avg.py`
 
 ### 2. Daily BLASTAM pipeline
 
@@ -87,6 +89,18 @@ Weather station metadata are loaded from:
 
 Only active stations are retained in the daily downloader.
 
+### EPIRICE county crop calendars
+
+EPIRICE_BLB reads the regional Google Sheets CSV on each run and matches counties
+to the station list's `城市` field. It uses the explicitly named transplanting and
+harvest `時間點` columns for both crop seasons. The source2023 parameters supplied
+in EPIRICE_GUIDE are pinned, and all model states are retained. See
+[`models/EPIRICE_BLB/README.md`](models/EPIRICE_BLB/README.md) for sources, units and outputs.
+
+一般每日氣象下載透過 `ERA5_HISTORY_DAYS=150` 保留足夠的作期起始資料，供 EPIRICE
+從插秧日起重建狀態。完整軌跡存於 `rice_blast_prediction/epirice_blb_states/`。
+EPIRICE 活動病害比例未設定作業警戒門檻，因此不加入高風險日數的季節摘要。
+
 ### Planthopper data
 
 Planthopper data are optional.
@@ -117,6 +131,7 @@ Examples:
 - `YYYYMMDD_BlastTF.csv`
 - `YYYYMMDD_BlastGAT.csv`
 - `YYYYMMDD_BLASTAM.csv`
+- `YYYYMMDD_EPIRICE_BLB.csv` (includes full prefixed state fields)
 
 ### 2. Station-based recent daily files
 

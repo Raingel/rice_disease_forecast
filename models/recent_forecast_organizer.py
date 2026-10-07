@@ -24,6 +24,7 @@ MODEL_FILES = {
     "BlastTF": "BlastTF",
     "BlastGAT": "BlastGAT",
     "BLASTAM": "BLASTAM",
+    "EPIRICE_BLB": "EPIRICE_BLB",
 }
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -64,6 +65,8 @@ def normalize_daily_frame(df: pd.DataFrame, value_col: str) -> pd.DataFrame:
     frame = df.copy()
     frame[DATE_COL] = pd.to_datetime(frame[DATE_COL], format="mixed", errors="coerce").dt.strftime("%Y-%m-%d")
     cols = [c for c in [STATION_ID_COL, STATION_NAME_COL, DATE_COL, "lat", "lon", value_col] if c in frame.columns]
+    if value_col == "EPIRICE_BLB":
+        cols.extend(c for c in frame.columns if c.startswith("EPIRICE_BLB_"))
     return frame[cols]
 
 
@@ -78,9 +81,12 @@ def merge_daily_predictions(date_str: str):
         if merged is None:
             merged = df
         else:
+            value_columns = [model_name]
+            if model_name == "EPIRICE_BLB":
+                value_columns.extend(c for c in df.columns if c.startswith("EPIRICE_BLB_"))
             merged = pd.merge(
                 merged,
-                df[[STATION_ID_COL, DATE_COL, model_name]],
+                df[[STATION_ID_COL, DATE_COL, *value_columns]],
                 on=[STATION_ID_COL, DATE_COL],
                 how="left",
             )
