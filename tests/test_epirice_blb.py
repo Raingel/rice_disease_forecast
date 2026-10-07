@@ -12,7 +12,7 @@ import pandas as pd
 
 from models.EPIRICE_BLB.crop_calendar import crop_dates, parse_calendar
 from models.EPIRICE_BLB.model import simulate_epirice_blb
-from models.EPIRICE_BLB.predict import build_parser, daily_weather, run, simulate_crop
+from models.EPIRICE_BLB.predict import build_parser, daily_weather, run, simulate_crop, station_weather_files
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = Path(__file__).parent / "fixtures" / "epirice_blb"
@@ -66,6 +66,30 @@ class CalendarTests(unittest.TestCase):
 
 
 class IntegrationTests(unittest.TestCase):
+    def test_renamed_station_uses_live_metadata_name(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            old = root / '72C440_舊站名_24.950944_121.030583.csv'
+            current = root / '72C440_目前站名_24.950944_121.030583.csv'
+            old.touch()
+            current.touch()
+            stations = pd.DataFrame({'站號': ['72C440'], '站名': ['目前站名'],
+                                     '緯度': [24.950944], '經度': [121.030583]})
+            self.assertEqual(station_weather_files(root, stations)['72C440'], current)
+            duplicate = root / '72C440_目前站名_24.9509440_121.0305830.csv'
+            duplicate.touch()
+            with self.assertRaisesRegex(ValueError, 'Multiple current-coordinate'):
+                station_weather_files(root, stations)
+
+    def test_ambiguous_old_names_are_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            for name in ['舊名一', '舊名二']:
+                (root / f'S1_{name}_24.0_120.0.csv').touch()
+            stations = pd.DataFrame({'站號': ['S1'], '站名': ['新名'], '緯度': [24.0], '經度': [120.0]})
+            with self.assertRaisesRegex(ValueError, 'Multiple current-coordinate'):
+                station_weather_files(root, stations)
+
     def test_hourly_units_complete_days_and_gaps(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "weather.csv"

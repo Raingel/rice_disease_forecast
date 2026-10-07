@@ -75,7 +75,14 @@ def station_weather_files(folder: Path, stations: pd.DataFrame) -> dict[str, Pat
                    if abs(lat - float(station["緯度"])) <= 1e-6
                    and abs(lon - float(station["經度"])) <= 1e-6]
         if len(matches) > 1:
-            raise ValueError(f"Multiple current-coordinate weather files for {station['站號']}")
+            # Renamed stations leave old-name files behind in the shared folder.
+            # The downloader writes the live metadata name; never choose by mtime.
+            current_name = [p for p in matches
+                            if "_".join(p.stem.split("_")[1:-2]) == str(station["站名"])]
+            if len(current_name) == 1:
+                matches = current_name
+            else:
+                raise ValueError(f"Multiple current-coordinate weather files for {station['站號']}: {[p.name for p in matches]}")
         if matches:
             found[str(station["站號"])] = matches[0]
     return found
@@ -252,6 +259,7 @@ def run(args: argparse.Namespace) -> dict:
     report = {"model_version": config["model_version"], "as_of": args.as_of.isoformat(),
               "generated_at": generated_at, "start_date": start_date.isoformat(), "end_date": end_date.isoformat(),
               "source_urls": {"calendar": args.calendar, "stations": args.station_list},
+              "selected_weather_files": {sid: path.name for sid, path in files.items()},
               "input_sha256": {"calendar": hashlib.sha256(calendar_text.encode()).hexdigest(),
                                "stations": hashlib.sha256(station_text.encode()).hexdigest(),
                                "config": hashlib.sha256(config_text.encode()).hexdigest()},
