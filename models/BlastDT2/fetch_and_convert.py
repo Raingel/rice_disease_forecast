@@ -234,6 +234,9 @@ for station, csv_path in iter_station_csv_paths(base_path, YEARS):
 
     source_year = int(os.path.splitext(os.path.basename(csv_path))[0])
     df = normalize_station_year_predictions(df, source_year, INCUBATION_DAYS)
+    if df.empty:
+        logging.warning(f"無本年度有效資料，不產生預報列：{csv_path}")
+        continue
     all_records.append(df)
 
 if processed_files == 0:

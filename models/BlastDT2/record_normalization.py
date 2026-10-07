@@ -17,6 +17,12 @@ def parse_blastdt2_value(value) -> float:
 
 def normalize_station_year_predictions(df, source_year, incubation_days=5):
     """Select the annual file's own infection dates before shifting dates."""
+    # Upstream emits one metadata-only row when a station has no annual data.
+    # Accept only that exact shape; malformed dates with real data still fail.
+    metadata = {'站號', '站名', 'lat', 'lon'}
+    payload_columns = [c for c in df.columns if c not in metadata]
+    if len(df) == 1 and df[payload_columns].isna().all().all():
+        return pd.DataFrame(columns=['站號', '站名', '日期', 'lat', 'lon', 'BlastDT2'])
     dates = pd.to_datetime(df['Date'], errors='coerce')
     if dates.isna().any():
         raise ValueError(f'Invalid infection date in source year {source_year}')

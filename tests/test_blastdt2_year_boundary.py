@@ -72,6 +72,22 @@ class YearBoundaryTests(unittest.TestCase):
             records.normalize_station_year_predictions(
                 annual_frame(['not-a-date'], [True]), 2025)
 
+    def test_metadata_only_annual_placeholder_is_empty(self):
+        frame = annual_frame([None], [None])
+        frame['Tx'] = None
+        result = records.normalize_station_year_predictions(frame, 2026)
+        self.assertTrue(result.empty)
+        self.assertEqual(list(result.columns), ['站號', '站名', '日期', 'lat', 'lon', 'BlastDT2'])
+
+    def test_missing_date_with_prediction_or_weather_still_fails(self):
+        for frame in [annual_frame([None], [True]), annual_frame([None], [None]).assign(Tx=25)]:
+            with self.assertRaisesRegex(ValueError, 'Invalid infection date'):
+                records.normalize_station_year_predictions(frame, 2026)
+
+    def test_multiple_undated_rows_are_not_a_placeholder(self):
+        with self.assertRaisesRegex(ValueError, 'Invalid infection date'):
+            records.normalize_station_year_predictions(annual_frame([None, None], [None, None]), 2026)
+
 
 if __name__ == '__main__':
     unittest.main()
