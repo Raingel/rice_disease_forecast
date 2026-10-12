@@ -1,0 +1,608 @@
+{
+  "requests": [
+    "https://archive-api.open-meteo.com/v1/archive?latitude=23.793361%2C23.728722%2C23.905333%2C23.961944%2C23.961922%2C23.820778%2C23.668178%2C23.754486%2C23.952956%2C23.986803%2C23.563333%2C24.018778%2C24.191961%2C23.478744%2C23.594153%2C23.639517%2C23.858572%2C23.761508%2C23.979067%2C23.585344%2C23.406728%2C23.251928%2C23.537022%2C23.406364%2C23.496606&longitude=120.949378%2C120.712097%2C120.846983%2C120.845%2C120.991131%2C120.642594%2C120.887417%2C120.883956%2C121.178556%2C121.076117%2C120.868728%2C121.004456%2C121.224339%2C120.878939%2C120.944286%2C120.786444%2C120.994889%2C120.832956%2C120.867742%2C120.180517%2C120.654417%2C120.576103%2C120.607797%2C120.603339%2C120.663506&start_date=2025-01-01&end_date=2025-12-31&hourly=temperature_2m%2Crelativehumidity_2m%2Cprecipitation&timezone=Asia%2FSingapore",
+    "https://archive-api.open-meteo.com/v1/archive?latitude=23.793361%2C23.728722%2C23.905333%2C23.961944%2C23.961922%2C23.820778%2C23.668178%2C23.754486%2C23.952956%2C23.986803%2C23.563333%2C24.018778%2C24.191961%2C23.478744%2C23.594153%2C23.639517%2C23.858572%2C23.761508%2C23.979067%2C23.585344%2C23.406728%2C23.251928%2C23.537022%2C23.406364%2C23.496606&longitude=120.949378%2C120.712097%2C120.846983%2C120.845%2C120.991131%2C120.642594%2C120.887417%2C120.883956%2C121.178556%2C121.076117%2C120.868728%2C121.004456%2C121.224339%2C120.878939%2C120.944286%2C120.786444%2C120.994889%2C120.832956%2C120.867742%2C120.180517%2C120.654417%2C120.576103%2C120.607797%2C120.603339%2C120.663506&start_date=2026-01-01&end_date=2026-10-11&hourly=temperature_2m%2Crelativehumidity_2m%2Cprecipitation&timezone=Asia%2FSingapore"
+  ],
+  "stations": [
+    {
+      "station_id": "C1I150",
+      "hourly_sha256": "dbd63a17a7929bdd86840925f95e7f8177c0662fcdd5240345c16977f239f904",
+      "request_coordinates": [
+        23.793361,
+        120.949378
+      ],
+      "returned_coordinates": [
+        [
+          23.86643,
+          120.85715
+        ],
+        [
+          23.86643,
+          120.85715
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I201",
+      "hourly_sha256": "96f09283a052f9ff43b667c8e177deee529da22b912cff2cb6084a55782ccbd2",
+      "request_coordinates": [
+        23.728722,
+        120.712097
+      ],
+      "returned_coordinates": [
+        [
+          23.725834,
+          120.69694
+        ],
+        [
+          23.725834,
+          120.69694
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I220",
+      "hourly_sha256": "e1a9f28bfd2d7948eef466c2300fe1f15605158f28374c415156aa87615e2309",
+      "request_coordinates": [
+        23.905333,
+        120.846983
+      ],
+      "returned_coordinates": [
+        [
+          23.86643,
+          120.952385
+        ],
+        [
+          23.86643,
+          120.952385
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I230",
+      "hourly_sha256": "974b11f69dc6675e89715a67fd73a29653a207156037d4d5813169130beacb60",
+      "request_coordinates": [
+        23.961944,
+        120.845
+      ],
+      "returned_coordinates": [
+        [
+          23.93673,
+          120.88983
+        ],
+        [
+          23.93673,
+          120.88983
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I250",
+      "hourly_sha256": "f78810ecbea9cda5c5c668edbc2cfd4d904a65fc9ea3f6e6db966c319ddaffe2",
+      "request_coordinates": [
+        23.961922,
+        120.991131
+      ],
+      "returned_coordinates": [
+        [
+          23.93673,
+          120.985176
+        ],
+        [
+          23.93673,
+          120.985176
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I280",
+      "hourly_sha256": "74c99f52de9eaf59fc3ea884a7395b5620be875133a5d29e373a94e1060d2355",
+      "request_coordinates": [
+        23.820778,
+        120.642594
+      ],
+      "returned_coordinates": [
+        [
+          23.796133,
+          120.729385
+        ],
+        [
+          23.796133,
+          120.729385
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I290",
+      "hourly_sha256": "516e74d459f444b046af68b58cc002b64cd57d7c1bafac93f1ac4cf35899a84f",
+      "request_coordinates": [
+        23.668178,
+        120.887417
+      ],
+      "returned_coordinates": [
+        [
+          23.655535,
+          120.85442
+        ],
+        [
+          23.655535,
+          120.85442
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I310",
+      "hourly_sha256": "07e6a41e6003f97ddd0b30c4db8c652332835fcae12f9badc58f8761f203a747",
+      "request_coordinates": [
+        23.754486,
+        120.883956
+      ],
+      "returned_coordinates": [
+        [
+          23.725834,
+          120.88702
+        ],
+        [
+          23.725834,
+          120.88702
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I320",
+      "hourly_sha256": "a9cab39bb193ad6937a88410d1f54cd5946d7b79a004ef7240e20387ef31cf75",
+      "request_coordinates": [
+        23.952956,
+        121.178556
+      ],
+      "returned_coordinates": [
+        [
+          23.93673,
+          121.08051
+        ],
+        [
+          23.93673,
+          121.08051
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I330",
+      "hourly_sha256": "1ca4824452de1d140aa9e882d49bc66f02c7029a246dc0bb36c3654afbaed54a",
+      "request_coordinates": [
+        23.986803,
+        121.076117
+      ],
+      "returned_coordinates": [
+        [
+          23.93673,
+          121.08051
+        ],
+        [
+          23.93673,
+          121.08051
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I340",
+      "hourly_sha256": "05f0913b583ae6465be98cb8521aceca6ee5f9da03ab433fa0d337baff81fba4",
+      "request_coordinates": [
+        23.563333,
+        120.868728
+      ],
+      "returned_coordinates": [
+        [
+          23.655535,
+          120.75949
+        ],
+        [
+          23.655535,
+          120.75949
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I400",
+      "hourly_sha256": "34f7f18c982c8e85bbe8a6ba22c65e905823f68c6dc047124b0bc6214551afa1",
+      "request_coordinates": [
+        24.018778,
+        121.004456
+      ],
+      "returned_coordinates": [
+        [
+          24.007029,
+          121.113464
+        ],
+        [
+          24.007029,
+          121.113464
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I430",
+      "hourly_sha256": "6fe29ee7bd6ba14340beeb43dc630d0a008925941646ebdd2d05bb3ee14560c2",
+      "request_coordinates": [
+        24.191961,
+        121.224339
+      ],
+      "returned_coordinates": [
+        [
+          24.217924,
+          121.21277
+        ],
+        [
+          24.217924,
+          121.21277
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I440",
+      "hourly_sha256": "2a1b5b8dda4783f2d8f25cf02493003aaa7cbd5f0df9a657bb7ed896f50b65a6",
+      "request_coordinates": [
+        23.478744,
+        120.878939
+      ],
+      "returned_coordinates": [
+        [
+          23.44464,
+          120.94637
+        ],
+        [
+          23.44464,
+          120.94637
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I450",
+      "hourly_sha256": "98ee60d3b066ce886074b614c37523908214404f35f6a72b79d780cff577b12b",
+      "request_coordinates": [
+        23.594153,
+        120.944286
+      ],
+      "returned_coordinates": [
+        [
+          23.514936,
+          121.073685
+        ],
+        [
+          23.514936,
+          121.073685
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I470",
+      "hourly_sha256": "464e67c612ebbb0f56d38c489f1e0d8b3e354465486cb623485b558084d369e3",
+      "request_coordinates": [
+        23.639517,
+        120.786444
+      ],
+      "returned_coordinates": [
+        [
+          23.585236,
+          120.821915
+        ],
+        [
+          23.585236,
+          120.821915
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I500",
+      "hourly_sha256": "b894756fe7c5eb0e9410ff21235954541bf0c72e65c4096f4b37686ba0bd17cf",
+      "request_coordinates": [
+        23.858572,
+        120.994889
+      ],
+      "returned_coordinates": [
+        [
+          23.796133,
+          121.10993
+        ],
+        [
+          23.796133,
+          121.10993
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I510",
+      "hourly_sha256": "426f45bd07b2b948364fb11c96d815cfe122c094432eab462997979eea0c2f7f",
+      "request_coordinates": [
+        23.761508,
+        120.832956
+      ],
+      "returned_coordinates": [
+        [
+          23.725834,
+          120.88702
+        ],
+        [
+          23.725834,
+          120.88702
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1I550",
+      "hourly_sha256": "d72628f80cca57f8bbb23cbd7e76336d6b4a894d64fd8730cf8a7fee39b97cd7",
+      "request_coordinates": [
+        23.979067,
+        120.867742
+      ],
+      "returned_coordinates": [
+        [
+          24.007029,
+          120.82714
+        ],
+        [
+          24.007029,
+          120.82714
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1K540",
+      "hourly_sha256": "70748364011d61a61e5c5c595c3931ef5991ab3f1ed526513768f2dd7103552a",
+      "request_coordinates": [
+        23.585344,
+        120.180517
+      ],
+      "returned_coordinates": [
+        [
+          23.585236,
+          120.15806
+        ],
+        [
+          23.585236,
+          120.15806
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1M390",
+      "hourly_sha256": "1d3b8439ae10e38df2d090faec50e22e8c9f2c901dca9d0d496a9ca47efa861c",
+      "request_coordinates": [
+        23.406728,
+        120.654417
+      ],
+      "returned_coordinates": [
+        [
+          23.37434,
+          120.72479
+        ],
+        [
+          23.37434,
+          120.72479
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1M400",
+      "hourly_sha256": "ccac9af7c946f888f7cdd5a81fe9ae646b52a3121531e0cdbd66c19dcda6eba3",
+      "request_coordinates": [
+        23.251928,
+        120.576103
+      ],
+      "returned_coordinates": [
+        [
+          23.233742,
+          120.56604
+        ],
+        [
+          23.233742,
+          120.56604
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1M480",
+      "hourly_sha256": "4185218680190cec7443a549376a5ceafa34d1953b0d2e9dd091727d92effaca",
+      "request_coordinates": [
+        23.537022,
+        120.607797
+      ],
+      "returned_coordinates": [
+        [
+          23.585236,
+          120.63224
+        ],
+        [
+          23.585236,
+          120.63224
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1M600",
+      "hourly_sha256": "a3cfe68814e7459366811987ce3d249567ea0aa9b56479512f5d0b4be7dbe5dc",
+      "request_coordinates": [
+        23.406364,
+        120.603339
+      ],
+      "returned_coordinates": [
+        [
+          23.44464,
+          120.66246
+        ],
+        [
+          23.44464,
+          120.66246
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    },
+    {
+      "station_id": "C1M610",
+      "hourly_sha256": "796877a83293d0b2eb83730dd44203f407abe584b66140f9dfdebda1574c9969",
+      "request_coordinates": [
+        23.496606,
+        120.663506
+      ],
+      "returned_coordinates": [
+        [
+          23.514936,
+          120.69474
+        ],
+        [
+          23.514936,
+          120.69474
+        ]
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "relativehumidity_2m": "%",
+        "precipitation": "mm"
+      }
+    }
+  ]
+}

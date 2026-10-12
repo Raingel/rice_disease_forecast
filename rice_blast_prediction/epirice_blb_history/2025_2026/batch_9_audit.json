@@ -1,0 +1,749 @@
+{
+  "model_version": "EPIRICE_BLB_source2023_guide_v1",
+  "as_of": "2026-10-13",
+  "generated_at": "2026-10-13T06:57:41.508511+08:00",
+  "start_date": "2025-01-01",
+  "end_date": "2026-10-11",
+  "source_urls": {
+    "calendar": "rebuild-inputs/regional_calendar.csv",
+    "stations": "rebuild-inputs/station_list.csv"
+  },
+  "selected_weather_files": {
+    "C0M820": "C0M820_達邦_23.453994_120.749517.csv",
+    "C0M850": "C0M850_表湖_23.241860_120.641660.csv",
+    "C0M860": "C0M860_新美_23.338017_120.683169.csv",
+    "C0M880": "C0M880_好美里_23.336400_120.138000.csv",
+    "C0M9H0": "C0M9H0_水社寮_23.504180_120.660350.csv",
+    "C0M9J0": "C0M9J0_交力坪_23.531680_120.643560.csv",
+    "C0M9K0": "C0M9K0_二萬平_23.508390_120.790110.csv",
+    "C0N010": "C0N010_鯤鯓國小_23.187900_120.088900.csv",
+    "C0N020": "C0N020_城西_23.056800_120.095600.csv",
+    "C0N030": "C0N030_四草_23.023500_120.111600.csv",
+    "C0N040": "C0N040_蘆竹溝_23.234400_120.096100.csv",
+    "C0N050": "C0N050_蚵寮_23.301000_120.110400.csv",
+    "C0O830": "C0O830_北寮_23.079561_120.495008.csv",
+    "C0O840": "C0O840_王爺宮_23.222064_120.400850.csv",
+    "C0O860": "C0O860_大內_23.118850_120.360830.csv",
+    "C0O900": "C0O900_善化_23.112883_120.297219.csv",
+    "C0O960": "C0O960_崎頂_22.959547_120.369317.csv",
+    "C0O970": "C0O970_虎頭埤_23.021375_120.347878.csv",
+    "C0O980": "C0O980_新市_23.061614_120.298197.csv",
+    "C0O990": "C0O990_媽廟_22.991750_120.293525.csv",
+    "C0R100": "C0R100_尾寮山_22.833111_120.683889.csv",
+    "C0R120": "C0R120_上德文_22.763360_120.704580.csv",
+    "C0R130": "C0R130_阿禮_22.742908_120.743678.csv",
+    "C0R140": "C0R140_瑪家_22.682903_120.686639.csv",
+    "C0R150": "C0R150_三地門_22.709889_120.639944.csv"
+  },
+  "input_sha256": {
+    "calendar": "b90f076173209f55f1100ff2dee1c17b3b00a9312a8859f3c82bc0a66a95d54d",
+    "stations": "9d119ae4193070a3077c1c676c5452341f5150349e98c96bf2548a80bb296313",
+    "config": "95957079de79f9524ea2c962046d713bc339d453c27363a76ccd5e9ddb5c77bc"
+  },
+  "input_hash_encoding": "UTF-8 source text without BOM",
+  "calendar_rice_counties": 16,
+  "calendar_seasons": 31,
+  "daily_rows": 10355,
+  "station_scenarios": [
+    {
+      "station_id": "C0M820",
+      "scenario_id": "C0M820_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M820",
+      "scenario_id": "C0M820_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M820",
+      "scenario_id": "C0M820_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M820",
+      "scenario_id": "C0M820_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M850",
+      "scenario_id": "C0M850_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M850",
+      "scenario_id": "C0M850_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M850",
+      "scenario_id": "C0M850_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M850",
+      "scenario_id": "C0M850_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M860",
+      "scenario_id": "C0M860_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M860",
+      "scenario_id": "C0M860_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M860",
+      "scenario_id": "C0M860_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M860",
+      "scenario_id": "C0M860_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M880",
+      "scenario_id": "C0M880_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M880",
+      "scenario_id": "C0M880_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M880",
+      "scenario_id": "C0M880_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M880",
+      "scenario_id": "C0M880_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M9H0",
+      "scenario_id": "C0M9H0_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9H0",
+      "scenario_id": "C0M9H0_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M9H0",
+      "scenario_id": "C0M9H0_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9H0",
+      "scenario_id": "C0M9H0_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M9J0",
+      "scenario_id": "C0M9J0_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9J0",
+      "scenario_id": "C0M9J0_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M9J0",
+      "scenario_id": "C0M9J0_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9J0",
+      "scenario_id": "C0M9J0_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0M9K0",
+      "scenario_id": "C0M9K0_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9K0",
+      "scenario_id": "C0M9K0_2025_2",
+      "status": "ok",
+      "state_rows": 103,
+      "daily_rows": 103
+    },
+    {
+      "station_id": "C0M9K0",
+      "scenario_id": "C0M9K0_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0M9K0",
+      "scenario_id": "C0M9K0_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0N010",
+      "scenario_id": "C0N010_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N010",
+      "scenario_id": "C0N010_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0N010",
+      "scenario_id": "C0N010_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N010",
+      "scenario_id": "C0N010_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0N020",
+      "scenario_id": "C0N020_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N020",
+      "scenario_id": "C0N020_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0N020",
+      "scenario_id": "C0N020_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N020",
+      "scenario_id": "C0N020_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0N030",
+      "scenario_id": "C0N030_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N030",
+      "scenario_id": "C0N030_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0N030",
+      "scenario_id": "C0N030_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N030",
+      "scenario_id": "C0N030_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0N040",
+      "scenario_id": "C0N040_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N040",
+      "scenario_id": "C0N040_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0N040",
+      "scenario_id": "C0N040_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N040",
+      "scenario_id": "C0N040_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0N050",
+      "scenario_id": "C0N050_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N050",
+      "scenario_id": "C0N050_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0N050",
+      "scenario_id": "C0N050_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0N050",
+      "scenario_id": "C0N050_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O830",
+      "scenario_id": "C0O830_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O830",
+      "scenario_id": "C0O830_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O830",
+      "scenario_id": "C0O830_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O830",
+      "scenario_id": "C0O830_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O840",
+      "scenario_id": "C0O840_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O840",
+      "scenario_id": "C0O840_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O840",
+      "scenario_id": "C0O840_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O840",
+      "scenario_id": "C0O840_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O860",
+      "scenario_id": "C0O860_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O860",
+      "scenario_id": "C0O860_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O860",
+      "scenario_id": "C0O860_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O860",
+      "scenario_id": "C0O860_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O900",
+      "scenario_id": "C0O900_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O900",
+      "scenario_id": "C0O900_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O900",
+      "scenario_id": "C0O900_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O900",
+      "scenario_id": "C0O900_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O960",
+      "scenario_id": "C0O960_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O960",
+      "scenario_id": "C0O960_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O960",
+      "scenario_id": "C0O960_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O960",
+      "scenario_id": "C0O960_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O970",
+      "scenario_id": "C0O970_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O970",
+      "scenario_id": "C0O970_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O970",
+      "scenario_id": "C0O970_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O970",
+      "scenario_id": "C0O970_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O980",
+      "scenario_id": "C0O980_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O980",
+      "scenario_id": "C0O980_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O980",
+      "scenario_id": "C0O980_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O980",
+      "scenario_id": "C0O980_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0O990",
+      "scenario_id": "C0O990_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O990",
+      "scenario_id": "C0O990_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0O990",
+      "scenario_id": "C0O990_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0O990",
+      "scenario_id": "C0O990_2026_2",
+      "status": "ok",
+      "state_rows": 69,
+      "daily_rows": 69
+    },
+    {
+      "station_id": "C0R100",
+      "scenario_id": "C0R100_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R100",
+      "scenario_id": "C0R100_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R100",
+      "scenario_id": "C0R100_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R100",
+      "scenario_id": "C0R100_2026_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R120",
+      "scenario_id": "C0R120_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R120",
+      "scenario_id": "C0R120_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R120",
+      "scenario_id": "C0R120_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R120",
+      "scenario_id": "C0R120_2026_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R130",
+      "scenario_id": "C0R130_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R130",
+      "scenario_id": "C0R130_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R130",
+      "scenario_id": "C0R130_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R130",
+      "scenario_id": "C0R130_2026_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R140",
+      "scenario_id": "C0R140_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R140",
+      "scenario_id": "C0R140_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R140",
+      "scenario_id": "C0R140_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R140",
+      "scenario_id": "C0R140_2026_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R150",
+      "scenario_id": "C0R150_2025_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R150",
+      "scenario_id": "C0R150_2025_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    },
+    {
+      "station_id": "C0R150",
+      "scenario_id": "C0R150_2026_1",
+      "status": "ok",
+      "state_rows": 120,
+      "daily_rows": 120
+    },
+    {
+      "station_id": "C0R150",
+      "scenario_id": "C0R150_2026_2",
+      "status": "ok",
+      "state_rows": 98,
+      "daily_rows": 98
+    }
+  ]
+}
