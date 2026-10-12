@@ -1,0 +1,170 @@
+name: Rebuild EPIRICE 2025-2026 history
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rebuild-epirice-history.yml'
+      - 'scripts/rebuild_epirice_history.py'
+  workflow_dispatch:
+    inputs:
+      end_date:
+        description: 'Historical cutoff in 2026, at least two days before today'
+        required: true
+        default: '2026-10-11'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: epirice-history-rebuild
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    # Only this explicitly named deployment commit starts the one-time rebuild.
+    if: "${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'data: start EPIRICE history rebuild 2025-2026' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      batches: ${{ steps.matrix.outputs.batches }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            models/EPIRICE_BLB
+            scripts/rebuild_epirice_history.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - name: Snapshot calendar, stations and expected scenarios
+        env:
+          END_DATE: ${{ inputs.end_date || '2026-10-11' }}
+        run: python scripts/rebuild_epirice_history.py prepare --end-date "$END_DATE"
+      - id: matrix
+        run: |
+          python - <<'PY'
+          import json, os
+          m = json.load(open('rebuild-inputs/manifest.json'))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('batches=' + json.dumps(list(range(len(m['groups'])))) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: epirice-rebuild-inputs
+          path: rebuild-inputs/
+          retention-days: 90
+
+  rebuild:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: ${{ fromJSON(needs.prepare.outputs.batches) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            models/EPIRICE_BLB
+            scripts/rebuild_epirice_history.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - uses: actions/download-artifact@v4
+        with:
+          name: epirice-rebuild-inputs
+          path: rebuild-inputs
+      - name: Restore weather checkpoints on retry
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: epirice-checkpoint-${{ matrix.batch }}
+          path: rebuild-batch/checkpoint
+      - name: Rebuild and verify this station batch
+        env:
+          BATCH_INDEX: ${{ matrix.batch }}
+        run: python scripts/rebuild_epirice_history.py batch --batch-index "$BATCH_INDEX"
+      - name: Preserve completed weather requests even if calculation fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: epirice-checkpoint-${{ matrix.batch }}
+          path: rebuild-batch/checkpoint/
+          overwrite: true
+          retention-days: 90
+          compression-level: 6
+      - name: Preserve verified results
+        uses: actions/upload-artifact@v4
+        with:
+          name: epirice-result-${{ matrix.batch }}
+          path: rebuild-batch/result/
+          overwrite: true
+          retention-days: 90
+          compression-level: 6
+
+  publish:
+    needs: [prepare, rebuild]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            models/EPIRICE_BLB
+            scripts/rebuild_epirice_history.py
+            rice_blast_prediction/epirice_blb_history
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - uses: actions/download-artifact@v4
+        with:
+          name: epirice-rebuild-inputs
+          path: rebuild-inputs
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: epirice-result-*
+          path: rebuild-parts
+      - name: Verify full coverage and assemble history
+        run: python scripts/rebuild_epirice_history.py merge
+      - uses: actions/upload-artifact@v4
+        with:
+          name: epirice-history-2025-2026-verified
+          path: rebuild-output/
+          retention-days: 90
+          overwrite: true
+      - name: Commit verified archive without replacing rolling forecasts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          target = Path('rice_blast_prediction/epirice_blb_history/2025_2026')
+          target.parent.mkdir(parents=True, exist_ok=True)
+          if target.exists():
+              target.rename('rebuild-previous-history')
+          shutil.copytree('rebuild-output', target)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rice_blast_prediction/epirice_blb_history/2025_2026
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: rebuild EPIRICE 2025-2026 historical crop states'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main
+          done
+          exit 1
