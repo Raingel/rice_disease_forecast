@@ -84,6 +84,12 @@ class MigrationTests(unittest.TestCase):
             old.to_csv(path, index=False)
             old.iloc[:0].to_csv(daily / "20260101_EPIRICE_BLB.csv", index=False)
             base = old.iloc[:1].copy().assign(BlastGAT=0.75)
+            stale = base.copy()
+            stale["日期"] = "2026-01-01"
+            for col in stale:
+                if col == "EPIRICE_BLB" or col.startswith("EPIRICE_BLB_"):
+                    stale[col] = float("nan")
+            base = pd.concat([base, stale], ignore_index=True)
             base.to_csv(recent / "S1.csv", index=False)
             first = migrate_daily(daily, inputs, date(2026, 8, 30))
             converted = pd.read_csv(path)
@@ -96,6 +102,7 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(result["added_station_days"], 1)
             self.assertEqual(pd.read_csv(recent / "S1.csv").BlastGAT.iloc[0], 0.75)
             self.assertEqual(pd.read_csv(recent / "S2.csv").EPIRICE_BLB.iloc[0], 0.)
+            self.assertEqual(pd.read_csv(recent / "S2.csv")["日期"].tolist(), ["2026-08-30"])
             self.assertEqual(migrate_recent(recent, daily, inputs, date(2026, 8, 30))["added_station_days"], 0)
 
 

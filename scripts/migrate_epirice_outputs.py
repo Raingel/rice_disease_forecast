@@ -3,9 +3,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections import Counter
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -71,12 +72,18 @@ def migrate_recent(recent, daily, inputs, as_of):
     before["日期"] = pd.to_datetime(before["日期"]).dt.strftime("%Y-%m-%d")
     frames = []
     for day, base in before.groupby("日期", sort=True):
+        within_window = as_of - timedelta(days=30) <= date.fromisoformat(day) <= as_of + timedelta(days=29)
+        selected_stations = stations if within_window else stations[stations["站號"].isin(base["站號"])]
+        cols = [c for c in base if c in ["站號", "站名", "日期", "lat", "lon"] or c == MODEL_NAME or c.startswith(PREFIX)]
+        fallback = complete_daily(base[cols], day, selected_stations, calendars, config, as_of)
         path = daily / f"{day.replace('-', '')}_EPIRICE_BLB.csv"
         if path.exists():
             epi = pd.read_csv(path, dtype={"站號": str})
+            if not within_window:
+                epi = epi[epi["站號"].isin(base["站號"])]
+            epi = pd.concat([epi, fallback[~fallback["站號"].isin(epi["站號"])]], ignore_index=True)
         else:
-            cols = [c for c in base if c in ["站號", "站名", "日期", "lat", "lon"] or c == MODEL_NAME or c.startswith(PREFIX)]
-            epi = complete_daily(base[cols], day, stations, calendars, config, as_of)
+            epi = fallback
         frames.append(merge_station_frames(base, epi))
     after = pd.concat(frames, ignore_index=True).sort_values(["站號", "日期"])
     # Other models' historical values must not change during this migration.
@@ -91,7 +98,9 @@ def migrate_recent(recent, daily, inputs, as_of):
         frame.to_csv(recent / f"{sid}.csv", index=False, encoding="utf-8-sig")
     after[["站號", "站名", "lon", "lat"]].drop_duplicates("站號").to_csv(recent / "station_list.csv", index=False, encoding="utf-8-sig")
     return {"files": after["站號"].nunique(), "rows": len(after),
-            "added_station_days": len(after) - len(before), "other_model_values_unchanged": True}
+            "added_station_days": len(after) - len(before), "other_model_values_unchanged": True,
+            "station_expansion_start": (as_of - timedelta(days=30)).isoformat(),
+            "station_expansion_end": (as_of + timedelta(days=29)).isoformat()}
 
 
 def migrate(root):
@@ -102,6 +111,8 @@ def migrate(root):
               "generated_at": datetime.now(ZoneInfo("Asia/Taipei")).isoformat(),
               "non_crop_value": -99, "raw_state_files_modified": 0, "weather_downloads": 0,
               "high_risk_summary_modified": False, "archives": {}}
+    if os.getenv("EPIRICE_RECENT_BASELINE"):
+        report["recent_baseline_commit"] = os.environ["EPIRICE_RECENT_BASELINE"]
     report["rolling_daily"] = migrate_daily(root / "data", rolling_inputs, today)
     for archive in sorted((root / "epirice_blb_history").glob("*")):
         if not (archive / "data").is_dir():

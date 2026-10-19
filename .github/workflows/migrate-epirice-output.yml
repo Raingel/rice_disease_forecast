@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   migrate:
-    if: "${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'data: migrate EPIRICE primary flow and non-crop markers' }}"
+    if: "${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'data: migrate EPIRICE primary flow and non-crop markers' || github.event.head_commit.message == 'data: repair EPIRICE recent-window migration' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -46,6 +46,12 @@ jobs:
       - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
       - name: Test output contract and model parity
         run: python -m unittest discover -s tests -p 'test_epirice*.py'
+      - name: Restore original station tables for one-time recent-window repair
+        if: "${{ github.event_name == 'push' && github.event.head_commit.message == 'data: repair EPIRICE recent-window migration' }}"
+        run: |
+          git fetch --depth=1 origin f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd
+          git restore --source=f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd --worktree -- rice_blast_prediction/recent_daily_by_station
+          echo 'EPIRICE_RECENT_BASELINE=f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd' >> "$GITHUB_ENV"
       - name: Convert and validate all saved EPIRICE outputs
         run: python scripts/migrate_epirice_outputs.py
       - uses: actions/upload-artifact@v4
