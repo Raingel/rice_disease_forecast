@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from models.EPIRICE_BLB.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
 from models.EPIRICE_BLB.predict import build_parser, daily_weather, load_stations, read_source, run
+from models.EPIRICE_BLB.output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 
 
 def write_json(path, value):
@@ -66,6 +67,7 @@ def prepare(folder, end, batch_size):
                 "expected_scenarios": scenarios,
                 "source_urls": {"calendar": CALENDAR_URL, "stations": STATIONS_URL},
                 "input_sha256": {k: hashlib.sha256(v.encode()).hexdigest() for k, v in sources.items()},
+                "primary_value_field": PRIMARY_VALUE_FIELD, "output_schema_version": OUTPUT_SCHEMA_VERSION,
                 "method": "Open-Meteo archive hourly reanalysis at current station coordinates; current calendar repeated for each year"}
     write_json(folder / "manifest.json", manifest)
     print(f"Prepared {len(stations)} active stations, {len(ids)} rice stations, {len(scenarios)} scenarios, {len(groups)} batches", flush=True)
@@ -194,21 +196,29 @@ def merge(inputs, parts, output):
             shutil.copy2(result / name, output / f"batch_{index}_{name}")
         shutil.copy2(result / "states/run_audit.json", output / f"batch_{index}_audit.json")
     verify_states(output / "states", manifest["expected_scenarios"])
-    total = 0
+    total, modeled_total, non_crop_total = 0, 0, 0
+    stations = load_stations((inputs / "station_list.csv").read_text(encoding="utf-8-sig"))
+    calendars = parse_calendar((inputs / "regional_calendar.csv").read_text(encoding="utf-8-sig"))
+    config = json.loads((inputs / "config.json").read_text(encoding="utf-8"))
     (output / "data").mkdir()
     for day in pd.date_range(manifest["start"], manifest["end"]):
         filename = f"{day:%Y%m%d}_EPIRICE_BLB.csv"
         frames = [pd.read_csv(result / "data" / filename, dtype={"站號": str}) for result in results]
         frame = pd.concat(frames, ignore_index=True).sort_values("站號")
+        frame = complete_daily(frame, day.date(), stations, calendars, config, date.fromisoformat(manifest["as_of"]))
         if frame.duplicated(["站號", "日期"]).any():
             raise ValueError(f"Duplicate station-day: {filename}")
         total += len(frame)
+        modeled_total += int(frame.EPIRICE_BLB_status.eq("ok").sum())
+        non_crop_total += int(frame.EPIRICE_BLB_status.eq("non_crop_period").sum())
         frame.to_csv(output / "data" / filename, index=False, encoding="utf-8-sig")
     expected_rows = sum(s["rows"] for s in manifest["expected_scenarios"].values())
-    if total != expected_rows:
-        raise ValueError(f"Daily/state row mismatch: {total} != {expected_rows}")
+    if modeled_total != expected_rows:
+        raise ValueError(f"Daily/state row mismatch: {modeled_total} != {expected_rows}")
     report = {k: v for k, v in manifest.items() if k not in ("groups", "expected_scenarios")}
     report.update(status="complete", scenarios=len(manifest["expected_scenarios"]), daily_rows=total,
+                  model_rows=modeled_total, non_crop_rows=non_crop_total,
+                  primary_value_field=PRIMARY_VALUE_FIELD, output_schema_version=OUTPUT_SCHEMA_VERSION,
                   batches=len(results), skipped_weather_scenarios=0)
     write_json(output / "rebuild_audit.json", report)
     print(f"Verified archive: {len(results)} batches, {len(manifest['expected_scenarios'])} scenarios, {total} station-days", flush=True)

@@ -31,13 +31,18 @@ the large weather repository and TensorFlow installation.
 Published output: `rice_blast_prediction/epirice_blb_history/2025_2026/`
 
 - `data/YYYYMMDD_EPIRICE_BLB.csv`: daily station outputs, same column schema as
-  the daily EPIRICE runner. Empty dates outside crop periods still have headers.
+  the daily EPIRICE runner. All active station IDs are included. Primary values
+  are raw new-infection flow; non-crop rows use -99. Missing weather/calendar or
+  days beyond model duration retain blank values with an explicit status.
 - `states/2025_1`, `2025_2`, `2026_1`, `2026_2`: complete per-station crop states,
   ending at harvest, the model's 120-day limit, or the historical cutoff.
 - `weather_daily`: hourly weather aggregated to the exact daily model inputs.
 - `inputs`: shared source snapshots, hashes and expected-scenario manifest.
 - `batch_*_audit.json`, `batch_*_weather_provenance.json`, `rebuild_audit.json`:
   per-batch and overall coverage, requests, returned grid coordinates and hashes.
+
+`model_rows` counts actual simulated station-days and matches complete-state
+coverage. `daily_rows` additionally includes the non-crop and missing-value rows.
 
 Original hourly weather is retained in the 90-day checkpoint artifacts; daily
 inputs and full model states are committed permanently. The archive is separate

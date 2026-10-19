@@ -20,9 +20,11 @@ import pandas as pd
 if __package__:
     from .crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, normalize_county, parse_calendar
     from .model import simulate_epirice_blb
+    from .output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 else:
     from crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, normalize_county, parse_calendar
     from model import simulate_epirice_blb
+    from output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 
 MODEL_NAME = "EPIRICE_BLB"
 ROOT = Path(os.getenv("PIPELINE_ROOT", Path(__file__).resolve().parents[2]))
@@ -140,7 +142,7 @@ def to_daily_output(states: pd.DataFrame, station: pd.Series, metadata: dict) ->
     frame["站號"], frame["站名"] = str(station["站號"]), station["站名"]
     frame["日期"] = states["date"]
     frame["lat"], frame["lon"] = float(station["緯度"]), float(station["經度"])
-    frame[MODEL_NAME] = states["intensity_active"]
+    frame[MODEL_NAME] = states[PRIMARY_VALUE_FIELD]
     for col in states.columns:
         if col != "date":
             frame[f"{MODEL_NAME}_{col}"] = states[col]
@@ -230,7 +232,8 @@ def run(args: argparse.Namespace) -> dict:
             meta = {"county": county, "season": season, "scenario_id": scenario,
                     "transplant_date": crop_start.isoformat(), "harvest_date": harvest.isoformat(),
                     "simulation_end_date": simulated_end.isoformat(), "model_version": config["model_version"],
-                    "generated_at": generated_at}
+                    "generated_at": generated_at, "primary_value_field": PRIMARY_VALUE_FIELD,
+                    "output_schema_version": OUTPUT_SCHEMA_VERSION}
             is_forecast = pd.to_datetime(states["date"]).dt.date > args.as_of
             full = states.copy()
             full["站號"], full["站名"] = sid, station["站名"]
@@ -253,10 +256,16 @@ def run(args: argparse.Namespace) -> dict:
         raise ValueError("Overlapping crop scenarios for the same station and date")
     # Rewrite the requested date interval, including empty days, so a skipped
     # scenario cannot leave a previous run's score in a daily model file.
+    output_rows, status_counts = 0, defaultdict(int)
     for day in pd.date_range(start_date, end_date, freq="D"):
         rows = combined[combined["日期"].eq(day.strftime("%Y-%m-%d"))]
+        rows = complete_daily(rows, day.date(), stations, calendars, config, args.as_of)
+        output_rows += len(rows)
+        for status, count in rows[f"{MODEL_NAME}_status"].value_counts().items():
+            status_counts[status] += int(count)
         rows.to_csv(args.output_dir / f"{day.strftime('%Y%m%d')}_{MODEL_NAME}.csv", index=False, encoding="utf-8-sig")
-    report = {"model_version": config["model_version"], "as_of": args.as_of.isoformat(),
+    report = {"model_version": config["model_version"], "primary_value_field": PRIMARY_VALUE_FIELD,
+              "output_schema_version": OUTPUT_SCHEMA_VERSION, "as_of": args.as_of.isoformat(),
               "generated_at": generated_at, "start_date": start_date.isoformat(), "end_date": end_date.isoformat(),
               "source_urls": {"calendar": args.calendar, "stations": args.station_list},
               "selected_weather_files": {sid: path.name for sid, path in files.items()},
@@ -266,10 +275,11 @@ def run(args: argparse.Namespace) -> dict:
               "input_hash_encoding": "UTF-8 source text without BOM",
               "calendar_rice_counties": sum(c["rice_area"] for c in calendars.values()),
               "calendar_seasons": sum(len(c["seasons"]) for c in calendars.values()),
-              "daily_rows": len(combined), "station_scenarios": audit}
+              "daily_rows": output_rows, "model_rows": len(combined),
+              "output_status_counts": dict(status_counts), "station_scenarios": audit}
     (args.state_dir / "run_audit.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     errors = [a for a in audit if a["status"] not in ("ok", "no_rice_calendar", "outside_crop_period")]
-    print(f"EPIRICE_BLB: {len(combined)} daily rows; {len(errors)} skipped weather scenarios; full states: {args.state_dir}")
+    print(f"EPIRICE_BLB: {output_rows} daily rows ({len(combined)} modeled); {len(errors)} skipped weather scenarios; full states: {args.state_dir}")
     if errors and not frames:
         raise RuntimeError("All eligible EPIRICE scenarios lack valid weather; see run_audit.json")
     return report

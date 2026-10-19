@@ -2,6 +2,10 @@ import os
 from datetime import datetime, timedelta
 
 import pandas as pd
+try:
+    from models.EPIRICE_BLB.output_contract import merge_station_frames
+except ModuleNotFoundError:
+    from EPIRICE_BLB.output_contract import merge_station_frames
 
 PLANTHOPPER_REMOTE_BASE_URL = os.getenv(
     "PLANTHOPPER_REMOTE_BASE_URL",
@@ -77,9 +81,11 @@ def merge_daily_predictions(date_str: str):
         if not os.path.exists(path):
             continue
 
-        df = normalize_daily_frame(pd.read_csv(path), model_name)
+        df = normalize_daily_frame(pd.read_csv(path, dtype={STATION_ID_COL: str}), model_name)
         if merged is None:
             merged = df
+        elif model_name == "EPIRICE_BLB":
+            merged = merge_station_frames(merged, df)
         else:
             value_columns = [model_name]
             if model_name == "EPIRICE_BLB":

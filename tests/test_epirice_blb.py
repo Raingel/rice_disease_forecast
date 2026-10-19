@@ -12,7 +12,8 @@ import pandas as pd
 
 from models.EPIRICE_BLB.crop_calendar import crop_dates, parse_calendar
 from models.EPIRICE_BLB.model import simulate_epirice_blb
-from models.EPIRICE_BLB.predict import build_parser, daily_weather, run, simulate_crop, station_weather_files
+from models.EPIRICE_BLB.predict import (OUTPUT_SCHEMA_VERSION, PRIMARY_VALUE_FIELD, build_parser,
+                                      daily_weather, run, simulate_crop, station_weather_files, to_daily_output)
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = Path(__file__).parent / "fixtures" / "epirice_blb"
@@ -66,6 +67,17 @@ class CalendarTests(unittest.TestCase):
 
 
 class IntegrationTests(unittest.TestCase):
+    def test_primary_value_is_new_infection_flow_including_zero(self):
+        states = pd.DataFrame({"date": ["2026-08-01", "2026-08-02"],
+                               "rateinf_new_infections": [0.0, 2.5],
+                               "intensity_active": [0.1, 0.2], "infectious": [8.0, 9.0]})
+        station = pd.Series({"站號": "S1", "站名": "站", "緯度": 24.0, "經度": 120.0})
+        actual = to_daily_output(states, station, {})
+        self.assertEqual(PRIMARY_VALUE_FIELD, "rateinf_new_infections")
+        self.assertEqual(actual["EPIRICE_BLB"].tolist(), [0.0, 2.5])
+        for col in states.columns.drop("date"):
+            self.assertEqual(actual[f"EPIRICE_BLB_{col}"].tolist(), states[col].tolist())
+
     def test_renamed_station_uses_live_metadata_name(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -136,7 +148,12 @@ class IntegrationTests(unittest.TestCase):
             daily_path = tmp / "daily/20260930_EPIRICE_BLB.csv"
             daily = pd.read_csv(daily_path)
             self.assertEqual(daily["EPIRICE_BLB_simday"].iloc[0], 60)
-            self.assertEqual(daily["EPIRICE_BLB"].iloc[0], full["intensity_active"].iloc[-1])
+            self.assertEqual(daily["EPIRICE_BLB"].iloc[0], full[PRIMARY_VALUE_FIELD].iloc[-1])
+            self.assertEqual(daily["EPIRICE_BLB_intensity_active"].iloc[0], full["intensity_active"].iloc[-1])
+            self.assertEqual(daily["EPIRICE_BLB_primary_value_field"].iloc[0], PRIMARY_VALUE_FIELD)
+            self.assertEqual(daily["EPIRICE_BLB_output_schema_version"].iloc[0], OUTPUT_SCHEMA_VERSION)
+            self.assertEqual(report["primary_value_field"], PRIMARY_VALUE_FIELD)
+            self.assertEqual(report["output_schema_version"], OUTPUT_SCHEMA_VERSION)
             self.assertIn("EPIRICE_BLB_senescence_sites_rate", daily)
             organizer_path = ROOT / "models/recent_forecast_organizer.py"
             spec = importlib.util.spec_from_file_location("organizer_epirice_test", organizer_path)
@@ -151,6 +168,9 @@ class IntegrationTests(unittest.TestCase):
             self.assertIn("EPIRICE_BLB_latent", merged)
             self.assertIn("EPIRICE_BLB_transplant_date", merged)
             self.assertEqual(merged["EPIRICE_BLB_simday"].iloc[0], 60)
+            self.assertEqual(merged["EPIRICE_BLB"].iloc[0], daily["EPIRICE_BLB"].iloc[0])
+            self.assertEqual(merged["EPIRICE_BLB_intensity_active"].iloc[0], daily["EPIRICE_BLB_intensity_active"].iloc[0])
+            self.assertEqual(merged["EPIRICE_BLB_output_schema_version"].iloc[0], OUTPUT_SCHEMA_VERSION)
 
     def test_missing_start_cannot_publish_stale_scores(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -167,7 +187,9 @@ class IntegrationTests(unittest.TestCase):
                                              "--output-dir", str(tmp / "daily"), "--state-dir", str(tmp / "states")])
             with self.assertRaisesRegex(RuntimeError, "All eligible"):
                 run(args)
-            self.assertTrue(pd.read_csv(tmp / "daily/20260930_EPIRICE_BLB.csv").empty)
+            missing = pd.read_csv(tmp / "daily/20260930_EPIRICE_BLB.csv")
+            self.assertTrue(missing["EPIRICE_BLB"].isna().all())
+            self.assertEqual(missing["EPIRICE_BLB_status"].iloc[0], "missing_model_output")
             report = json.loads((tmp / "states/run_audit.json").read_text(encoding="utf-8"))
             self.assertEqual(report["station_scenarios"][0]["status"], "incomplete_crop_weather")
 

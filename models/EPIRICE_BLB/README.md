@@ -54,19 +54,41 @@ python models/EPIRICE_BLB/predict.py --weather-dir ERA5_archive --start-date 202
 
 完整狀態保留 GUIDE 的所有輸出，另含 total_sites、生長／衰老流量與感染批次進入量、
 截至該日的 `AUDPC_cumulative`、地區／作期／插秧及收割日期、模型版本和生成時間。
-`EPIRICE_BLB` 是 `intensity_active` 的對外代表欄；其他欄位用 `EPIRICE_BLB_` 前綴。
+`EPIRICE_BLB` 是 `rateinf_new_infections`（每日新增感染量，模型位點數／日）的對外代表欄，
+不是機率或百分比；其他欄位用 `EPIRICE_BLB_` 前綴，包含原始新增感染量與
+`EPIRICE_BLB_intensity_active` 活動病害比例。
+`EPIRICE_BLB_primary_value_field=rateinf_new_infections`、
+`EPIRICE_BLB_output_schema_version=EPIRICE_BLB_daily_v3` 記錄輸出定義；
+完整狀態與 audit 亦保留無前綴的對應欄位。核心模型版本與參數沒有改變。
+舊版輸出沒有 schema 標記，其 `EPIRICE_BLB` 代表 `intensity_active`，部署前須轉換，
+避免在同一條歷史曲線混用兩種意義。
+模擬第 20 日的新增感染量是設定的初始感染量 I0，非當日氣象造成的新傳播；
+本次保留 GUIDE 的原始行為，設定警戒門檻時需區分此情境輸入。
 沒有額外提前天數。`is_forecast` 表示目標日是否晚於 as-of，並非逐列 API 資料來源標籤。
 
 `AUDPC` 保留原實作的整個模擬期間積分，會在每列重複同一終值，搭配
 `simulation_end_date` 解讀；截至該日的歷史分析請用 `AUDPC_cumulative`。
 若末段包含預報，整段 AUDPC 同樣包含預報，不是已觀測的完整作期總量。
 
-每日指定區間以本次有效情境重寫，空日保留欄名而無數值，避免重新使用失敗情境
-上次的每日分數。完整作期檔依情境更新；舊情境檔可能保留，最新有效性以 run_audit
+每日指定區間會寫出所有指定有效測站。主值使用原始新增感染量，沒有標準化或截斷。
+非作期（插秧前、收割後，或明確標示不種稻）主值為 -99，status=non_crop_period。
+原始狀態欄位不填 -99；沒有模擬值就留空。沒有日曆設定為 missing_crop_calendar、
+作期內缺氣象／計算結果為 missing_model_output；仍在作期但超過模型120日上限為
+outside_model_duration，以上主值均留空，不冒充零或非作期。
+有效的零新增感染量保持 0，status=ok。模型預設第20日初始感染不另做排除。
+每站合併採 EPIRICE 與既有模型站日聯集，保留 EPIRICE 獨有測站及其名稱／座標。
+
+每日指定區間以本次情境重寫，避免重新使用失敗情境上次的每日分數。
+完整作期檔依情境更新；舊情境檔可能保留，最新有效性以 run_audit
 及生成時間為準。同一日同一站若有重疊作期會報錯，避免合併時覆蓋。
 
 未設定操作性警戒門檻，也未加入 recent_summary 的高風險日數。
 原有模型的門檻及摘要方式維持原設定。
+
+`scripts/migrate_epirice_outputs.py` 可從已存的原始新增感染欄位轉換每日檔、歷史檔
+及每站合併檔；不重跑氣象／模型、不改完整狀態檔，也不更動其他模型數值或
+recent_summary。對應一次性 workflow 會驗證原始狀態欄位完整保留，並輸出
+`rice_blast_prediction/epirice_output_migration.json` 紀錄轉換範圍與各種狀態筆數。
 
 ## 驗證
 
