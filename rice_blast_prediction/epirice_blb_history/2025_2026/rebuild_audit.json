@@ -509,7 +509,16 @@
   "method": "Open-Meteo archive hourly reanalysis at current station coordinates; current calendar repeated for each year",
   "status": "complete",
   "scenarios": 3074,
-  "daily_rows": 320625,
+  "daily_rows": 578908,
   "batches": 32,
-  "skipped_weather_scenarios": 0
+  "skipped_weather_scenarios": 0,
+  "primary_value_field": "rateinf_new_infections",
+  "output_schema_version": "EPIRICE_BLB_daily_v3",
+  "model_rows": 320625,
+  "output_status_counts": {
+    "non_crop_period": 228798,
+    "missing_crop_calendar": 12331,
+    "ok": 320625,
+    "outside_model_duration": 17154
+  }
 }
