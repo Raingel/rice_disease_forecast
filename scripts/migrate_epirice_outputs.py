@@ -2,15 +2,21 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
+import re
 import sys
+import threading
+import time
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -26,6 +32,54 @@ def sources(inputs):
     return (load_stations((inputs / "station_list.csv").read_text(encoding="utf-8-sig")),
             parse_calendar((inputs / "regional_calendar.csv").read_text(encoding="utf-8-sig")),
             json.loads((inputs / "config.json").read_text(encoding="utf-8")))
+
+
+def restore_recent(folder, source_ref):
+    """Fetch only station CSVs at an immutable ref and verify Git blob hashes."""
+    if not re.fullmatch(r"[0-9a-f]{40}", source_ref):
+        raise ValueError("Restore source must be an immutable commit SHA")
+    response = requests.get(
+        "https://api.github.com/repos/Raingel/rice_disease_forecast/contents/rice_blast_prediction/recent_daily_by_station",
+        params={"ref": source_ref}, timeout=(15, 60))
+    response.raise_for_status()
+    entries = response.json()
+    if not isinstance(entries, list) or not 0 < len(entries) < 1000:
+        raise ValueError("Incomplete station-file inventory")
+    if any(e["type"] != "file" or not re.fullmatch(r"[A-Za-z0-9_-]+\.csv", e["name"]) for e in entries):
+        raise ValueError("Unexpected station-file path")
+    folder = Path(folder).resolve()
+    folder.mkdir(parents=True, exist_ok=True)
+    local = threading.local()
+
+    def fetch(entry):
+        if not hasattr(local, "session"):
+            local.session = requests.Session()
+        url = f"https://raw.githubusercontent.com/Raingel/rice_disease_forecast/{source_ref}/rice_blast_prediction/recent_daily_by_station/{entry['name']}"
+        for attempt in range(3):
+            try:
+                result = local.session.get(url, timeout=(15, 45))
+                result.raise_for_status()
+                content = result.content
+                sha = hashlib.sha1(f"blob {len(content)}\0".encode() + content).hexdigest()
+                if sha != entry["sha"]:
+                    raise ValueError(f"Git blob hash mismatch: {entry['name']}")
+                (folder / entry["name"]).write_bytes(content)
+                return
+            except requests.RequestException:
+                if attempt == 2:
+                    raise
+                time.sleep(5 * (attempt + 1))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for index, _ in enumerate(pool.map(fetch, entries), 1):
+            if index % 100 == 0:
+                print(f"Restored and hash-verified {index}/{len(entries)} original station tables", flush=True)
+    keep = {entry["name"] for entry in entries}
+    for path in folder.glob("*.csv"):
+        if path.name not in keep:
+            if path.resolve().parent != folder:
+                raise ValueError("Unexpected restore cleanup path")
+            path.unlink()
+    return len(entries)
 
 
 def save_verified(before, after, path):

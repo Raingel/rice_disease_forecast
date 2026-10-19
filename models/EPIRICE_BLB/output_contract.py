@@ -64,6 +64,7 @@ def complete_daily(frame, day, stations, calendars, config, as_of=None):
         row.update({PREFIX + k: v for k, v in crop_context(day, station["county"], calendars, int(config["duration_days"])).items()})
         context.append(row)
     context = pd.DataFrame(context).set_index("站號") if context else pd.DataFrame(index=pd.Index([], name="站號"))
+    context = context.replace("", np.nan)
     frame = frame.set_index("站號")
     # Keep historical IDs that no longer occur in the current metadata snapshot.
     frame = frame.reindex(frame.index.union(context.index, sort=False))

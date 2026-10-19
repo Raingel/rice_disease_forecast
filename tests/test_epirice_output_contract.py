@@ -1,13 +1,16 @@
 import json
+import hashlib
 import tempfile
 import unittest
 from datetime import date
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 import pandas as pd
 
 from models.EPIRICE_BLB.output_contract import complete_daily, merge_station_frames
-from scripts.migrate_epirice_outputs import migrate_daily, migrate_recent
+from scripts.migrate_epirice_outputs import migrate_daily, migrate_recent, restore_recent
 
 
 class OutputContractTests(unittest.TestCase):
@@ -62,8 +65,38 @@ class OutputContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Duplicate"):
             complete_daily(pd.concat([self.frame, self.frame]), "2026-08-10", self.stations, self.calendars, self.config)
 
+    def test_unknown_empty_county_remains_empty_on_csv_roundtrip(self):
+        stations = self.stations.iloc[:1].copy()
+        stations["county"] = ""
+        first = complete_daily(pd.DataFrame(), "2026-08-10", stations, self.calendars, self.config)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "daily.csv"
+            first.to_csv(path, index=False)
+            saved = pd.read_csv(path, dtype={"站號": str})
+        again = complete_daily(saved, "2026-08-10", stations, self.calendars, self.config)
+        self.assertTrue(again.EPIRICE_BLB_county.isna().all())
+        self.assertTrue(again.EPIRICE_BLB.isna().all())
+        self.assertEqual(again.EPIRICE_BLB_status.iloc[0], "missing_crop_calendar")
+
 
 class MigrationTests(unittest.TestCase):
+    def test_restore_verifies_git_blob_content_and_removes_only_extra_csv(self):
+        content = b"station,date,value\nS1,2026-08-30,2\n"
+        sha = hashlib.sha1(f"blob {len(content)}\0".encode() + content).hexdigest()
+        inventory = SimpleNamespace(raise_for_status=lambda: None,
+                                    json=lambda: [{"type": "file", "name": "S1.csv", "sha": sha}])
+        downloaded = SimpleNamespace(raise_for_status=lambda: None, content=content)
+        session = SimpleNamespace(get=lambda *args, **kwargs: downloaded)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            (path / "extra.csv").write_text("old")
+            (path / "keep.txt").write_text("keep")
+            with patch("scripts.migrate_epirice_outputs.requests.get", return_value=inventory), patch("scripts.migrate_epirice_outputs.requests.Session", return_value=session):
+                self.assertEqual(restore_recent(path, "0" * 40), 1)
+            self.assertEqual((path / "S1.csv").read_bytes(), content)
+            self.assertFalse((path / "extra.csv").exists())
+            self.assertTrue((path / "keep.txt").exists())
+
     def test_conversion_and_recent_union_are_repeatable_and_preserve_other_values(self):
         fixtures = Path(__file__).parent / "fixtures/epirice_blb"
         with tempfile.TemporaryDirectory() as folder:

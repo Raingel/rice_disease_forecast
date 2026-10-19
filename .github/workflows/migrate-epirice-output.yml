@@ -49,8 +49,7 @@ jobs:
       - name: Restore original station tables for one-time recent-window repair
         if: "${{ github.event_name == 'push' && github.event.head_commit.message == 'data: repair EPIRICE recent-window migration' }}"
         run: |
-          git fetch --depth=1 origin f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd
-          git restore --source=f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd --worktree -- rice_blast_prediction/recent_daily_by_station
+          python -c "from pathlib import Path; from scripts.migrate_epirice_outputs import restore_recent; restore_recent(Path('rice_blast_prediction/recent_daily_by_station'), 'f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd')"
           echo 'EPIRICE_RECENT_BASELINE=f52b8c2a349ed71d509c50f7d7e3386dc77ba7bd' >> "$GITHUB_ENV"
       - name: Convert and validate all saved EPIRICE outputs
         run: python scripts/migrate_epirice_outputs.py
