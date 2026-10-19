@@ -1,0 +1,197 @@
+name: EPIRICE historical year stage
+
+on:
+  workflow_call:
+    inputs:
+      year:
+        required: true
+        type: number
+      mode:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      batches: ${{ steps.matrix.outputs.batches }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /models/EPIRICE_BLB/
+            /scripts/rebuild_epirice_history.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - uses: actions/download-artifact@v4
+        with:
+          name: epirice-2020-frozen-inputs
+          path: frozen-inputs
+      - name: Prepare this year's station batches from shared snapshots
+        if: inputs.mode == 'compute'
+        env:
+          YEAR: ${{ inputs.year }}
+        run: python scripts/rebuild_epirice_history.py prepare --start-year "$YEAR" --end-date "$YEAR-12-31" --source-inputs frozen-inputs --batch-size 50
+      - id: matrix
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path('rebuild-inputs/manifest.json')
+          batches = list(range(len(json.loads(path.read_text())['groups']))) if path.exists() else [0]
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('batches=' + json.dumps(batches) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: inputs.mode == 'compute'
+        with:
+          name: epirice-${{ inputs.year }}-inputs
+          path: rebuild-inputs/
+          retention-days: 14
+          overwrite: true
+
+  rebuild:
+    if: inputs.mode == 'compute'
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: ${{ fromJSON(needs.prepare.outputs.batches) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /models/EPIRICE_BLB/
+            /scripts/rebuild_epirice_history.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - uses: actions/download-artifact@v4
+        with:
+          name: epirice-${{ inputs.year }}-inputs
+          path: rebuild-inputs
+      - name: Restore successful weather request on retry
+        if: github.run_attempt > 1
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: epirice-${{ inputs.year }}-checkpoint-${{ matrix.batch }}
+          path: rebuild-batch/checkpoint
+      - name: Reconstruct and validate this station batch
+        env:
+          BATCH: ${{ matrix.batch }}
+        run: python scripts/rebuild_epirice_history.py batch --batch-index "$BATCH"
+      - name: Save weather checkpoint even if later steps fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: epirice-${{ inputs.year }}-checkpoint-${{ matrix.batch }}
+          path: rebuild-batch/checkpoint/
+          overwrite: true
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: epirice-${{ inputs.year }}-result-${{ matrix.batch }}
+          path: rebuild-batch/result/
+          overwrite: true
+          retention-days: 14
+
+  publish:
+    if: "${{ always() && needs.prepare.result == 'success' && (needs.rebuild.result == 'success' || inputs.mode == 'reuse') }}"
+    needs: [prepare, rebuild]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /models/EPIRICE_BLB/
+            /scripts/rebuild_epirice_history.py
+            /scripts/integrate_epirice_history_year.py
+            /rice_blast_prediction/data/${{ inputs.year }}*.csv
+            /rice_blast_prediction/epirice_blb_history/${{ inputs.year }}/
+            /rice_blast_prediction/epirice_blb_history/2025_2026/data/${{ inputs.year }}*.csv
+            /rice_blast_prediction/epirice_blb_history/2025_2026/rebuild_audit.json
+            /rice_blast_prediction/history_daily_by_station/${{ inputs.year }}/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - uses: actions/download-artifact@v4
+        if: inputs.mode == 'compute'
+        with:
+          name: epirice-${{ inputs.year }}-inputs
+          path: rebuild-inputs
+      - uses: actions/download-artifact@v4
+        if: inputs.mode == 'compute'
+        with:
+          pattern: epirice-${{ inputs.year }}-result-*
+          path: year-parts
+      - name: Assemble checkpointed station batches
+        if: inputs.mode == 'compute'
+        env:
+          YEAR: ${{ inputs.year }}
+        run: |
+          python - <<'PY'
+          import os, shutil
+          from pathlib import Path
+          target = Path('rebuild-parts')
+          target.mkdir()
+          prefix = 'epirice-' + os.environ['YEAR'] + '-result-'
+          for p in Path('year-parts').iterdir():
+              shutil.move(str(p), str(target / ('epirice-result-' + p.name.removeprefix(prefix))))
+          PY
+          python scripts/rebuild_epirice_history.py merge
+      - name: Integrate annual daily files and all available model columns
+        env:
+          YEAR: ${{ inputs.year }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          if [[ "$MODE" == compute ]]; then
+            python scripts/integrate_epirice_history_year.py integrate --year "$YEAR" --rebuilt rebuild-output
+          else
+            python scripts/integrate_epirice_history_year.py integrate --year "$YEAR"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: epirice-${{ inputs.year }}-verified
+          path: |
+            rice_blast_prediction/history_daily_by_station/${{ inputs.year }}/integration_audit.json
+            rice_blast_prediction/epirice_blb_history/${{ inputs.year }}/rebuild_audit.json
+          overwrite: true
+          retention-days: 30
+      - name: Commit this verified year as a persistent checkpoint
+        env:
+          YEAR: ${{ inputs.year }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ":(glob)rice_blast_prediction/data/${YEAR}*_EPIRICE_BLB.csv" "rice_blast_prediction/history_daily_by_station/$YEAR"
+          if [[ "$MODE" == compute ]]; then git add "rice_blast_prediction/epirice_blb_history/$YEAR"; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: reconstruct and integrate EPIRICE year $YEAR"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch --filter=blob:none origin main
+            git rebase origin/main
+          done
+          exit 1

@@ -1,0 +1,128 @@
+name: Staged EPIRICE backfill from 2020
+
+on:
+  workflow_dispatch:
+    inputs:
+      resume_from:
+        description: 'First year to compute; earlier years must already be published'
+        type: choice
+        options: ['2020', '2021', '2022', '2023', '2024', '2025']
+        default: '2020'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/epirice-backfill-2020.yml'
+      - '.github/workflows/epirice-history-year.yml'
+      - 'scripts/integrate_epirice_history_year.py'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: epirice-staged-backfill-2020
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    if: "${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'data: start EPIRICE backfill from 2020' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /models/EPIRICE_BLB/
+            /scripts/rebuild_epirice_history.py
+            /scripts/integrate_epirice_history_year.py
+            /scripts/migrate_epirice_outputs.py
+            /models/recent_forecast_organizer.py
+            /tests/test_epirice*.py
+            /tests/fixtures/epirice_blb/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - run: python -m unittest discover -s tests -p 'test_epirice*.py'
+      - name: Freeze all shared crop, station and model inputs once
+        run: python scripts/rebuild_epirice_history.py prepare --start-year 2020 --end-date 2026-10-11 --inputs frozen-inputs --batch-size 50
+      - uses: actions/upload-artifact@v4
+        with:
+          name: epirice-2020-frozen-inputs
+          path: frozen-inputs/
+          retention-days: 14
+
+  year2020:
+    needs: snapshot
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2020
+      mode: ${{ fromJSON(inputs.resume_from || '2020') <= 2020 && 'compute' || 'reuse' }}
+  year2021:
+    needs: year2020
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2021
+      mode: ${{ fromJSON(inputs.resume_from || '2020') <= 2021 && 'compute' || 'reuse' }}
+  year2022:
+    needs: year2021
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2022
+      mode: ${{ fromJSON(inputs.resume_from || '2020') <= 2022 && 'compute' || 'reuse' }}
+  year2023:
+    needs: year2022
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2023
+      mode: ${{ fromJSON(inputs.resume_from || '2020') <= 2023 && 'compute' || 'reuse' }}
+  year2024:
+    needs: year2023
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2024
+      mode: ${{ fromJSON(inputs.resume_from || '2020') <= 2024 && 'compute' || 'reuse' }}
+  year2025:
+    needs: year2024
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2025
+      mode: reuse
+  year2026:
+    needs: year2025
+    uses: ./.github/workflows/epirice-history-year.yml
+    with:
+      year: 2026
+      mode: reuse
+
+  index:
+    needs: year2026
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /models/EPIRICE_BLB/
+            /scripts/integrate_epirice_history_year.py
+            /rice_blast_prediction/history_daily_by_station/*/integration_audit.json
+            /rice_blast_prediction/epirice_backfill_2020_manifest.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - run: python scripts/integrate_epirice_history_year.py index
+      - name: Publish the completed coverage index
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rice_blast_prediction/epirice_backfill_2020_manifest.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: finish staged EPIRICE history integration from 2020'
+          git pull --rebase origin main
+          git push origin HEAD:main

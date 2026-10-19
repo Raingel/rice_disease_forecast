@@ -26,16 +26,18 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def prepare(folder, end, batch_size):
-    if not date(2026, 1, 1) <= end <= date(2026, 12, 31):
-        raise ValueError("End date must be in 2026")
+def prepare(folder, end, batch_size, start_year=2025, source_inputs=None):
+    if not 2020 <= start_year <= end.year:
+        raise ValueError("Start year must be at least 2020 and no later than end")
     today = datetime.now(ZoneInfo("Asia/Taipei")).date()
     if end > today - timedelta(days=2):
         raise ValueError("History end must allow two days for archive availability")
     folder.mkdir(parents=True, exist_ok=True)
-    calendar_text, station_text = read_source(CALENDAR_URL), read_source(STATIONS_URL)
+    calendar_text = read_source(str(source_inputs / "regional_calendar.csv") if source_inputs else CALENDAR_URL)
+    station_text = read_source(str(source_inputs / "station_list.csv") if source_inputs else STATIONS_URL)
+    config_source = source_inputs / "config.json" if source_inputs else ROOT / "models/EPIRICE_BLB/config.json"
     sources = {"regional_calendar.csv": calendar_text, "station_list.csv": station_text,
-               "config.json": (ROOT / "models/EPIRICE_BLB/config.json").read_text(encoding="utf-8")}
+               "config.json": config_source.read_text(encoding="utf-8")}
     for name, text in sources.items():
         (folder / name).write_text(text, encoding="utf-8")
     config = json.loads(sources["config.json"])
@@ -48,7 +50,7 @@ def prepare(folder, end, batch_size):
         if not calendar or not calendar["rice_area"]:
             excluded.append({"station_id": sid, "county": county, "reason": "no_rice_calendar"})
             continue
-        for year in (2025, 2026):
+        for year in range(start_year, end.year + 1):
             for entry in calendar["seasons"]:
                 start, harvest = crop_dates(entry, year)
                 finish = min(start + timedelta(days=config["duration_days"] - 1), harvest, end)
@@ -61,7 +63,7 @@ def prepare(folder, end, batch_size):
                     "rows": (finish - start).days + 1}
     ids = sorted({v["station_id"] for v in scenarios.values()})
     groups = [ids[i:i + batch_size] for i in range(0, len(ids), batch_size)]
-    manifest = {"start": "2025-01-01", "end": end.isoformat(), "as_of": today.isoformat(),
+    manifest = {"start": f"{start_year}-01-01", "end": end.isoformat(), "as_of": today.isoformat(),
                 "model_version": config["model_version"], "active_stations": len(stations),
                 "eligible_stations": len(ids), "excluded": excluded, "groups": groups,
                 "expected_scenarios": scenarios,
@@ -119,8 +121,8 @@ def batch(inputs, folder, index):
     ids = manifest["groups"][index]
     stations = load_stations((inputs / "station_list.csv").read_text(encoding="utf-8"))
     stations = stations.set_index("站號").loc[ids].reset_index()
-    yearly = [fetch_year(stations, 2025, "2025-12-31", folder / "checkpoint"),
-              fetch_year(stations, 2026, manifest["end"], folder / "checkpoint")]
+    yearly = [fetch_year(stations, year, min(f"{year}-12-31", manifest["end"]), folder / "checkpoint")
+              for year in range(date.fromisoformat(manifest["start"]).year, date.fromisoformat(manifest["end"]).year + 1)]
     weather = folder / "weather"
     weather.mkdir(parents=True, exist_ok=True)
     provenance = []
@@ -229,6 +231,8 @@ def main():
     parser.add_argument("mode", choices=["prepare", "batch", "merge"])
     parser.add_argument("--inputs", type=Path, default=Path("rebuild-inputs"))
     parser.add_argument("--end-date", type=date.fromisoformat, default=date(2026, 10, 11))
+    parser.add_argument("--start-year", type=int, default=2025)
+    parser.add_argument("--source-inputs", type=Path, help="Frozen calendar/station/config snapshot for staged jobs")
     parser.add_argument("--batch-size", type=int, default=25)
     parser.add_argument("--batch-index", type=int, default=0)
     parser.add_argument("--work-dir", type=Path, default=Path("rebuild-batch"))
@@ -238,7 +242,7 @@ def main():
     if args.mode == "prepare":
         if not 1 <= args.batch_size <= 50:
             parser.error("Batch size must be between 1 and 50")
-        prepare(args.inputs, args.end_date, args.batch_size)
+        prepare(args.inputs, args.end_date, args.batch_size, args.start_year, args.source_inputs)
     elif args.mode == "batch":
         batch(args.inputs, args.work_dir, args.batch_index)
     else:
