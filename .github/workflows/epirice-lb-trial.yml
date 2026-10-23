@@ -10,8 +10,6 @@ jobs:
   leaf-blast-trial:
     runs-on: ubuntu-22.04
     timeout-minutes: 25
-    env:
-      TRIAL_OUTPUT: ${{ runner.temp }}/epirice-lb-trial
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,6 +26,9 @@ jobs:
             /tests/test_epirice*.py
             /tests/epirice_lb_trial/
             /tests/fixtures/epirice_blb/
+      - name: Set temporary output folder at runtime
+        shell: bash
+        run: echo "TRIAL_OUTPUT=$RUNNER_TEMP/epirice-lb-trial" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
