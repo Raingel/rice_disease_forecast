@@ -1,8 +1,14 @@
 import os
+import sys
+from pathlib import Path
 from functools import lru_cache
 from datetime import datetime, timedelta
 
 import pandas as pd
+# The pipeline executes this file directly from models/, outside package mode.
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 try:
     from models.EPIRICE_BLB.output_contract import merge_station_frames
     from models.EPIRICE_LB.output_contract import merge_compact, COMPACT_FIELDS

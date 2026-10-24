@@ -1,5 +1,8 @@
 """Daily-entry and compact organizer regression using frozen real weather."""
 import gzip
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -16,6 +19,17 @@ FIXTURE = ROOT / "tests/fixtures/epirice_lb_huatan"
 
 
 class DailyLeafBlastTests(unittest.TestCase):
+    def test_organizer_import_from_pipeline_working_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            env = dict(os.environ, RECENT_OUTPUT_FOLDER=tmp)
+            result = subprocess.run(
+                [sys.executable, "-I", "-c",
+                 "import runpy; runpy.run_path('recent_forecast_organizer.py', run_name='pipeline_import_test')"],
+                cwd=ROOT / "models", env=env, text=True, capture_output=True,
+                timeout=30,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_entry_defaults_and_manual_date_contract(self):
         args = daily_arguments({"PIPELINE_ROOT": "/project", "ERA5_OUTPUT_DIR": "/weather", "DATA_FOLDER": "/data"})
         self.assertTrue(args.all_stations)
