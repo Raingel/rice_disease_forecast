@@ -28,8 +28,29 @@ def blob_sha(data):
 
 
 def fingerprint(folder):
-    return {name: hashlib.sha256((folder / name).read_bytes()).hexdigest()
+    return {name: hashlib.sha256(json.dumps(json.loads((folder / name).read_text(encoding='utf-8-sig')),
+                ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')).hexdigest()
             for name in ['source_snapshot.json', 'station_matches.json', 'plan.json']}
+
+
+def verify_inputs(progress, folder):
+    current = fingerprint(folder)
+    if progress.get('inputs_sha256') == current:
+        return
+    # Import the initial raw-byte fingerprints only when every input matches
+    # exactly apart from LF/CRLF. Do not accept changed coordinates or dates.
+    previous = progress.get('inputs_sha256', {})
+    compatible = set(previous) == set(current)
+    for name in current:
+        raw = (folder / name).read_bytes()
+        lf = raw.replace(b'\r\n', b'\n')
+        variants = {hashlib.sha256(data).hexdigest() for data in [raw, lf, lf.replace(b'\n', b'\r\n')]}
+        compatible = compatible and previous.get(name) in variants
+    if not compatible:
+        raise ValueError('Frozen plan changed; explicit migration is required')
+    progress['inputs_sha256'] = current
+    progress['input_fingerprint_format'] = 'canonical_json_v1'
+    print('Verified legacy input hashes; normalized LF/CRLF fingerprints')
 
 
 def station_folder(station):
@@ -217,8 +238,7 @@ def run(args, github=None):
     inputs = fingerprint(args.inventory)
     if progress is None:
         progress = {'schema_version': 1, 'inputs_sha256': inputs, 'plan': plan, 'stations': {}}
-    if progress.get('inputs_sha256') != inputs:
-        raise ValueError('Frozen plan changed; explicit migration is required')
+    verify_inputs(progress, args.inventory)
     summary = summarize(progress, stations, start, through)
     now = datetime.now(timezone.utc)
     cooldown = progress.get('retry_after_utc')

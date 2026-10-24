@@ -13,7 +13,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from maintain_weather_archive import FIELDS, save_year
-from weather_archive_action import blob_sha, run, station_folder, pack_archive, unpack_archive
+from weather_archive_action import blob_sha, run, station_folder, pack_archive, unpack_archive, fingerprint, verify_inputs
 
 
 class MemoryGitHub:
@@ -113,6 +113,24 @@ class WeatherActionTests(unittest.TestCase):
         (self.args.inventory / 'plan.json').write_text(json.dumps({'start': '2025-01-01', 'through': '2026-01-01'}))
         with self.assertRaisesRegex(ValueError, 'Frozen plan changed'):
             run(self.args, self.github)
+
+    def test_windows_seed_hashes_migrate_on_linux_without_accepting_changed_plan(self):
+        names = ['source_snapshot.json', 'station_matches.json', 'plan.json']
+        old = {}
+        for name in names:
+            path = self.args.inventory / name
+            content = json.loads(path.read_text())
+            lf = (json.dumps(content, indent=2) + '\n').encode()
+            old[name] = hashlib.sha256(lf.replace(b'\n', b'\r\n')).hexdigest()
+            path.write_bytes(lf)
+        state = {'inputs_sha256': old}
+        verify_inputs(state, self.args.inventory)
+        self.assertEqual(state['inputs_sha256'], fingerprint(self.args.inventory))
+        self.assertEqual(state['input_fingerprint_format'], 'canonical_json_v1')
+        changed = {'inputs_sha256': old}
+        (self.args.inventory / 'plan.json').write_text(json.dumps({'start': '2013-01-01', 'through': '2026-01-01'}))
+        with self.assertRaisesRegex(ValueError, 'Frozen plan changed'):
+            verify_inputs(changed, self.args.inventory)
 
     def test_rate_limit_persists_cooldown_and_next_run_does_no_weather_work(self):
         with patch('weather_archive_action.maintain', side_effect=lambda a: self.worker(a, missing=True, rate_limited=True)):

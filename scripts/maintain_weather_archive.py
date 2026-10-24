@@ -105,7 +105,8 @@ def run(args):
             continue
         write_json(folder / 'last_attempt.json', {'time_utc': pd.Timestamp.now(tz='UTC').isoformat()})
         try:
-            legacy = pd.DataFrame(columns=FIELDS)
+            legacy = pd.DataFrame({field: pd.Series(dtype='float64') for field in FIELDS},
+                                  index=pd.DatetimeIndex([]))
             entry = station['archive_entries'][0] if station['archive_entries'] else None
             needs_import = any(not (folder / f'{year}.csv.gz').exists() for year in years)
             if entry and needs_import:

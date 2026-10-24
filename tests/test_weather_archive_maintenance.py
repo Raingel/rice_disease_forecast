@@ -13,6 +13,26 @@ from scripts.maintain_weather_archive import clean, FIELDS, run
 
 
 class WeatherMaintenanceTests(unittest.TestCase):
+    def test_station_without_legacy_archive_can_initialize_and_download(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            station = {'station_id': 'NEW', 'lat': 24, 'lon': 120, 'archive_entries': []}
+            (root / 'boundaries.json').write_text(json.dumps({'repository': 'owner/repo', 'snapshot_commit': 'frozen'}))
+            (root / 'station_matches.json').write_text(json.dumps({'matched': [], 'missing_current_coordinates': [station]}))
+            timestamps = pd.date_range('2026-01-01', periods=24, freq='h')
+            fresh = {'hourly': {'time': timestamps.astype(str).tolist(), **{c: [20.] * 24 for c in FIELDS}}}
+            response = Mock(content=json.dumps(fresh).encode(), url='https://archive-api.open-meteo.com/v1/archive')
+            response.json.return_value = fresh
+            args = SimpleNamespace(inventory=root, cache=root / 'cache', start=timestamps[0].date(),
+                                   through=timestamps[-1].date(), station=None, max_stations=1,
+                                   max_requests=1, max_seconds=60)
+            with patch('scripts.maintain_weather_archive.requests.Session') as session:
+                session.return_value.get.return_value = response
+                summary = run(args)
+            self.assertEqual(summary['stations_complete'], 1)
+            saved = pd.read_csv(root / 'cache/NEW_24_120/2026.csv.gz')
+            self.assertTrue(saved[['u', 'v']].notna().all().all())
+
     def test_invalid_values_are_missing_and_duplicate_times_rejected(self):
         raw = pd.DataFrame({'time': ['2026-01-01'], 'temperature_2m': [np.inf],
                             'relativehumidity_2m': [101], 'precipitation': [-1],
