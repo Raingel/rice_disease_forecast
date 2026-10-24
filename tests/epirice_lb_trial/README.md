@@ -1,5 +1,10 @@
 # EPIRICE 葉稻熱病：獨立小範圍測試套件
 
+2026/10/23 更新：首次 [Action 39940530608](https://github.com/Raingel/rice_disease_forecast/actions/runs/39940530608)
+已完成原始 R 執行及跨語言比對，三組各 120 日、22 欄最大誤差為 `5.093170329928398e-11`。
+目前 candidate 已改呼叫 `models/EPIRICE_LB/model.py`；獨立 runner 與花壇歷史氣象測試
+說明見 `models/EPIRICE_LB/README.md`。以下保留初始測試設計及執行方式。
+
 這是研究用測試候選，尚未接入正式每日 pipeline。首次準備檔案時，只完成本機 Python
 測試；**原始 R／Python 數值一致性仍待實際執行 R 後判定**。不能將 Python 測試通過
 解釋為台灣田間預報能力已驗證。
@@ -13,7 +18,7 @@
 - 原始 helper：`R/predict_leaf_blast.R`；核心：`R/SEIR.R`；AUDPC：`R/calculate_audpc.R`。
   另下載 DESCRIPTION 與 LICENSE。五份檔案均使用固定 SHA-256 驗證，見 `upstream_manifest.json`。
   上游授權為 `GPL-3 + file LICENSE`；下載內容保留原始署名與授權，未重寫上游 R 程式。
-- Python 候選 `candidate.py` 將獨立 LB 設定傳入既有可參數化的 BLB SEIR 函數。
+- 測試 adapter `candidate.py` 將獨立 LB 設定傳入正式 LB 模組，再使用既有可參數化的 SEIR 函數。
   **沒有改動 BLB 程式或 BLB config，也沒有把 BLB 疫病參數套用到 LB。**
   這種核心重用是否忠實，須由獨立 R 執行驗證，不靠 Python 自產答案當基準。
 
@@ -93,7 +98,8 @@ R 參考測試環境固定為 R 4.4.3、data.table 1.16.4，workflow 會負責�
 
 ## 手動上傳與 GitHub Action
 
-本套件只有新增下列檔案，不包含工作目錄內其他既有變更：
+最初獨立測試新增下列檔案，不包含工作目錄內其他既有變更；目前版本另需一併保留
+`models/EPIRICE_LB/` 與 `tests/test_epirice_lb_runner.py`：
 
 ```text
 .github/workflows/epirice-lb-trial.yml
@@ -127,6 +133,6 @@ Action 只有 `contents: read` 權限、25 分鐘上限、稀疏 checkout，不 
 - `comparison.json`：各情境、各欄最大絕對誤差與對應模擬日。
 - `failure.json`：執行失敗的階段與原因。
 
-本步驟尚未完成：GitHub Action 實際執行、R/Python 跨語言驗證、真實歷史氣象驗證、
-全站效能測量、每日正式 pipeline 接入及網站呈現。未制定任何警戒門檻或防治建議。
+目前已完成首次 GitHub Action、R/Python 跨語言驗證與花壇歷史氣象單站 runner 測試。
+仍未完成全站效能測量、每日正式 pipeline 接入及網站呈現。未制定任何警戒門檻或防治建議。
 本機範例與數值一致性皆不代表田間預報能力；臺灣品種與田區校正屬後續獨立工作。

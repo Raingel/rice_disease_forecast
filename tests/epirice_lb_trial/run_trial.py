@@ -55,6 +55,12 @@ def protected_hashes():
     return {str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in files if p.is_file()}
 
 
+def leaf_hashes():
+    files = list((ROOT / "models/EPIRICE_LB").glob("*.py"))
+    files += [ROOT / "models/EPIRICE_LB/config.json"]
+    return {str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in files}
+
+
 def make_weather(case):
     dates = pd.date_range("2026-02-01", periods=120, freq="D")
     weather = pd.DataFrame({"YYYYMMDD": dates.strftime("%Y-%m-%d"), "DOY": dates.dayofyear,
@@ -125,6 +131,7 @@ def prepare(folder):
         "candidate_sha256": sha(HERE / "candidate.py"), "config_sha256": sha(HERE / "config.json"),
         "upstream_manifest_sha256": sha(HERE / "upstream_manifest.json"),
         "protected_source_hashes": protected_hashes(), "station_trial": station_trial(folder),
+        "leaf_source_hashes": leaf_hashes(),
         "source_commit": json.loads((HERE / "upstream_manifest.json").read_text())["commit"],
         "field_forecast_skill_validated": False})
     for stale in ("comparison.json", "failure.json"):
@@ -169,6 +176,9 @@ def compare(folder):
     for path, expected in prepared["protected_source_hashes"].items():
         if sha(ROOT / path) != expected:
             raise ValueError(f"Existing production source changed: {path}")
+    for path, expected in prepared.get("leaf_source_hashes", {}).items():
+        if sha(ROOT / path) != expected:
+            raise ValueError(f"LB implementation changed since prepare: {path}")
     for key, path in (("candidate_sha256", HERE / "candidate.py"), ("config_sha256", HERE / "config.json"),
                       ("upstream_manifest_sha256", HERE / "upstream_manifest.json")):
         if sha(path) != prepared[key]:

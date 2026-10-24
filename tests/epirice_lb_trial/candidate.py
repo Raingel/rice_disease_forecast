@@ -1,8 +1,4 @@
-"""Test-only LB adapter; production BLB code and parameters are never modified.
-
-The existing parameter-driven SEIR engine is a candidate for reuse. Independent
-R execution must validate that choice before this trial becomes a daily model.
-"""
+"""Test harness for the LB implementation; production BLB stays unchanged."""
 from __future__ import annotations
 
 import json
@@ -12,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from models.EPIRICE_BLB.model import simulate_epirice_blb
+from models.EPIRICE_LB.model import simulate_epirice_lb
 
 HERE = Path(__file__).resolve().parent
 MODEL = "EPIRICE_LB"
@@ -29,22 +25,7 @@ def load_config():
 
 def simulate(weather):
     config = load_config()
-    n = len(weather)
-    if not 1 <= n <= config["duration_days"]:
-        raise ValueError("Trial requires 1 to 120 consecutive daily rows")
-    weather = weather.reset_index(drop=True).copy()
-    days = pd.DatetimeIndex(pd.to_datetime(weather["YYYYMMDD"], errors="raise"))
-    if (days.tz is not None or not days.equals(days.normalize())
-            or not days.equals(pd.date_range(days[0], periods=n, freq="D"))):
-        raise ValueError("Daily dates must be consecutive Taiwan local calendar dates")
-    values = weather[["TEMP", "RHUM", "RAIN"]].to_numpy(dtype=float)
-    if not np.isfinite(values).all():
-        raise ValueError("Missing or non-finite daily weather")
-    if not weather["RHUM"].between(0, 100).all() or not weather["RAIN"].ge(0).all():
-        raise ValueError("Invalid daily humidity or rainfall")
-    weather["YYYYMMDD"] = days.strftime("%Y-%m-%d")
-    states = simulate_epirice_blb(weather, dict(config, duration_days=n))
-    states["RcOpt"] = config["RcOpt"]
+    states = simulate_epirice_lb(weather, config)
     for key in ("model_version", "parameter_version", "site_unit", "source_commit"):
         states[key] = config[key]
     states["primary_value_field"] = PRIMARY
