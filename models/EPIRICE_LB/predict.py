@@ -40,7 +40,12 @@ def simulate_crop(daily, config, start, harvest, available_end):
     weather = daily.reindex(pd.date_range(start, end, freq="D")).copy()
     missing = weather[["TEMP", "RHUM", "RAIN"]].isna().any(axis=1)
     if missing.any():
-        raise ValueError(f"Incomplete weather from transplanting: {weather.index[missing][0].date()} ({missing.sum()} days)")
+        first_missing = weather.index[missing][0]
+        if first_missing.date() == start:
+            raise ValueError(f"Incomplete weather from transplanting: {start}")
+        # Preserve the valid prefix; never bridge a gap or initialize after it.
+        weather = weather.loc[weather.index < first_missing].copy()
+        end = weather.index[-1].date()
     weather["YYYYMMDD"] = weather.index.strftime("%Y-%m-%d")
     return simulate_epirice_lb(weather, config), end
 
@@ -129,7 +134,7 @@ def run(args):
             continue
         for year, season, planting, harvest in crops:
             scenario = f"{sid}_{year}_{1 if season == '一期作' else 2}"
-            # Include a final incomplete day in validation; never silently drop it.
+            # Validate every day and stop before the first incomplete day.
             available_end = min(daily.index.max().date(), end)
             try:
                 states, simulated_end = simulate_crop(daily, config, planting, harvest, available_end)
@@ -140,6 +145,10 @@ def run(args):
                 continue
             limit = min(harvest, planting + timedelta(days=int(config["duration_days"]) - 1))
             completion = "complete" if simulated_end == limit else "weather_endpoint" if simulated_end < end else "requested_endpoint"
+            stop_reason = ""
+            if completion == "weather_endpoint":
+                next_day = simulated_end + timedelta(days=1)
+                stop_reason = f"Weather ends on {simulated_end}; first unavailable or incomplete day: {next_day}; no extrapolated states"
             metadata = {"county": county, "season": season, "scenario_id": scenario,
                         "transplant_date": planting.isoformat(), "harvest_date": harvest.isoformat(),
                         "simulation_end_date": simulated_end.isoformat(), "simulation_status": completion,
@@ -161,9 +170,10 @@ def run(args):
             selected = frame[pd.to_datetime(frame["日期"]).dt.date.between(start, end)]
             frames.append(selected)
             audit.append({"station_id": sid, "scenario_id": scenario, "status": "ok",
-                          "simulation_status": completion, "state_rows": len(full), "daily_rows": len(selected)})
+                          "simulation_status": completion, "simulation_end_date": simulated_end.isoformat(),
+                          "reason": stop_reason, "state_rows": len(full), "daily_rows": len(selected)})
             if completion == "weather_endpoint":
-                failures[sid] = f"Weather ends on {simulated_end}; no extrapolated states"
+                failures[sid] = stop_reason
     combined = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=["站號", "日期"])
     if combined.duplicated(["站號", "日期"]).any():
         raise ValueError("Overlapping crop scenarios")

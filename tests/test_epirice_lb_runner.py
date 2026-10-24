@@ -99,9 +99,29 @@ class LeafBlastRunnerTests(unittest.TestCase):
 
     def test_incomplete_final_hour_is_not_silently_trimmed(self):
         self.hours(end="2026-06-04", drop=120 * 24 - 1)
-        with self.assertRaises(RuntimeError):
-            run(self.args())
+        report = run(self.args())
+        self.assertEqual(report["output_status_counts"], {"ok": 2, "missing_model_output": 1})
+        states = pd.read_csv(self.folder / "states/2026_1/C0G910.csv")
+        self.assertEqual((len(states), states.date.iloc[-1]), (119, "2026-06-03"))
+        self.assertEqual(report["station_scenarios"][0]["simulation_status"], "weather_endpoint")
+        self.assertTrue(pd.isna(self.read("20260604").EPIRICE_LB.iloc[0]))
         self.assertIn("2026-06-04", self.read("20260604").EPIRICE_LB_missing_reason.iloc[0])
+
+    def test_internal_gap_stops_prefix_and_never_resumes_after_gap(self):
+        self.hours(end="2026-06-04", drop=118 * 24 + 7)
+        run(self.args())
+        self.assertEqual(self.read("20260602").EPIRICE_LB_status.iloc[0], "ok")
+        for day in ["20260603", "20260604"]:
+            row = self.read(day).iloc[0]
+            self.assertTrue(pd.isna(row.EPIRICE_LB))
+            self.assertIn("2026-06-03", row.EPIRICE_LB_missing_reason)
+        # A later refresh fills the gap and rebuilds from transplanting.
+        self.hours(end="2026-06-04")
+        run(self.args())
+        rebuilt = pd.read_csv(self.folder / "states/2026_1/C0G910.csv")
+        expected, _ = simulate_crop(daily_weather(self.path), load_config(), date(2026, 2, 5), date(2026, 6, 15), date(2026, 6, 4))
+        self.assertEqual(len(rebuilt), 120)
+        np.testing.assert_allclose(rebuilt[COMPARE_COLUMNS], expected[COMPARE_COLUMNS], rtol=0, atol=1e-10)
 
     def test_weather_endpoint_preserves_valid_history_and_marks_later_dates_missing(self):
         self.hours(end="2026-06-02")

@@ -116,6 +116,9 @@ python -m models.EPIRICE_LB.predict `
 狀態 `ok` 可包含有效 0；`non_crop_period` 主值 -99；`missing_model_output` 或
 `missing_crop_calendar` 主值空白；作期內超過 120 日為 `outside_model_duration`、空白。
 資料缺漏不寫成零感染。`simulation_status` 區分完整模擬、氣象終點、指定日期終點。
+遇到尾端不完整日或中途缺日，保留插秧日起至第一個缺漏日前一天的連續有效狀態，
+以 `weather_endpoint` 記錄停止日期；缺漏日及其後不繼續模擬，每日檔保留缺值及原因。
+若插秧日即缺資料，整作無法初始化。每日更新補齊氣象後，仍由插秧日起完整重算。
 有作期但完全無有效氣象時寫出 audit 與缺值每日檔後，以非零退出碼結束。
 
 `output_contract.merge_compact()` 已接入 organizer，只新增主值、
