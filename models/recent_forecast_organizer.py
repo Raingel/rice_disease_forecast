@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 from datetime import datetime, timedelta
 
 import pandas as pd
@@ -33,6 +34,40 @@ MODEL_FILES = {
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 planthopper_daily_cache = {}
+
+
+@lru_cache(maxsize=1)
+def current_station_coordinates():
+    try:
+        from models.EPIRICE_BLB.predict import load_stations, read_source
+        from models.EPIRICE_BLB.crop_calendar import STATIONS_URL
+    except ModuleNotFoundError:
+        from EPIRICE_BLB.predict import load_stations, read_source
+        from EPIRICE_BLB.crop_calendar import STATIONS_URL
+    return load_stations(read_source(os.getenv("EPIRICE_STATIONS_SOURCE", STATIONS_URL))).set_index(STATION_ID_COL)
+
+
+def resolve_station_days(frame, stations=None):
+    """Resolve relocated-station variants; never select a conflicting first row."""
+    keys = [STATION_ID_COL, DATE_COL]
+    frame = frame.drop_duplicates().copy()
+    duplicated = frame.duplicated(keys, keep=False)
+    if not duplicated.any():
+        return frame
+    stations = current_station_coordinates() if stations is None else stations
+    resolved = [frame.loc[~duplicated]]
+    for (sid, day), group in frame.loc[duplicated].groupby(keys, dropna=False):
+        if sid not in stations.index or not {"lat", "lon"}.issubset(group.columns):
+            raise ValueError(f"Cannot resolve station/date variants: {sid} {day}; missing current coordinates")
+        station = stations.loc[sid]
+        match = (pd.to_numeric(group.lat, errors="coerce").sub(float(station["緯度"])).abs().le(1e-6)
+                 & pd.to_numeric(group.lon, errors="coerce").sub(float(station["經度"])).abs().le(1e-6))
+        selected = group.loc[match]
+        if len(selected) != 1:
+            raise ValueError(f"Ambiguous station/date variants: {sid} {day}; {len(selected)} current-coordinate rows")
+        print(f"[INFO] {sid} {day}: selected current-coordinate row from {len(group)} variants")
+        resolved.append(selected)
+    return pd.concat(resolved, ignore_index=True)
 
 
 def load_planthopper_data(date_str: str):
@@ -71,7 +106,7 @@ def normalize_daily_frame(df: pd.DataFrame, value_col: str) -> pd.DataFrame:
     cols = [c for c in [STATION_ID_COL, STATION_NAME_COL, DATE_COL, "lat", "lon", value_col] if c in frame.columns]
     if value_col == "EPIRICE_BLB":
         cols.extend(c for c in frame.columns if c.startswith("EPIRICE_BLB_"))
-    return frame[cols]
+    return resolve_station_days(frame[cols])
 
 
 def merge_daily_predictions(date_str: str):
@@ -95,6 +130,7 @@ def merge_daily_predictions(date_str: str):
                 df[[STATION_ID_COL, DATE_COL, *value_columns]],
                 on=[STATION_ID_COL, DATE_COL],
                 how="left",
+                validate="one_to_one",
             )
 
     if merged is None:
