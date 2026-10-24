@@ -27,6 +27,7 @@ jobs:
             /tests/test_epirice*.py
             /tests/epirice_lb_trial/
             /tests/fixtures/epirice_blb/
+            /tests/fixtures/epirice_lb_huatan/
       - name: Set temporary output folder at runtime
         shell: bash
         run: echo "TRIAL_OUTPUT=$RUNNER_TEMP/epirice-lb-trial" >> "$GITHUB_ENV"
@@ -54,6 +55,8 @@ jobs:
         run: Rscript tests/epirice_lb_trial/reference.R "$TRIAL_OUTPUT"
       - name: Compare all 120 days with absolute tolerance 1e-6
         run: python tests/epirice_lb_trial/run_trial.py compare --output "$TRIAL_OUTPUT"
+      - name: Run Huatan 2026 first crop with frozen historical hourly weather
+        run: python tests/epirice_lb_trial/run_huatan.py --output "$TRIAL_OUTPUT/huatan_real_weather"
       - name: Retain results and diagnostics even on failure
         if: always()
         uses: actions/upload-artifact@v4

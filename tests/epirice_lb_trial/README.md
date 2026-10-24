@@ -1,5 +1,20 @@
 # EPIRICE 葉稻熱病：獨立小範圍測試套件
 
+2026/10/24：手動 Action 已增加真正的花壇歷史氣象單站 runner 測試，置於 R 比對之後。
+使用 `tests/fixtures/epirice_lb_huatan/` 的壓縮逐時快照（原始 94,395 bytes），不另建氣象
+下載流程。來源為 2026/10/7 保存的 Open-Meteo archive 再分析，原請求未指定固定產品，
+不宣稱是氣象站觀測或固定 ERA5-Land。站表、日曆與氣象均有 SHA-256，來源及回傳格點
+記錄於 `provenance.json`；日曆使用當時的彰化縣代表作期，不是田區實際插秧紀錄。
+
+附件 `huatan_real_weather/` 保存解壓後逐時輸入、runner 完整狀態、133 份每日檔、日均氣象、
+輸入快照、`run_audit.json` 與 `verification.json`。模擬 2026/2/5 至 6/4 共 120 日；
+2/4 與 6/16 應為非作期 -99，6/5 至 6/15 為超出 120 日而空白。既有合成氣象範例
+仍放在 `station_trial/`，兩者分開標示。Cloud 全流程驗證必須同時通過 `comparison.json`
+與 `huatan_real_weather/verification.json`；不寫入正式每日檔或總表。
+
+本機重跑單站測試：
+`python tests/epirice_lb_trial/run_huatan.py --output repo_review/lb_huatan_smoke`
+
 2026/10/23 更新：首次 [Action 39940530608](https://github.com/Raingel/rice_disease_forecast/actions/runs/39940530608)
 已完成原始 R 執行及跨語言比對，三組各 120 日、22 欄最大誤差為 `5.093170329928398e-11`。
 目前 candidate 已改呼叫 `models/EPIRICE_LB/model.py`；獨立 runner 與花壇歷史氣象測試
