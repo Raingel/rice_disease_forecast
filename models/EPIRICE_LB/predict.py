@@ -1,4 +1,4 @@
-"""Run bounded LB station scenarios, reconstructing state from transplanting.
+"""Run LB station scenarios, reconstructing state from transplanting.
 
 Read the existing hourly weather folder; this runner never downloads weather.
 Explicit stations/output directories keep the initial integration bounded.
@@ -58,7 +58,9 @@ def build_parser():
     parser.add_argument("--calendar", default=CALENDAR_URL)
     parser.add_argument("--station-list", default=STATIONS_URL)
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
-    parser.add_argument("--station-id", action="append", required=True)
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--station-id", action="append")
+    selection.add_argument("--all-stations", action="store_true", help="Run all active stations for the daily pipeline")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--state-dir", type=Path, required=True)
     parser.add_argument("--weather-provenance", type=Path, help="Optional existing weather request/source JSON to snapshot")
@@ -79,10 +81,11 @@ def run(args):
     config = json.loads(config_text)
     calendar_text, station_text = read_source(args.calendar), read_source(args.station_list)
     calendars, stations = parse_calendar(calendar_text), load_stations(station_text)
-    stations = stations[stations["站號"].isin(args.station_id)].copy()
-    missing_ids = set(args.station_id) - set(stations["站號"])
-    if missing_ids:
-        raise ValueError(f"Requested stations are not active: {sorted(missing_ids)}")
+    if args.station_id:
+        stations = stations[stations["站號"].isin(args.station_id)].copy()
+        missing_ids = set(args.station_id) - set(stations["站號"])
+        if missing_ids:
+            raise ValueError(f"Requested stations are not active: {sorted(missing_ids)}")
     files = station_weather_files(args.weather_dir, stations)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     args.state_dir.mkdir(parents=True, exist_ok=True)

@@ -2,7 +2,7 @@
 
 本模組重現固定開源版本的計算，尚未進行臺灣田間校正。使用獨立 LB 設定，呼叫既有
 `EPIRICE_BLB/model.py` 的可參數化 SEIR 核心；未修改 BLB 的公式、參數或輸出定義。
-目前僅提供明確指定測站與輸出位置的 runner，未接入每日全站排程或網站。
+支援指定測站與每日全站入口；每日 pipeline 已接入 LB，近期每站表採三欄精簡輸出。
 
 ## 來源與版本
 
@@ -97,7 +97,7 @@ python -m models.EPIRICE_LB.predict `
 ```
 
 也可直接 `python models/EPIRICE_LB/predict.py ...`。未傳日曆或站表時沿用 BLB 的
-既有雲端來源。`--station-id` 可重複；目前要求明確指定站點與兩個輸出資料夾。
+既有雲端來源。`--station-id` 可重複，也可改用 `--all-stations`；兩者擇一，並指定兩個輸出資料夾。
 請以每次測試獨立資料夾保存結果。`--weather-provenance existing_request.json`
 可將先前下載器的請求來源一併保存；資料夾叫 ERA5 並不保證其內容是 ERA5-Land。
 
@@ -118,9 +118,22 @@ python -m models.EPIRICE_LB.predict `
 資料缺漏不寫成零感染。`simulation_status` 區分完整模擬、氣象終點、指定日期終點。
 有作期但完全無有效氣象時寫出 audit 與缺值每日檔後，以非零退出碼結束。
 
-`output_contract.merge_compact()` 是尚未接入 organizer 的明確合併入口，只新增主值、
+`output_contract.merge_compact()` 已接入 organizer，只新增主值、
 intensity、status 三欄，其他模型保持原值；完整狀態留在模型自己的檔案。
-未修改近期表、年度表、高風險日數及網站規則，也未執行全站回填。
+近期表新增 `EPIRICE_LB`、`EPIRICE_LB_intensity_active`、`EPIRICE_LB_status`。
+年度歷史表、高風險日數及網站規則維持既有方式，未執行歷史回填。
+
+### 每日全站入口
+
+`python models/EPIRICE_LB/daily.py` 使用既有 `ERA5_INPUT_DIR`／`ERA5_OUTPUT_DIR`，
+完整每日檔寫入 `DATA_FOLDER`，完整作期狀態寫入 `EPIRICE_LB_STATE_DIR`
+（預設 `rice_blast_prediction/epirice_lb_states`），不另下載氣象。
+站表、作期沿用 `EPIRICE_STATIONS_SOURCE`、`EPIRICE_CALENDAR_SOURCE`。
+一般每日輸出臺灣當日往前 30 日至往後 15 日，仍從各作插秧日起完整重建。
+手動日期沿用 `EPIRICE_BACKFILL_START_DATE`／`EPIRICE_BACKFILL_END_DATE`，
+或以 `EPIRICE_LB_BACKFILL_START_DATE`／`EPIRICE_LB_BACKFILL_END_DATE` 覆寫。
+Daily Action 的推送已包含 LB 狀態資料夾。BLASTAM pipeline 使用相同 organizer，
+會一併保留最新已存在的 LB 精簡欄位。
 
 ## 驗證證據與限制
 

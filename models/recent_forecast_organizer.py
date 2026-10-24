@@ -5,8 +5,10 @@ from datetime import datetime, timedelta
 import pandas as pd
 try:
     from models.EPIRICE_BLB.output_contract import merge_station_frames
+    from models.EPIRICE_LB.output_contract import merge_compact, COMPACT_FIELDS
 except ModuleNotFoundError:
     from EPIRICE_BLB.output_contract import merge_station_frames
+    from EPIRICE_LB.output_contract import merge_compact, COMPACT_FIELDS
 
 PLANTHOPPER_REMOTE_BASE_URL = os.getenv(
     "PLANTHOPPER_REMOTE_BASE_URL",
@@ -30,6 +32,7 @@ MODEL_FILES = {
     "BlastGAT": "BlastGAT",
     "BLASTAM": "BLASTAM",
     "EPIRICE_BLB": "EPIRICE_BLB",
+    "EPIRICE_LB": "EPIRICE_LB",
 }
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -106,6 +109,8 @@ def normalize_daily_frame(df: pd.DataFrame, value_col: str) -> pd.DataFrame:
     cols = [c for c in [STATION_ID_COL, STATION_NAME_COL, DATE_COL, "lat", "lon", value_col] if c in frame.columns]
     if value_col == "EPIRICE_BLB":
         cols.extend(c for c in frame.columns if c.startswith("EPIRICE_BLB_"))
+    elif value_col == "EPIRICE_LB":
+        cols.extend(c for c in COMPACT_FIELDS if c != value_col and c in frame.columns)
     return resolve_station_days(frame[cols])
 
 
@@ -121,6 +126,8 @@ def merge_daily_predictions(date_str: str):
             merged = df
         elif model_name == "EPIRICE_BLB":
             merged = merge_station_frames(merged, df)
+        elif model_name == "EPIRICE_LB":
+            merged = merge_compact(merged, df)
         else:
             value_columns = [model_name]
             if model_name == "EPIRICE_BLB":

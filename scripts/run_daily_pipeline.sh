@@ -120,6 +120,7 @@ run_py "$ROOT_DIR/models/230128_Transformer" "predictor_250628.py"
 run_py "$ROOT_DIR/models/BlastGAT" "predict.py"
 run_py "$ROOT_DIR/models/BlastDT2" "fetch_and_convert.py"
 run_py "$ROOT_DIR/models/EPIRICE_BLB" "predict.py"
+run_py "$ROOT_DIR/models/EPIRICE_LB" "daily.py"
 run_py "$ROOT_DIR/models" "recent_forecast_organizer.py"
 run_py "$ROOT_DIR/models" "crop_season_avg.py"
 
