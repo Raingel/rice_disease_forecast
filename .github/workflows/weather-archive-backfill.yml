@@ -2,7 +2,7 @@ name: Resumable weather archive from 2013
 
 on:
   schedule:
-    - cron: '37 * * * *'
+    - cron: '7,27,47 * * * *'
   workflow_dispatch:
     inputs:
       smoke:

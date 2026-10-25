@@ -10,7 +10,7 @@ fixed so this one-time job can finish. A later extension requires a new plan.
 
 ## Execution and storage
 
-`.github/workflows/weather-archive-backfill.yml` runs at minute 37 each hour,
+`.github/workflows/weather-archive-backfill.yml` is scheduled at minutes 07, 27 and 47 each hour (every 20 minutes),
 subject to GitHub scheduling delays. It also supports manual dispatch. One writer
 is allowed; each normal batch has a 35-minute worker budget and a 45-minute job
 limit to leave time for publishing. A batch may finish sooner on request limits
