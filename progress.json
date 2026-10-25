@@ -5,7 +5,15 @@
     "source_snapshot.json": "bcbfeaa8b0f77ff8488980b2f3da3a4b836d9906d4f93d691225ef569b2d2589",
     "station_matches.json": "1ffb6fb22fa38806a3b3a040e9a552d445d0b1765986e1c75a410d89c23a231a"
   },
-  "latest_run_id": "40183274259",
+  "latest_batch_metrics": {
+    "daily_weighted_calls": 8000.0,
+    "estimated_weighted_calls": 105.35714285714286,
+    "http_requests": 1,
+    "max_weighted_calls": 800.0,
+    "mode": "annual_multi_location_v1",
+    "stations_processed": 0
+  },
+  "latest_run_id": "40186718072",
   "plan": {
     "hourly_fields": [
       "temperature_2m",
@@ -20009,19 +20017,24 @@
       }
     },
     "C0E910": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-25T10:55:31.237158+00:00"
     },
     "C0E920": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-25T10:55:31.237217+00:00"
     },
     "C0E930": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-25T10:55:31.237266+00:00"
     },
     "C0E940": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-25T10:55:31.237313+00:00"
     },
     "C0E950": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-25T10:55:31.237359+00:00"
     },
     "C0E960": {
       "complete": false
@@ -22344,5 +22357,20 @@
     "stations_not_started": 764,
     "stations_partial": 57
   },
-  "updated_at_utc": "2026-10-25T10:17:51.722164+00:00"
+  "updated_at_utc": "2026-10-25T10:56:00.236977+00:00",
+  "weather_request_ledger": [
+    {
+      "at_utc": "2026-10-25T10:56:00.231379+00:00",
+      "end": "2026-10-22",
+      "estimated_weighted_calls": 105.35714285714286,
+      "start": "2026-01-01",
+      "station_ids": [
+        "C0E910",
+        "C0E920",
+        "C0E930",
+        "C0E940",
+        "C0E950"
+      ]
+    }
+  ]
 }
