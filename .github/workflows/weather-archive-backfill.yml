@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       smoke:
-        description: 'Small first run (one station, at most two supplement requests)'
+        description: 'Small batch (two stations, annual requests, estimated quota capped)'
         type: boolean
         default: false
 
@@ -30,6 +30,7 @@ jobs:
           sparse-checkout: |
             /scripts/maintain_weather_archive.py
             /scripts/weather_archive_action.py
+            /scripts/weather_archive_batch.py
             /tests/test_weather_archive*.py
             /weather_backfill/
       - uses: actions/setup-python@v5
@@ -45,7 +46,7 @@ jobs:
           SMOKE: ${{ inputs.smoke && 'true' || 'false' }}
         run: |
           if [[ "$SMOKE" == "true" ]]; then
-            python -u scripts/weather_archive_action.py --inventory weather_backfill/inputs --cache "$RUNNER_TEMP/weather-cache" --max-seconds 360 --max-stations 1 --max-requests 2
+            python -u scripts/weather_archive_action.py --inventory weather_backfill/inputs --cache "$RUNNER_TEMP/weather-cache" --max-seconds 600 --max-stations 2 --batch-size 2 --max-requests 2 --max-weighted-calls 120 --daily-weighted-calls 8000
           else
-            python -u scripts/weather_archive_action.py --inventory weather_backfill/inputs --cache "$RUNNER_TEMP/weather-cache" --max-seconds 2100 --max-stations 50 --max-requests 120
+            python -u scripts/weather_archive_action.py --inventory weather_backfill/inputs --cache "$RUNNER_TEMP/weather-cache" --max-seconds 2100 --max-stations 50 --batch-size 5 --max-requests 120 --max-weighted-calls 800 --daily-weighted-calls 8000
           fi

@@ -225,6 +225,113 @@ def unpack_archive(raw, folder, start, through):
             (folder / member.name).write_bytes(tar.extractfile(member).read())
 
 
+def run_batched(args, github, progress, stations, start, through, head, tree, started):
+    from weather_archive_batch import supplement
+    batch_size = args.batch_size
+    now = datetime.now(timezone.utc)
+    horizon = now - timedelta(hours=24)
+    progress['weather_request_ledger'] = [entry for entry in progress.get('weather_request_ledger', [])
+        if datetime.fromisoformat(entry['at_utc']) > horizon]
+    metrics = {'mode': 'annual_multi_location_v1', 'http_requests': 0,
+               'estimated_weighted_calls': 0.0, 'stations_processed': 0,
+               'max_weighted_calls': args.max_weighted_calls, 'daily_weighted_calls': args.daily_weighted_calls}
+    pending = [s for s in stations if not progress['stations'][s['station_id']]['complete']]
+    pending.sort(key=lambda s: progress['stations'][s['station_id']].get('last_attempt_utc', ''))
+    selected = pending[:args.max_stations]
+    args.cache.mkdir(parents=True, exist_ok=True)
+    day_blocked = False
+
+    def checkpoint():
+        nonlocal head, tree
+        progress.update(summary=summarize(progress, stations, start, through),
+                        updated_at_utc=datetime.now(timezone.utc).isoformat(),
+                        latest_run_id=os.environ.get('GITHUB_RUN_ID'), latest_batch_metrics=metrics.copy())
+        head = github.publish(head, tree, [], progress)
+        tree = github.call('GET', '/git/commits/' + head)['tree']['sha']
+
+    def reserve(ids, begin, end, weight):
+        nonlocal day_blocked
+        daily_used = sum(entry['estimated_weighted_calls'] for entry in progress['weather_request_ledger'])
+        if metrics['http_requests'] >= args.max_requests or metrics['estimated_weighted_calls'] + weight > args.max_weighted_calls + 1e-9:
+            return False
+        if daily_used + weight > args.daily_weighted_calls + 1e-9:
+            day_blocked = True
+            return False
+        entry = {'at_utc': datetime.now(timezone.utc).isoformat(), 'station_ids': ids,
+                 'start': str(begin), 'end': str(end), 'estimated_weighted_calls': weight}
+        progress['weather_request_ledger'].append(entry)
+        metrics['http_requests'] += 1
+        metrics['estimated_weighted_calls'] += weight
+        # Reserve even failed requests and persist before HTTP, so cancellation
+        # cannot silently reset the rolling quota estimate on the next runner.
+        checkpoint()
+        return True
+
+    for offset in range(0, len(selected), batch_size):
+        if time.monotonic() - started >= args.max_seconds - 240:
+            break
+        ready = []
+        for station in selected[offset:offset + batch_size]:
+            task = progress['stations'][station['station_id']]
+            folder = args.cache / station_folder(station)
+            folder.mkdir(exist_ok=True)
+            task['last_attempt_utc'] = datetime.now(timezone.utc).isoformat()
+            try:
+                if task.get('archive_asset'):
+                    unpack_archive(github.read_archive(task['archive_asset']), folder, start, through)
+                else:
+                    for year, item in task.get('years', {}).items():
+                        for name, key in [(f'{year}.csv.gz', 'csv_blob'), (f'{year}.csv.json', 'metadata_blob')]:
+                            (folder / name).write_bytes(github.read_blob(item[key]))
+                ready.append(station)
+            except (requests.RequestException, ValueError, OSError) as exc:
+                task['last_error'] = {'reason': 'Checkpoint restore: ' + str(exc), 'station_id': station['station_id']}
+        if not ready:
+            checkpoint()
+            continue
+        remaining = args.max_seconds - (time.monotonic() - started)
+        if remaining < 240:
+            checkpoint()
+            break
+        result = supplement(SimpleNamespace(inventory=args.inventory, cache=args.cache, start=start,
+            through=through, max_seconds=int(remaining - 90),
+            max_requests=args.max_requests - metrics['http_requests'], request_pause_seconds=1), ready, reserve)
+        if result['rate_limited']:
+            progress['retry_after_utc'] = (datetime.now(timezone.utc) + timedelta(hours=6)).isoformat()
+        for station in ready:
+            sid = station['station_id']
+            folder = args.cache / station_folder(station)
+            task = progress['stations'][sid]
+            task['last_error'] = result['errors'].get(sid)
+            for path in sorted(folder.glob('*.csv.gz')):
+                year = int(path.name.split('.')[0])
+                metadata_path = path.with_suffix('.json')
+                metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+                raw = validate_year(path, metadata, start, through, year)
+                item = {k: metadata[k] for k in ['start', 'end', 'expected_hours', 'missing_hours', 'missing_cells', 'output_sha256']}
+                item.update(csv_blob=blob_sha(raw), metadata_blob=blob_sha(metadata_path.read_bytes()))
+                task.setdefault('years', {})[str(year)] = item
+            if task.get('years'):
+                task['archive_asset'] = github.save_archive(station, pack_archive(folder), task.get('archive_asset'))
+            metrics['stations_processed'] += 1
+            checkpoint()
+        print(json.dumps({'summary': progress['summary'], 'metrics': metrics}), flush=True)
+        daily_used = sum(entry['estimated_weighted_calls'] for entry in progress['weather_request_ledger'])
+        if day_blocked or daily_used + 1 > args.daily_weighted_calls:
+            oldest = min((datetime.fromisoformat(entry['at_utc']) for entry in progress['weather_request_ledger']),
+                         default=datetime.now(timezone.utc))
+            progress['retry_after_utc'] = (oldest + timedelta(hours=24, minutes=1)).isoformat()
+            checkpoint()
+        if (result['rate_limited'] or result['exhausted'] or day_blocked or metrics['http_requests'] >= args.max_requests
+                or metrics['estimated_weighted_calls'] + 1 > args.max_weighted_calls
+                or daily_used + 1 > args.daily_weighted_calls):
+            break
+    if progress['summary']['complete']:
+        github.call('PUT', '/actions/workflows/' + WORKFLOW + '/disable')
+    set_output(progress['summary']['complete'])
+    return progress
+
+
 def run(args, github=None):
     started = time.monotonic()
     github = github or GitHub(os.environ['GITHUB_REPOSITORY'], os.environ['GH_TOKEN'])
@@ -246,6 +353,9 @@ def run(args, github=None):
         print('Archive cooldown active until ' + cooldown)
         set_output(False)
         return progress
+    if hasattr(args, 'batch_size'):
+        progress['summary'] = summary
+        return run_batched(args, github, progress, stations, start, through, head, tree, started)
     pending = [s for s in stations if not progress['stations'][s['station_id']]['complete']]
     pending.sort(key=lambda s: progress['stations'][s['station_id']].get('last_attempt_utc', ''))
     selected = pending[:args.max_stations]
@@ -327,7 +437,11 @@ if __name__ == '__main__':
     parser.add_argument('--max-seconds', type=int, default=2100)
     parser.add_argument('--max-stations', type=int, default=50)
     parser.add_argument('--max-requests', type=int, default=120)
+    parser.add_argument('--batch-size', type=int, default=5)
+    parser.add_argument('--max-weighted-calls', type=float, default=800)
+    parser.add_argument('--daily-weighted-calls', type=float, default=8000)
     args = parser.parse_args()
-    if args.max_seconds < 240 or min(args.max_stations, args.max_requests) < 1:
+    if (args.max_seconds < 240 or min(args.max_stations, args.max_requests, args.batch_size) < 1
+            or args.batch_size > 10 or min(args.max_weighted_calls, args.daily_weighted_calls) < 1):
         parser.error('Require >=240 seconds and positive station/request limits')
     run(args)

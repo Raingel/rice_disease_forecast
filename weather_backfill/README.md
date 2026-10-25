@@ -14,7 +14,22 @@ fixed so this one-time job can finish. A later extension requires a new plan.
 subject to GitHub scheduling delays. It also supports manual dispatch. One writer
 is allowed; each normal batch has a 35-minute worker budget and a 45-minute job
 limit to leave time for publishing. A batch may finish sooner on request limits
-or API errors. Smoke mode uses one station and at most two supplement requests.
+or API errors. Smoke mode uses two stations and at most two annual supplement requests.
+
+The worker groups up to five stations with similar missing periods and requests
+the rest of each calendar year in one HTTP request. Timeout/error batches split
+into smaller groups. Responses must match station ordering, hourly dates, UTC+8
+and the expected units. Existing valid cells are retained; there is no zero-fill.
+The single-station 31-day implementation is retained for local compatibility,
+but Actions uses the annual multi-location worker.
+
+There is an estimated weighted-call cap of 800 per batch and 8,000 in a rolling
+24-hour repository ledger (locations times max(1, requested days / 14), five
+variables and one default model). These are conservative planning estimates,
+not an observed provider billing counter. Requests are reserved and checkpointed
+before HTTP, including failed attempts. Fewer HTTP requests do not bypass the
+provider quota. Daily exhaustion causes a cooldown until the oldest reservation
+expires; actual HTTP 429 still causes a six-hour cooldown.
 
 Only code, tests and frozen inputs are checked out. Existing coordinate-matched
 archive CSVs are fetched individually from a pinned source commit. Each station
@@ -33,8 +48,9 @@ forecast checkouts. Use each task's `archive_asset` descriptor to download its
 current bundle and verify SHA256. `csv_blob`/`metadata_blob` identify content by
 Git SHA1; they are downloadable Git objects only for the initial seed files.
 
-Each station is committed before the next one starts. Partial years are saved
-as well. Hard cancellation can lose only the current uncommitted station's work.
+Each station is committed after its small group's download. Partial years are
+saved as well. Hard cancellation can lose the current uncommitted group's weather
+work; its reserved quota remains recorded.
 Data are never silently replaced with zero; existing valid cells are retained.
 Temperature, RH, rain, wind speed and direction must be finite; RH, rain and wind
 range checks are applied, timestamps must be unique hourly values. Wind vectors
@@ -68,4 +84,7 @@ rejects mismatching inputs instead of overwriting the old coverage record.
 Run `python -m unittest discover -s tests -p 'test_weather_archive*.py'`.
 Tests cover invalid data, duplicate hours, valid-cell preservation, local resume,
 fresh-runner checkpoint restoration, corrupted files, frozen inputs, quota cooldown
-and disabling only after full completion. Progress counts are not field measurements.
+and disabling only after full completion. Annual multi-location tests additionally
+cover station mapping, schema/units, full-year axes, failure splitting, valid-cell
+preservation, rolling quota reservation and restoration on a fresh runner.
+Progress counts are not field measurements.
