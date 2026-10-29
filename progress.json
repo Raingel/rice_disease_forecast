@@ -11,7 +11,7 @@
     "http_requests": 6,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 8
+    "stations_processed": 9
   },
   "latest_run_id": "40911513050",
   "plan": {
@@ -68805,8 +68805,159 @@
       }
     },
     "C0V840": {
-      "complete": false,
-      "last_attempt_utc": "2026-10-29T16:27:37.032211+00:00"
+      "archive_asset": {
+        "browser_download_url": "https://github.com/Raingel/rice_disease_forecast/releases/download/weather-archive-2013-c/C0V840_8f57f489f6ef5619375ec6f8e5eb36a02cd2c68032d93dae86904208805cd094.tar.gz",
+        "id": 689169844,
+        "name": "C0V840_8f57f489f6ef5619375ec6f8e5eb36a02cd2c68032d93dae86904208805cd094.tar.gz",
+        "sha256": "8f57f489f6ef5619375ec6f8e5eb36a02cd2c68032d93dae86904208805cd094",
+        "size": 2788216,
+        "tag": "weather-archive-2013-c"
+      },
+      "complete": true,
+      "last_attempt_utc": "2026-10-29T16:27:37.032211+00:00",
+      "last_error": null,
+      "years": {
+        "2013": {
+          "csv_blob": "97354b41c404dcee1601628b82d3c1b43b56ca8a",
+          "end": "2013-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "d0508ce328252a63915208a6efb69cabc369fd89",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "0e595b4fc1a97a844942e061742852f515561b0c399c48b187d8b0c06ba428ea",
+          "start": "2013-01-01"
+        },
+        "2014": {
+          "csv_blob": "0cdcc64290fe97c83383945dcede55a6f1a27551",
+          "end": "2014-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "da08a83b27b20a3966c148740ef8d1c868884bc7",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "224ab2ad1c98c50527077540ffda880fca2608c78c93f33afa07e76ef90bc7b0",
+          "start": "2014-01-01"
+        },
+        "2015": {
+          "csv_blob": "10da176b9adf94f4aafdd8b620257ab1201fe92b",
+          "end": "2015-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "ae1f92691c3914f6f77bf4a5c67b9291e2c5a3c7",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "9348ffc9c80e612bbad2730d2ac61b81e5ab6fab8f50af6c7a2c8219bdf4dce4",
+          "start": "2015-01-01"
+        },
+        "2016": {
+          "csv_blob": "24883250e29db0bf41e34375150d8e388dfcb739",
+          "end": "2016-12-31",
+          "expected_hours": 8784,
+          "metadata_blob": "02a140f8ceea4974fb97102ccdeb7eac5ab0c35b",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "618fb38359f0ece5c46c2eb5fe821b9295801eece4e69a4a388d4bf007bec672",
+          "start": "2016-01-01"
+        },
+        "2017": {
+          "csv_blob": "3a3e7408aaf556d0d7bf45c6893b781c24cf372c",
+          "end": "2017-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "20418346901f826461d7c39691e6a0f47a421868",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "6901f504f0245afcd14b48c27df30b88ac0d4f4de6fa80aefb8b6c44976ce014",
+          "start": "2017-01-01"
+        },
+        "2018": {
+          "csv_blob": "00fee294507c624d69956b5e8e86d627a1c04401",
+          "end": "2018-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "e284f1a1196302906e966de40420e8f9ffe2f7b1",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "7c9aa6801d06693be8318f6d6994a48b39cdf706a7fd9fe96ac77ebdd75ff90f",
+          "start": "2018-01-01"
+        },
+        "2019": {
+          "csv_blob": "425621dc966548b1af263e516f806ebbfdb87f93",
+          "end": "2019-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "9191914d5d02d03e4856eda79d6442ed53caa65f",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "f614c1ef130763c997d151ce0f78d2b80e2cbf6015e7e7ad3af7e69426954092",
+          "start": "2019-01-01"
+        },
+        "2020": {
+          "csv_blob": "d4194ed3835ca12f147981626f5b323fcdcd6936",
+          "end": "2020-12-31",
+          "expected_hours": 8784,
+          "metadata_blob": "630292ec0b82a661cf772cfa74a69cbb3f839031",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "c98187738bd13a47e0c19bced284223ffeaaf8db04bd58e0657f1165eeeb1ef4",
+          "start": "2020-01-01"
+        },
+        "2021": {
+          "csv_blob": "0364c507858388d5963bf889205e53ae4b816ae1",
+          "end": "2021-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "be71d15d3ab7602b3656f7caa50add15a29c745a",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "0b0454146e906c664f9ecd0d4d3d97918dadf7b7dbe5767e7fec6e34c381f403",
+          "start": "2021-01-01"
+        },
+        "2022": {
+          "csv_blob": "8daa7c92e4699a48ac1d432aab9b45682b290cb1",
+          "end": "2022-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "94d6485f303796726f2115dab8efe0d3634cc87f",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "00cc933f6235a3e9f8965471b08655beb7731d39a93ffda09b371a3602f767ec",
+          "start": "2022-01-01"
+        },
+        "2023": {
+          "csv_blob": "0f7472166dc7ef3486da10ebe114a4c7b654de7d",
+          "end": "2023-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "92f97f8288a4ac5ddc773b9b5590d7e49d8186d1",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "e8c8a94acded03ea04814824dfd8fadec0a936b11c52f21e5c1154ed86e27b8b",
+          "start": "2023-01-01"
+        },
+        "2024": {
+          "csv_blob": "bf259503d26a62851dea6e3b85611747061e945f",
+          "end": "2024-12-31",
+          "expected_hours": 8784,
+          "metadata_blob": "7799aea251cc8a5b8e086dc3ab0866703a454cad",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "07ffb181371681eeb3b594942add8c86b43fbefdbdc9d56a9ffbf48ea62a1494",
+          "start": "2024-01-01"
+        },
+        "2025": {
+          "csv_blob": "6a845c38fd58475735a332e3063d7c99ae702540",
+          "end": "2025-12-31",
+          "expected_hours": 8760,
+          "metadata_blob": "ea277b0c6a86519c2579db78618e1ee8d647cc02",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "c20035264d949cafb3a5dabf38962c3d3c3b3783529529cca66eb5ebdd4b221c",
+          "start": "2025-01-01"
+        },
+        "2026": {
+          "csv_blob": "a310f266dd0780c9624b7dda3b8fcce2a95d69ac",
+          "end": "2026-10-22",
+          "expected_hours": 7080,
+          "metadata_blob": "8373901d2cb520fcfbef4746fbd16308a5a4c58d",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "e21cdcca238728b179cec6196ec3c391362bfbec73626dca30013b749dd6b11e",
+          "start": "2026-01-01"
+        }
+      }
     },
     "C0V850": {
       "complete": false,
@@ -69961,12 +70112,12 @@
   },
   "summary": {
     "complete": false,
-    "stations_complete": 279,
+    "stations_complete": 280,
     "stations_expected": 892,
-    "stations_not_started": 451,
+    "stations_not_started": 450,
     "stations_partial": 162
   },
-  "updated_at_utc": "2026-10-29T16:29:06.031384+00:00",
+  "updated_at_utc": "2026-10-29T16:29:10.842561+00:00",
   "weather_request_ledger": [
     {
       "at_utc": "2026-10-28T19:41:17.809093+00:00",
