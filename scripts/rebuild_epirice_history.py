@@ -16,8 +16,11 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from models.EPIRICE_BLB.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
-from models.EPIRICE_BLB.predict import build_parser, daily_weather, load_stations, read_source, run
+from models.epirice.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
+from models.epirice.sources import read_source
+from models.epirice.stations import load_stations
+from models.epirice.weather import daily_weather
+from models.EPIRICE_BLB.predict import build_parser, run
 from models.EPIRICE_BLB.output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 
 
