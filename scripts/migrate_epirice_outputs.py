@@ -20,8 +20,8 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from models.EPIRICE_BLB.crop_calendar import parse_calendar
-from models.EPIRICE_BLB.predict import load_stations
+from models.epirice.crop_calendar import parse_calendar
+from models.epirice.stations import load_stations
 from models.EPIRICE_BLB.output_contract import (
     MODEL_NAME, PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, PREFIX,
     complete_daily, merge_station_frames,

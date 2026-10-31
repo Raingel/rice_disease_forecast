@@ -6,7 +6,7 @@ import sys
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from models.EPIRICE_BLB.crop_calendar import CALENDAR_URL, STATIONS_URL
+from models.epirice.crop_calendar import CALENDAR_URL, STATIONS_URL
 from models.EPIRICE_LB.predict import build_parser, run
 
 

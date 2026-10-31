@@ -54,3 +54,38 @@ python -m unittest discover -s tests -p 'test_epirice_lb_trial.py'
 
 The pinned BLB reference compares 120 days of all numeric columns at
 absolute tolerance 1e-6. This does not represent a fresh independent R run.
+
+## Phase 2: reusable calendar, weather and station I/O
+
+The following modules own the existing shared data behavior:
+
+| Module | Responsibility |
+| --- | --- |
+| `crop_calendar.py` | Taiwan county crop calendar, representative planting/harvest dates, cross-year seasons, crop-period status |
+| `stations.py` | active station list, county normalization, strict current-coordinate weather filename matching and renamed stations |
+| `weather.py` | hourly temperature/humidity/precipitation CSV, Taiwan calendar days, 24-valid-hours requirement, daily TEMP/RHUM/RAIN |
+| `sources.py` | local UTF-8-BOM CSV reading and HTTP retry helper |
+
+BLB and LB prediction runners now import these modules directly; the historical
+migration/rebuild tools use the shared helpers too. Old import paths under
+`models.EPIRICE_BLB.crop_calendar`,
+`models.EPIRICE_BLB.predict` and
+`models.EPIRICE_BLB.output_contract.crop_context` remain supported.
+The BLB `read_source` wrapper keeps its original `urlopen` mock hook.
+
+No weather aggregation, crop date inference, station coordinate tolerance,
+simulation arithmetic, output status, schema, model parameters, or daily
+workflow commands are intentionally changed. The existing LB-specific choice
+to stop a simulation at the first incomplete day is deliberately unchanged,
+as is BLB's refusal to use any incomplete modeled crop weather.
+
+```bash
+python -m unittest discover -s tests -p 'test_epirice_*.py'
+(cd models/EPIRICE_BLB && python predict.py --help >/dev/null)
+(cd models/EPIRICE_LB && python predict.py --help >/dev/null)
+```
+
+The two model-specific output contracts remain separate. Consolidation of
+state-field definitions, output schemas and model registration is a **later
+phase** and should not be combined with these observational-I/O changes.
+
