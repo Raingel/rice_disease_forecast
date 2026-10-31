@@ -98,7 +98,7 @@ class SharedDataTests(unittest.TestCase):
             folder = Path(td)
             old = folder / "S01_舊名_24.000000_120.000000.csv"
             live = folder / "S01_現名_24.0_120.0.csv"
-            stale = folder / "S01_現名_24.000001_120.0.csv"
+            stale = folder / "S01_現名_24.001_120.0.csv"
             for file in (old, live, stale):
                 file.touch()
             self.assertEqual(stations.station_weather_files(folder, frame), {"S01": live})
