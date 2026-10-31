@@ -21,8 +21,10 @@ import numpy as np
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from models.EPIRICE_BLB.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
-from models.EPIRICE_BLB.predict import daily_weather, load_stations, read_source, station_weather_files
+from models.epirice.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
+from models.epirice.sources import read_source
+from models.epirice.stations import load_stations, station_weather_files
+from models.epirice.weather import daily_weather
 from models.EPIRICE_LB.model import CONFIG_PATH, simulate_epirice_lb
 from models.EPIRICE_LB.output_contract import (
     MODEL_NAME, OUTPUT_SCHEMA_VERSION, PREFIX, PRIMARY_VALUE_FIELD, complete_daily,
