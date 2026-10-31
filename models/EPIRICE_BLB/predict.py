@@ -3,119 +3,39 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import io
 import json
 import os
-import time
+import sys
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.request import urlopen
 
-import numpy as np
 import pandas as pd
 
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from models.epirice.crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, parse_calendar
+from models.epirice.sources import read_source as _shared_read_source
+from models.epirice.stations import load_stations, station_weather_files
+from models.epirice.weather import HOURLY_COLS, daily_weather
+
 if __package__:
-    from .crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, normalize_county, parse_calendar
     from .model import simulate_epirice_blb
     from .output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 else:
-    from crop_calendar import CALENDAR_URL, STATIONS_URL, crop_dates, normalize_county, parse_calendar
     from model import simulate_epirice_blb
     from output_contract import PRIMARY_VALUE_FIELD, OUTPUT_SCHEMA_VERSION, complete_daily
 
 MODEL_NAME = "EPIRICE_BLB"
 ROOT = Path(os.getenv("PIPELINE_ROOT", Path(__file__).resolve().parents[2]))
 META_COLS = ["站號", "站名", "日期", "lat", "lon"]
-HOURLY_COLS = ["temperature_2m", "relativehumidity_2m", "precipitation"]
-
 
 def read_source(source: str) -> str:
-    if not source.startswith(("https://", "http://")):
-        return Path(source).read_text(encoding="utf-8-sig")
-    for attempt in range(3):
-        try:
-            request = Request(source, headers={"Cache-Control": "no-cache"})
-            with urlopen(request, timeout=90) as response:
-                return response.read().decode("utf-8-sig")
-        except (HTTPError, URLError, TimeoutError):
-            if attempt == 2:
-                raise
-            time.sleep(2 * (attempt + 1))
-    raise RuntimeError("Unreachable source retry state")
-
-
-def load_stations(text: str) -> pd.DataFrame:
-    stations = pd.read_csv(io.StringIO(text), dtype={"站號": str})
-    required = {"站號", "站名", "緯度", "經度", "城市", "撤站日期"}
-    if not required.issubset(stations.columns):
-        raise ValueError(f"Missing station columns: {sorted(required - set(stations.columns))}")
-    stations = stations.loc[stations["撤站日期"].isna()].copy()
-    stations["county"] = stations["城市"].fillna("").map(normalize_county)
-    stations = stations.dropna(subset=["站號", "站名", "緯度", "經度"])
-    if stations["站號"].duplicated().any():
-        raise ValueError("Active station metadata contains duplicate station IDs")
-    return stations
-
-
-def station_weather_files(folder: Path, stations: pd.DataFrame) -> dict[str, Path]:
-    """Old filenames can survive coordinate updates; require current coordinates."""
-    candidates = defaultdict(list)
-    for path in sorted(folder.glob("*.csv")):
-        parts = path.stem.split("_")
-        if len(parts) < 4:
-            continue
-        try:
-            candidates[parts[0]].append((path, float(parts[-2]), float(parts[-1])))
-        except ValueError:
-            continue
-    found = {}
-    for _, station in stations.iterrows():
-        matches = [p for p, lat, lon in candidates[str(station["站號"])]
-                   if abs(lat - float(station["緯度"])) <= 1e-6
-                   and abs(lon - float(station["經度"])) <= 1e-6]
-        if len(matches) > 1:
-            # Renamed stations leave old-name files behind in the shared folder.
-            # The downloader writes the live metadata name; never choose by mtime.
-            current_name = [p for p in matches
-                            if "_".join(p.stem.split("_")[1:-2]) == str(station["站名"])]
-            if len(current_name) == 1:
-                matches = current_name
-            else:
-                raise ValueError(f"Multiple current-coordinate weather files for {station['站號']}: {[p.name for p in matches]}")
-        if matches:
-            found[str(station["站號"])] = matches[0]
-    return found
-
-
-def daily_weather(path: Path) -> pd.DataFrame:
-    hourly = pd.read_csv(path, usecols=["time", *HOURLY_COLS])
-    hourly["time"] = pd.to_datetime(hourly["time"], errors="raise")
-    if hourly["time"].dt.tz is not None:
-        hourly["time"] = hourly["time"].dt.tz_convert("Asia/Taipei").dt.tz_localize(None)
-    if not hourly["time"].dt.floor("h").eq(hourly["time"]).all():
-        raise ValueError("Weather timestamps must fall on hourly boundaries")
-    if hourly["time"].duplicated().any():
-        raise ValueError("Duplicate hourly weather timestamps")
-    for col in HOURLY_COLS:
-        hourly[col] = pd.to_numeric(hourly[col], errors="coerce")
-    hourly = hourly.replace([np.inf, -np.inf], np.nan).sort_values("time").set_index("time")
-    if hourly.empty:
-        raise ValueError("Empty hourly weather file")
-    valid = hourly[HOURLY_COLS].notna().all(axis=1)
-    valid &= hourly["relativehumidity_2m"].between(0, 100) & hourly["precipitation"].ge(0)
-    hourly.loc[~valid, HOURLY_COLS] = np.nan
-    daily = pd.DataFrame({
-        "TEMP": hourly["temperature_2m"].resample("D").mean(),
-        "RHUM": hourly["relativehumidity_2m"].resample("D").mean(),
-        "RAIN": hourly["precipitation"].resample("D").sum(min_count=24),
-    })
-    complete = valid.resample("D").sum().eq(24)
-    daily.loc[~complete, ["TEMP", "RHUM", "RAIN"]] = np.nan
-    return daily
-
+    """Preserve the BLB urlopen mock hook used by offline integration tests."""
+    return _shared_read_source(source, opener=urlopen)
 
 def simulate_crop(daily: pd.DataFrame, config: dict, start: date, harvest: date,
                   available_end: date) -> tuple[pd.DataFrame, date]:
