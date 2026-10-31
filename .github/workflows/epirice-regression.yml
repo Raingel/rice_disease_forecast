@@ -1,0 +1,40 @@
+name: EPIRICE shared engine regression
+
+on:
+  pull_request:
+    paths:
+      - 'models/epirice/**'
+      - 'models/EPIRICE_BLB/**'
+      - 'models/EPIRICE_LB/**'
+      - 'tests/test_epirice_*.py'
+      - '.github/workflows/epirice-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  epirice-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            models
+            tests
+            scripts
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install minimal test dependencies
+        run: python -m pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - name: Standalone model entry points import successfully
+        run: |
+          (cd models/EPIRICE_BLB && python predict.py --help >/dev/null)
+          (cd models/EPIRICE_LB && python predict.py --help >/dev/null)
+      - name: Shared engine regression
+        run: |
+          python -m unittest discover -s tests -p 'test_epirice_shared_engine.py'
+          python -m unittest discover -s tests -p 'test_epirice_blb.py'
+          python -m unittest discover -s tests -p 'test_epirice_lb_runner.py'
+          python -m unittest discover -s tests -p 'test_epirice_lb_trial.py'

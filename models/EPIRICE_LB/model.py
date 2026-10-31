@@ -1,7 +1,7 @@
 """Pinned leaf-blast parameters using the independently R-verified SEIR loop.
 
-The shared, parameter-driven loop lives in EPIRICE_BLB for compatibility.
-Neither that module nor the BLB configuration is modified by this adapter.
+The shared, parameter-driven loop lives in models.epirice.engine.
+The BLB and LB parameter files remain independent and unchanged.
 """
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from models.EPIRICE_BLB.model import simulate_epirice_blb
+from models.epirice.engine import simulate_epirice
 
 CONFIG_PATH = Path(__file__).with_name("config.json")
 
@@ -36,7 +36,7 @@ def simulate_epirice_lb(weather, config=None):
         raise ValueError("Invalid daily humidity or rainfall")
     weather["YYYYMMDD"] = days.strftime("%Y-%m-%d")
     weather["DOY"] = days.dayofyear
-    states = simulate_epirice_blb(weather, dict(config, duration_days=n))
+    states = simulate_epirice(weather, dict(config, duration_days=n))
     states["DOY"] = weather["DOY"]
     states["RcOpt"] = config["RcOpt"]
     return states
