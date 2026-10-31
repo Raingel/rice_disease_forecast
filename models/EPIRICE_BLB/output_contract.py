@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 
 if __package__:
-    from .crop_calendar import crop_dates
+    from .crop_calendar import crop_context  # backwards-compatible public symbol
 else:
-    from crop_calendar import crop_dates
+    from crop_calendar import crop_context
 
 MODEL_NAME = "EPIRICE_BLB"
 PRIMARY_VALUE_FIELD = "rateinf_new_infections"
@@ -22,28 +22,6 @@ STATE_FIELDS = ["simday", "TEMP", "RHUM", "RAIN", "RcW", "RcT", "RcA", "Rc",
                 "AUDPC", "AUDPC_cumulative", "total_sites", "growth_new_sites",
                 "senescence_sites_rate", "senesced_total", "latent_cohort_entries",
                 "infectious_cohort_entries", "DOY"]
-
-
-def crop_context(day, county, calendars, duration):
-    calendar = calendars.get(county)
-    if calendar is None:
-        return {"status": "missing_crop_calendar", "county": county}
-    if not calendar["rice_area"]:
-        return {"status": "non_crop_period", "county": county}
-    matches = []
-    for year in (day.year - 1, day.year):
-        for entry in calendar["seasons"]:
-            start, harvest = crop_dates(entry, year)
-            if start <= day <= harvest:
-                matches.append((entry, start, harvest))
-    if len(matches) > 1:
-        raise ValueError(f"Overlapping crop calendar: {county} {day}")
-    if not matches:
-        return {"status": "non_crop_period", "county": county}
-    entry, start, harvest = matches[0]
-    return {"status": "missing_model_output" if day < start + timedelta(days=duration) else "outside_model_duration",
-            "county": county, "season": entry["season"],
-            "transplant_date": start.isoformat(), "harvest_date": harvest.isoformat()}
 
 
 def complete_daily(frame, day, stations, calendars, config, as_of=None):
