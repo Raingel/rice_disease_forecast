@@ -7,13 +7,13 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 777.857142857143,
-    "http_requests": 7,
+    "estimated_weighted_calls": 100.35714285714286,
+    "http_requests": 1,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 5
+    "stations_processed": 0
   },
-  "latest_run_id": "41186427597",
+  "latest_run_id": "41213944691",
   "plan": {
     "hourly_fields": [
       "temperature_2m",
@@ -79237,19 +79237,24 @@
       }
     },
     "C1D380": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-31T15:15:29.645303+00:00"
     },
     "C1D400": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-31T15:15:29.645360+00:00"
     },
     "C1D410": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-31T15:15:29.645406+00:00"
     },
     "C1D420": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-31T15:15:29.645453+00:00"
     },
     "C1D630": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-10-31T15:15:29.645498+00:00"
     },
     "C1D640": {
       "complete": false
@@ -80162,34 +80167,8 @@
     "stations_not_started": 384,
     "stations_partial": 198
   },
-  "updated_at_utc": "2026-10-31T08:55:16.787586+00:00",
+  "updated_at_utc": "2026-10-31T15:15:48.262028+00:00",
   "weather_request_ledger": [
-    {
-      "at_utc": "2026-10-30T14:22:15.906207+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 126.78571428571429,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C0X160",
-        "C0X170",
-        "C0X180",
-        "C0X190",
-        "C0X200"
-      ]
-    },
-    {
-      "at_utc": "2026-10-30T14:22:22.198765+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 105.35714285714286,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C0X160",
-        "C0X170",
-        "C0X180",
-        "C0X190",
-        "C0X200"
-      ]
-    },
     {
       "at_utc": "2026-10-30T19:31:26.723733+00:00",
       "end": "2025-12-31",
@@ -80702,6 +80681,19 @@
       "start": "2025-01-11",
       "station_ids": [
         "C1A9N0"
+      ]
+    },
+    {
+      "at_utc": "2026-10-31T15:15:48.244670+00:00",
+      "end": "2018-12-31",
+      "estimated_weighted_calls": 100.35714285714286,
+      "start": "2018-03-26",
+      "station_ids": [
+        "C1D380",
+        "C1D400",
+        "C1D410",
+        "C1D420",
+        "C1D630"
       ]
     }
   ]
