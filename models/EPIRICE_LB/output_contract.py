@@ -4,7 +4,8 @@ from datetime import date
 import numpy as np
 import pandas as pd
 
-from models.EPIRICE_BLB.output_contract import STATE_FIELDS as BLB_STATE_FIELDS, crop_context
+from models.EPIRICE_BLB.output_contract import STATE_FIELDS as BLB_STATE_FIELDS
+from models.epirice.crop_calendar import crop_context
 
 MODEL_NAME = "EPIRICE_LB"
 PREFIX = MODEL_NAME + "_"
