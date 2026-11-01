@@ -3,11 +3,11 @@ name: Public forecast CSV v1 compatibility
 on:
   pull_request:
     paths:
-      - 'models/recent_forecast_organizer.py'
-      - 'models/crop_season_avg.py'
-      - 'models/EPIRICE_BLB/**'
-      - 'models/EPIRICE_LB/**'
-      - 'models/epirice/**'
+      - 'models/**'
+      - 'scripts/run_daily_pipeline.sh'
+      - 'scripts/run_blastam_pipeline.sh'
+      - '.github/workflows/daily-forecast.yml'
+      - '.github/workflows/blastam-forecast.yml'
       - 'tests/test_public_contract_v1.py'
       - 'tests/fixtures/public_contract_v1/**'
       - 'docs/public_forecast_contract_v1.md'
