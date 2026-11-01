@@ -71,7 +71,7 @@ class PublishedMultidayCoverageTests(unittest.TestCase):
                 self.assertEqual(source["original_rows"], 892)
                 self.assertEqual(sum(source["original_status_counts"].values()), 892)
                 self.assertEqual(sum(source["sample_status_counts"].values()), 48)
-                self.assertEqual(set(source["header"]), set(source["header"]))
+                self.assertEqual(len(source["header"]), len(set(source["header"])))
                 self.assertTrue(source["path"].startswith("rice_blast_prediction/data/"))
                 frame = sample_frame(source)
                 self.assertEqual(list(frame.columns), source["header"])
