@@ -174,7 +174,7 @@ class LegacyDailyAdapterTests(unittest.TestCase):
             serialize_complete_legacy_daily(["not a complete model frame"], "EPIRICE_BLB")
 
     def test_full_csv_fields_stay_outside_minimal_v2_record(self):
-        original = serialize_complete_legacy_daily(complete_frame(), "EPIRICE_LB")
+        original = serialize_complete_legacy_daily(complete_frame("EPIRICE_LB"), "EPIRICE_LB")
         envelope = read_legacy_daily_csv(original, "EPIRICE_LB")
         flattened = envelope.records[0].to_dict()
         self.assertNotIn("EPIRICE_LB_latent", flattened)
