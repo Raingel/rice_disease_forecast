@@ -1,0 +1,271 @@
+{
+  "schema_version": "2.0",
+  "registry_version": "github-model-registry-2026-11-02.1",
+  "authority": "upstream",
+  "provenance": {
+    "repository": "Raingel/rice_disease_forecast",
+    "source_revision": "e55adb8b8d2599c669b7abeb973bcdd232bd7675",
+    "website_reference": "2026-11-01 audited website v2 bootstrap registry; mapping names and risk profiles retained",
+    "status": "authoritative_metadata_not_yet_consumed_by_production"
+  },
+  "models": [
+    {
+      "model_id": "BlastGRU-TW",
+      "disease_id": "rice_blast",
+      "display_name": "興大一代（BlastGRU-TW）",
+      "model_type": "statistical",
+      "primary_field": "BlastGRU-TW",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BlastGRU-TW",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BlastTF",
+      "disease_id": "rice_blast",
+      "display_name": "興大二代（BlastTF）",
+      "model_type": "statistical",
+      "primary_field": "BlastTF",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BlastTF",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BlastLSTLS",
+      "disease_id": "rice_blast",
+      "display_name": "興大三代（BlastLSTLS）",
+      "model_type": "statistical",
+      "primary_field": "BlastLSTLS",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BlastLSTLS",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BlastGAT",
+      "disease_id": "rice_blast",
+      "display_name": "興大四代（BlastGAT）",
+      "model_type": "statistical",
+      "primary_field": "BlastGAT",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_blastgat",
+        "warning_transform": "legacy_warning_map_blastgat"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BlastGAT",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BlastDT2",
+      "disease_id": "rice_blast",
+      "display_name": "農試所二代（BlastDT2）",
+      "model_type": "decision_tree",
+      "primary_field": "BlastDT2",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BlastDT2",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BLASTAM",
+      "disease_id": "rice_blast",
+      "display_name": "日本東北一代（BLASTAM）",
+      "model_type": "rule_based",
+      "primary_field": "BLASTAM",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BLASTAM",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "BLBTSLS",
+      "disease_id": "bacterial_leaf_blight",
+      "display_name": "白葉枯病（BLBTSLS）",
+      "model_type": "statistical",
+      "primary_field": "BLBTSLS",
+      "value_type": "legacy_score",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series",
+        "legacy_warning_map",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "homepage_grid": "legacy_homepage_grid_disease",
+        "homepage_chart": "legacy_homepage_chart",
+        "warning_map": "legacy_warning_map_disease",
+        "season_summary": "legacy_season_disease"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "daily_filename_suffix": "BLBTSLS",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "planthopper",
+      "disease_id": "planthopper_migration",
+      "display_name": "飛蝨遷入",
+      "model_type": "migration",
+      "primary_field": "planthopper",
+      "value_type": "migration_index",
+      "unit": "legacy_percent_or_fraction_ambiguous",
+      "capabilities": [
+        "station_series",
+        "season_summary"
+      ],
+      "risk_profiles": {
+        "pest_migration": "legacy_planthopper"
+      },
+      "public": true,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "upstream_repository": "Raingel/HYSPLIT-Planthopper-Forecast",
+        "grid_filename_suffix": "_max_freq.csv",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "EPIRICE_BLB",
+      "disease_id": "bacterial_leaf_blight",
+      "display_name": "EPIRICE_BLB（隔離示範）",
+      "model_type": "mechanistic",
+      "primary_field": "EPIRICE_BLB",
+      "value_type": "new_infection_flow",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series"
+      ],
+      "risk_profiles": {},
+      "public": false,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "primary_field": "rateinf_new_infections",
+        "daily_filename_suffix": "EPIRICE_BLB",
+        "source_schema_version": "EPIRICE_BLB_daily_v3",
+        "revision": "unknown"
+      }
+    },
+    {
+      "model_id": "EPIRICE_LB",
+      "disease_id": "rice_blast",
+      "display_name": "EPIRICE_LB（隔離示範）",
+      "model_type": "mechanistic",
+      "primary_field": "EPIRICE_LB",
+      "value_type": "new_infection_flow",
+      "unit": "unknown",
+      "capabilities": [
+        "station_series"
+      ],
+      "risk_profiles": {},
+      "public": false,
+      "model_version": "unknown",
+      "source": {
+        "kind": "legacy_github_csv",
+        "primary_field": "rateinf_new_infections",
+        "daily_filename_suffix": "EPIRICE_LB",
+        "source_schema_version": "EPIRICE_LB_daily_v1",
+        "revision": "unknown"
+      }
+    }
+  ]
+}
