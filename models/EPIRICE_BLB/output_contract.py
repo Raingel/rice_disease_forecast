@@ -99,3 +99,10 @@ def merge_station_frames(base, epirice):
         if extra in merged:
             merged[col] = merged[col].combine_first(merged.pop(extra))
     return merged
+
+
+def normalized_v2_records(completed_daily_frame):
+    """Opt-in, read-only Internal Contract v2 projection; never alters public CSV."""
+    from models.epirice.output_contract_v2 import normalize_epirice_daily
+
+    return normalize_epirice_daily(completed_daily_frame, MODEL_NAME)
