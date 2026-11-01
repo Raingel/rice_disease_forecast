@@ -121,7 +121,7 @@ class LegacyDailyAdapterTests(unittest.TestCase):
         self.assertEqual(envelope.to_v1_bytes(), original)
 
     def test_original_source_integrity_checksum_checked_before_return(self):
-        original = serialize_complete_legacy_daily(complete_frame(), "EPIRICE_LB")
+        original = serialize_complete_legacy_daily(complete_frame("EPIRICE_LB"), "EPIRICE_LB")
         envelope = read_legacy_daily_csv(original, "EPIRICE_LB")
         with self.assertRaisesRegex(UnsafeLegacyConversionError, "checksum changed"):
             replace(envelope, original_csv=original + b"tamper").to_v1_bytes()
