@@ -1,0 +1,39 @@
+name: Upstream Model Registry validation
+
+on:
+  pull_request:
+    paths:
+      - 'registry/**'
+      - 'models/model_registry.py'
+      - 'tests/test_model_registry.py'
+      - 'docs/model_registry_phase4.md'
+      - '.github/workflows/model-registry-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  registry-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            registry
+            models
+            tests
+            scripts
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install isolated regression dependencies
+        run: python -m pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
+      - name: Validate upstream registry and existing model-list parity
+        run: python -m unittest discover -s tests -p 'test_model_registry.py' -v
+      - name: Preserve website-facing public CSV v1 contract
+        run: python -m unittest discover -s tests -p 'test_public_contract_v1.py' -v
+      - name: Preserve EPIRICE and relocated-station regression
+        run: |
+          python -m unittest discover -s tests -p 'test_epirice_*.py'
+          python -m unittest discover -s tests -p 'test_recent_station_coordinates.py'
