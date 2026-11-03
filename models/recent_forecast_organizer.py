@@ -120,7 +120,19 @@ def normalize_daily_frame(df: pd.DataFrame, value_col: str) -> pd.DataFrame:
     return resolve_station_days(frame[cols])
 
 
-def merge_daily_predictions(date_str: str):
+def merge_daily_predictions(date_str: str, *, coverage_mode: str = "legacy"):
+    """Combine existing daily model CSVs without changing published score semantics.
+
+    legacy: v1 frozen behavior (first available model as base, classic left joins).
+    union: opt-in station coverage recovery, retaining every model's native
+           values and filling metadata for station-days first seen later.
+
+    The production runner deliberately defaults to legacy until the repair is
+    separately reviewed and enabled. EPIRICE's validated outer joins remain
+    untouched in both modes.
+    """
+    if coverage_mode not in {"legacy", "union"}:
+        raise ValueError(f"Unknown forecast station coverage mode: {coverage_mode!r}")
     merged = None
     for model_name, suffix in MODEL_FILES.items():
         path = os.path.join(DATA_FOLDER, f"{date_str}_{suffix}.csv")
@@ -136,15 +148,35 @@ def merge_daily_predictions(date_str: str):
             merged = merge_compact(merged, df)
         else:
             value_columns = [model_name]
-            if model_name == "EPIRICE_BLB":
-                value_columns.extend(c for c in df.columns if c.startswith("EPIRICE_BLB_"))
-            merged = pd.merge(
-                merged,
-                df[[STATION_ID_COL, DATE_COL, *value_columns]],
-                on=[STATION_ID_COL, DATE_COL],
-                how="left",
-                validate="one_to_one",
-            )
+            if coverage_mode == "union":
+                # Preserve all station-days, even when the first available
+                # model covers only a subset (e.g. 92 instead of 892 stations).
+                # Do not fabricate scores for models absent at a new station.
+                metadata = [c for c in (STATION_NAME_COL, "lat", "lon") if c in df]
+                merged = pd.merge(
+                    merged,
+                    df[[STATION_ID_COL, DATE_COL, *metadata, *value_columns]],
+                    on=[STATION_ID_COL, DATE_COL],
+                    how="outer",
+                    suffixes=("", "_new_station_meta"),
+                    validate="one_to_one",
+                )
+                for col in metadata:
+                    extra = col + "_new_station_meta"
+                    if extra in merged:
+                        if col in merged:
+                            merged[col] = merged[col].combine_first(merged.pop(extra))
+                        else:
+                            merged[col] = merged.pop(extra)
+            else:
+                # Frozen public v1 contract: ordinary models use left joins.
+                merged = pd.merge(
+                    merged,
+                    df[[STATION_ID_COL, DATE_COL, *value_columns]],
+                    on=[STATION_ID_COL, DATE_COL],
+                    how="left",
+                    validate="one_to_one",
+                )
 
     if merged is None:
         return None
@@ -160,13 +192,18 @@ def merge_daily_predictions(date_str: str):
 
 
 def main() -> None:
+    # Explicit opt-in only. Scheduled jobs do not set this variable; their
+    # published station CSVs remain on the frozen v1 semantics by default.
+    coverage_mode = os.getenv("RECENT_STATION_COVERAGE_MODE", "legacy")
+    if coverage_mode not in {"legacy", "union"}:
+        raise ValueError(f"Unknown RECENT_STATION_COVERAGE_MODE: {coverage_mode!r}")
     all_data = []
     today = datetime.today() - timedelta(days=30)
     date_range = [today + timedelta(days=i) for i in range(60)]
 
     for target_date in date_range:
         date_str = target_date.strftime("%Y%m%d")
-        merged = merge_daily_predictions(date_str)
+        merged = merge_daily_predictions(date_str, coverage_mode=coverage_mode)
         if merged is not None:
             all_data.append(merged)
 
