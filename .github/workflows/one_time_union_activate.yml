@@ -47,11 +47,11 @@ jobs:
       - name: Install exact regression dependencies
         run: python -m pip install numpy==1.26.4 pandas==2.2.2 requests==2.32.3
       - name: Check expected scope without modifying files
-        run: python scripts/one_time_union_activation.py
+        run: PYTHONPATH=. python scripts/one_time_union_activation.py
       - name: Apply once on staging branch only
         env:
           ONE_TIME_UNION_APPROVED: 'yes'
-        run: python scripts/one_time_union_activation.py --apply
+        run: PYTHONPATH=. python scripts/one_time_union_activation.py --apply
       - name: Check precisely 800 existing station CSV paths changed
         shell: bash
         run: |
