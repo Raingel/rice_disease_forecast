@@ -248,8 +248,18 @@ class FullPublishedCsvShadowTests(unittest.TestCase):
                 self.assertEqual(len(repaired), 892)
                 self.assertEqual(set(repaired["站號"]), expected_all_station_ids(day))
                 self.assertFalse(repaired.duplicated(KEYS).any())
-                self.assertEqual(set(legacy["站號"]).issubset(set(repaired["站號"])), True)
+                self.assertTrue(set(legacy["站號"]) <= set(repaired["站號"]))
+                self.assertEqual(set(repaired["日期"]), {
+                    f'{day["day"][:4]}-{day["day"][4:6]}-{day["day"][6:]}'
+                })
                 assert_native_values(self, frames, repaired)
+                # Validate every existing baseline row and metadata field,
+                # not just the 20 frozen value samples.
+                baseline = legacy.set_index("站號").sort_index()
+                retained = repaired.set_index("站號").loc[baseline.index]
+                pd.testing.assert_frame_equal(
+                    baseline, retained[baseline.columns], check_dtype=False
+                )
                 # Explicitly audit a known site missing from incomplete model input.
                 self.assertEqual(repaired.set_index("站號").at["C0G910", "BLASTAM"],
                                  0.0 if day["day"] != "20261122" else 1.0)
