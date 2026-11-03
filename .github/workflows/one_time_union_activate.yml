@@ -15,11 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout isolated one-time branch
+      - name: Checkout only required one-time repair inputs
         uses: actions/checkout@v4
         with:
           ref: ops/one-time-union-station-repair-20261104
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/one_time_union_activation.py
+            /models/recent_forecast_organizer.py
+            /models/EPIRICE_BLB/
+            /models/EPIRICE_LB/
+            /models/epirice/
+            /rice_blast_prediction/recent_daily_by_station/
+            /rice_blast_prediction/data/20261121_BlastGRU-TW.csv
+            /rice_blast_prediction/data/20261121_BlastLSTLS.csv
+            /rice_blast_prediction/data/20261121_BLBTSLS.csv
+            /rice_blast_prediction/data/20261121_BlastTF.csv
+            /rice_blast_prediction/data/20261121_BlastGAT.csv
+            /rice_blast_prediction/data/20261121_BLASTAM.csv
+            /rice_blast_prediction/data/20261122_BlastLSTLS.csv
+            /rice_blast_prediction/data/20261122_BLBTSLS.csv
+            /rice_blast_prediction/data/20261122_BLASTAM.csv
+      - name: Reject changed branch revision before staging
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ github.sha }}"
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
