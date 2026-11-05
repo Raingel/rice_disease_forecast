@@ -8,6 +8,15 @@ from urllib.parse import urljoin
 import numpy as np
 import pandas as pd
 
+# The scheduled shell pipeline runs this module directly from models/.
+try:
+    from models.registry_legacy_bridge import resolve_seasonal_model_columns
+except ModuleNotFoundError:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from models.registry_legacy_bridge import resolve_seasonal_model_columns
+
 ROOT_DIR = os.getenv("PIPELINE_ROOT", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 DATA_FOLDER = os.getenv("DATA_FOLDER", os.path.join(ROOT_DIR, "rice_blast_prediction", "data"))
 PLAN_FOLDER = os.getenv("PLAN_FOLDER", "")
@@ -145,22 +154,18 @@ def nearest_planthopper_value(ph_df: pd.DataFrame, lat: float, lon: float) -> Op
     return float(ph_df["value"].iloc[idx])
 
 
-def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool = True):
+def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool = True, *, catalog_mode: str = "legacy"):
+    model_cols = resolve_seasonal_model_columns(MODEL_COLS, mode=catalog_mode)
     counts: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
     daily_station_rows: List[pd.DataFrame] = []
-    model_avail_days: Dict[str, int] = {m: 0 for m in MODEL_COLS.keys()}
+    model_avail_days: Dict[str, int] = {m: 0 for m in model_cols}
     total_days = (end_d - start_d).days + 1
 
     for d in daterange(start_d, end_d):
         ds = std_date_str(d)
         paths = {
-            "BlastGRU-TW": os.path.join(DATA_FOLDER, f"{ds}_BlastGRU-TW.csv"),
-            "BlastDT2": os.path.join(DATA_FOLDER, f"{ds}_BlastDT2.csv"),
-            "BlastLSTLS": os.path.join(DATA_FOLDER, f"{ds}_BlastLSTLS.csv"),
-            "BLBTSLS": os.path.join(DATA_FOLDER, f"{ds}_BLBTSLS.csv"),
-            "BlastTF": os.path.join(DATA_FOLDER, f"{ds}_BlastTF.csv"),
-            "BlastGAT": os.path.join(DATA_FOLDER, f"{ds}_BlastGAT.csv"),
-            "BLASTAM": os.path.join(DATA_FOLDER, f"{ds}_BLASTAM.csv"),
+            name: os.path.join(DATA_FOLDER, f"{ds}_{name}.csv")
+            for name in model_cols if name != "planthopper"
         }
 
         day_frames: Dict[str, pd.DataFrame] = {}
@@ -176,7 +181,7 @@ def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool
             model_avail_days["planthopper"] += 1
 
         for model_name, df in day_frames.items():
-            value_col = MODEL_COLS[model_name]
+            value_col = model_cols[model_name]
             if STATION_ID_COL not in df.columns or value_col not in df.columns:
                 continue
             threshold = MODEL_RISK_THRESHOLDS.get(model_name, DEFAULT_RISK_THRESHOLD_MODELS)
@@ -206,12 +211,15 @@ def accumulate_for_period(year: int, start_d: date, end_d: date, need_plan: bool
 
 
 def main() -> None:
+    catalog_mode = os.getenv("FORECAST_MODEL_CATALOG_MODE", "legacy")
+    # Verify model IDs, source columns and risk profile IDs before writing.
+    model_cols = resolve_seasonal_model_columns(MODEL_COLS, mode=catalog_mode)
     today = date.today()
     period_start, period_end = semester_window(today)
     this_year = today.year
     log.info("today=%s; period=%s~%s", today, period_start, period_end)
 
-    counts_this, station_master, avail_this, total_days_this = accumulate_for_period(this_year, period_start, period_end, need_plan=True)
+    counts_this, station_master, avail_this, total_days_this = accumulate_for_period(this_year, period_start, period_end, need_plan=True, catalog_mode=catalog_mode)
     log.info("this_year availability=%s; total_days=%s", avail_this, total_days_this)
 
     years_past = list(range(this_year - 10, this_year))
@@ -219,7 +227,7 @@ def main() -> None:
     yearly_avail_list: List[Tuple[int, Dict[str, int], int]] = []
     for yr in years_past:
         ps, pe = same_period_for_year(yr, period_start, period_end)
-        counts_y, _station_y, avail_y, total_days_y = accumulate_for_period(yr, ps, pe, need_plan=True)
+        counts_y, _station_y, avail_y, total_days_y = accumulate_for_period(yr, ps, pe, need_plan=True, catalog_mode=catalog_mode)
         yearly_counts_list.append((yr, counts_y, total_days_y))
         yearly_avail_list.append((yr, avail_y, total_days_y))
         log.info("%s availability=%s; total_days=%s", yr, avail_y, total_days_y)
@@ -241,12 +249,12 @@ def main() -> None:
             extra = pd.DataFrame({STATION_ID_COL: [sid]})
             out_df = pd.concat([out_df, extra], ignore_index=True)
             known_station_ids.add(sid)
-        for model_name in MODEL_COLS.keys():
+        for model_name in model_cols.keys():
             out_df.loc[out_df[STATION_ID_COL].astype(str) == sid, f"{model_name}_this_year"] = int(model_counts.get(model_name, 0))
 
-    model_complete_years: Dict[str, set] = {m: set() for m in MODEL_COLS.keys()}
+    model_complete_years: Dict[str, set] = {m: set() for m in model_cols.keys()}
     for yr, avail_y, total_days_y in yearly_avail_list:
-        for model_name in MODEL_COLS.keys():
+        for model_name in model_cols.keys():
             if avail_y.get(model_name, 0) == total_days_y and total_days_y > 0:
                 model_complete_years[model_name].add(yr)
     log.info("complete_years=%s", {k: sorted(v) for k, v in model_complete_years.items()})
@@ -256,7 +264,7 @@ def main() -> None:
         log.info("loaded planthopper snapshot: %s (%s stations)", PLAN_AVG_SNAPSHOT_CSV, len(plan_avg_snapshot))
 
     for sid in out_df[STATION_ID_COL].astype(str).tolist():
-        for model_name in MODEL_COLS.keys():
+        for model_name in model_cols.keys():
             avg_col = f"{model_name}_avg"
             if model_name == "planthopper" and sid in plan_avg_snapshot:
                 out_df.loc[out_df[STATION_ID_COL].astype(str) == sid, avg_col] = plan_avg_snapshot[sid]
