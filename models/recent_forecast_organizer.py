@@ -12,9 +12,11 @@ if not __package__:
 try:
     from models.EPIRICE_BLB.output_contract import merge_station_frames
     from models.EPIRICE_LB.output_contract import merge_compact, COMPACT_FIELDS
+    from models.registry_legacy_bridge import resolve_daily_model_files
 except ModuleNotFoundError:
     from EPIRICE_BLB.output_contract import merge_station_frames
     from EPIRICE_LB.output_contract import merge_compact, COMPACT_FIELDS
+    from models.registry_legacy_bridge import resolve_daily_model_files
 
 PLANTHOPPER_REMOTE_BASE_URL = os.getenv(
     "PLANTHOPPER_REMOTE_BASE_URL",
@@ -120,7 +122,7 @@ def normalize_daily_frame(df: pd.DataFrame, value_col: str) -> pd.DataFrame:
     return resolve_station_days(frame[cols])
 
 
-def merge_daily_predictions(date_str: str, *, coverage_mode: str = "legacy"):
+def merge_daily_predictions(date_str: str, *, coverage_mode: str = "legacy", catalog_mode: str = "legacy"):
     """Combine existing daily model CSVs without changing published score semantics.
 
     legacy: v1 frozen behavior (first available model as base, classic left joins).
@@ -133,8 +135,10 @@ def merge_daily_predictions(date_str: str, *, coverage_mode: str = "legacy"):
     """
     if coverage_mode not in {"legacy", "union"}:
         raise ValueError(f"Unknown forecast station coverage mode: {coverage_mode!r}")
+    # v1 order/field mapping stays frozen; registry mode must prove exact parity.
+    model_files = resolve_daily_model_files(MODEL_FILES, mode=catalog_mode)
     merged = None
-    for model_name, suffix in MODEL_FILES.items():
+    for model_name, suffix in model_files.items():
         path = os.path.join(DATA_FOLDER, f"{date_str}_{suffix}.csv")
         if not os.path.exists(path):
             continue
@@ -197,13 +201,16 @@ def main() -> None:
     coverage_mode = os.getenv("RECENT_STATION_COVERAGE_MODE", "legacy")
     if coverage_mode not in {"legacy", "union"}:
         raise ValueError(f"Unknown RECENT_STATION_COVERAGE_MODE: {coverage_mode!r}")
+    catalog_mode = os.getenv("FORECAST_MODEL_CATALOG_MODE", "legacy")
+    # Fail closed *before* any published CSV is written.
+    resolve_daily_model_files(MODEL_FILES, mode=catalog_mode)
     all_data = []
     today = datetime.today() - timedelta(days=30)
     date_range = [today + timedelta(days=i) for i in range(60)]
 
     for target_date in date_range:
         date_str = target_date.strftime("%Y%m%d")
-        merged = merge_daily_predictions(date_str, coverage_mode=coverage_mode)
+        merged = merge_daily_predictions(date_str, coverage_mode=coverage_mode, catalog_mode=catalog_mode)
         if merged is not None:
             all_data.append(merged)
 
