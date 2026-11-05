@@ -24,6 +24,14 @@ jobs:
             /tests/
             /scripts/
             /registry/
+      - name: Checkout immutable published source revision for full CSV regression
+        uses: actions/checkout@v4
+        with:
+          ref: 51fb7be702a28ae2133cbc466d409b47a8e5dee8
+          path: .pinned-coverage-evidence
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
             /rice_blast_prediction/data/20261120_BlastGRU-TW.csv
             /rice_blast_prediction/data/20261120_BlastLSTLS.csv
             /rice_blast_prediction/data/20261120_BLASTAM.csv
@@ -36,6 +44,29 @@ jobs:
             /rice_blast_prediction/data/20261122_BlastLSTLS.csv
             /rice_blast_prediction/data/20261122_BLBTSLS.csv
             /rice_blast_prediction/data/20261122_BLASTAM.csv
+      - name: Restore verified pinned source bytes inside isolated CI workspace
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import subprocess
+          fixture = json.loads(Path("tests/fixtures/coverage_shadow/20261120_22_published.json").read_text(encoding="utf-8"))
+          assert fixture["source_revision"] == "51fb7be702a28ae2133cbc466d409b47a8e5dee8"
+          touched = set()
+          for day in fixture["days"]:
+              for item in day["sources"]:
+                  path = Path(item["source_path"])
+                  pinned = Path(".pinned-coverage-evidence") / path
+                  assert pinned.is_file(), f"missing pinned source: {pinned}"
+                  actual = subprocess.check_output(["git", "hash-object", str(pinned)], text=True).strip()
+                  assert actual == item["source_blob_sha"], f"hash mismatch: {path}"
+                  path.parent.mkdir(parents=True, exist_ok=True)
+                  path.write_bytes(pinned.read_bytes())
+                  touched.add(str(path))
+          assert len(touched) == 12, len(touched)
+          print("Verified 12 full original model CSVs from immutable source revision")
+          PY
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
