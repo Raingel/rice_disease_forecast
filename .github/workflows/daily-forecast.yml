@@ -18,6 +18,13 @@ on:
 permissions:
   contents: write
 
+# Serialize both forecast writers across workflows (not per-workflow),
+# without cancelling a running or previously queued forecast.
+concurrency:
+  group: rice-forecast-main-writer
+  cancel-in-progress: false
+  queue: max
+
 jobs:
   run-forecast-pipeline:
     runs-on: ubuntu-latest
@@ -28,6 +35,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Synchronize latest main after the shared writer lock
+        run: bash scripts/prepare_forecast_main_checkout.sh
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,7 +74,8 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add rice_blast_prediction/data rice_blast_prediction/recent_daily_by_station rice_blast_prediction/recent_summary.csv rice_blast_prediction/epirice_blb_states rice_blast_prediction/epirice_lb_states ERA5
             git commit -m "chore: daily forecast update ($(date -u '+%Y-%m-%d %H:%M:%S UTC'))"
-            git push
+            # Non-force; if an external writer moved main, fail rather than overwrite.
+            git push origin HEAD:refs/heads/main
           else
             echo "No changes to commit."
           fi
