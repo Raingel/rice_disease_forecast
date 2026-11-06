@@ -212,10 +212,9 @@ class FreshMainCheckoutTests(unittest.TestCase):
             _git(self.remote, "show", "main:data.csv").stdout,
             "version=2\n",
         )
-        self.assertNotEqual(
-            _git(self.remote, "ls-tree", "-r", "--name-only", "main").stdout.find(
-                "new_forecast.csv"
-            ), 0,
+        self.assertNotIn(
+            "new_forecast.csv",
+            _git(self.remote, "ls-tree", "-r", "--name-only", "main").stdout,
         )
 
 
