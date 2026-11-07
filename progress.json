@@ -7,13 +7,13 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 777.857142857143,
-    "http_requests": 7,
+    "estimated_weighted_calls": 40.142857142857146,
+    "http_requests": 1,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 5
+    "stations_processed": 0
   },
-  "latest_run_id": "42288771025",
+  "latest_run_id": "42317602606",
   "plan": {
     "hourly_fields": [
       "temperature_2m",
@@ -33,16 +33,20 @@
   "seeded_at_utc": "2026-10-24T15:54:00.690979+00:00",
   "stations": {
     "12J990": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-11-07T00:20:41.707629+00:00"
     },
     "12Q970": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-11-07T00:20:41.707666+00:00"
     },
     "12Q980": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-11-07T00:20:41.707695+00:00"
     },
     "42HA10": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-11-07T00:20:41.707723+00:00"
     },
     "466881": {
       "complete": true,
@@ -4702,7 +4706,8 @@
       }
     },
     "72AI40": {
-      "complete": false
+      "complete": false,
+      "last_attempt_utc": "2026-11-07T00:20:41.707750+00:00"
     },
     "72C440": {
       "complete": false
@@ -99182,95 +99187,8 @@
     "stations_not_started": 259,
     "stations_partial": 323
   },
-  "updated_at_utc": "2026-11-06T20:31:08.371013+00:00",
+  "updated_at_utc": "2026-11-07T00:21:02.073472+00:00",
   "weather_request_ledger": [
-    {
-      "at_utc": "2026-11-06T00:03:14.312506+00:00",
-      "end": "2018-12-31",
-      "estimated_weighted_calls": 100.35714285714286,
-      "start": "2018-03-26",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:03:26.465129+00:00",
-      "end": "2019-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2019-01-01",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:03:39.623761+00:00",
-      "end": "2020-12-31",
-      "estimated_weighted_calls": 130.71428571428572,
-      "start": "2020-01-01",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:03:51.634259+00:00",
-      "end": "2021-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2021-01-01",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:04:01.861903+00:00",
-      "end": "2022-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2022-01-01",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:04:11.376352+00:00",
-      "end": "2023-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2023-01-01",
-      "station_ids": [
-        "C1V190",
-        "C1V200",
-        "C1V220",
-        "C1V231",
-        "C1V300"
-      ]
-    },
-    {
-      "at_utc": "2026-11-06T00:04:20.649968+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 25.357142857142858,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C1V190"
-      ]
-    },
     {
       "at_utc": "2026-11-06T06:21:52.167889+00:00",
       "end": "2018-12-31",
@@ -99530,6 +99448,16 @@
       "start": "2025-01-11",
       "station_ids": [
         "C1Z110"
+      ]
+    },
+    {
+      "at_utc": "2026-11-07T00:21:02.056750+00:00",
+      "end": "2018-12-31",
+      "estimated_weighted_calls": 40.142857142857146,
+      "start": "2018-03-26",
+      "station_ids": [
+        "42HA10",
+        "72AI40"
       ]
     }
   ]
