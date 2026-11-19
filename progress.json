@@ -7,13 +7,13 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 779.6428571428572,
-    "http_requests": 8,
+    "estimated_weighted_calls": 25.357142857142858,
+    "http_requests": 1,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 40
+    "stations_processed": 0
   },
-  "latest_run_id": "44534540910",
+  "latest_run_id": "44622570623",
   "plan": {
     "hourly_fields": [
       "temperature_2m",
@@ -40943,7 +40943,7 @@
         "tag": "weather-archive-2013-e"
       },
       "complete": false,
-      "last_attempt_utc": "2026-10-25T21:15:40.603792+00:00",
+      "last_attempt_utc": "2026-11-19T21:49:40.187384+00:00",
       "last_error": {
         "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=30)",
         "station_id": "C0K470"
@@ -41101,7 +41101,7 @@
         "tag": "weather-archive-2013-d"
       },
       "complete": false,
-      "last_attempt_utc": "2026-10-25T21:15:40.603827+00:00",
+      "last_attempt_utc": "2026-11-19T21:49:40.696336+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -41411,7 +41411,7 @@
         "tag": "weather-archive-2013-2"
       },
       "complete": false,
-      "last_attempt_utc": "2026-10-25T21:15:40.603859+00:00",
+      "last_attempt_utc": "2026-11-19T21:49:41.020265+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -41566,7 +41566,7 @@
         "tag": "weather-archive-2013-b"
       },
       "complete": false,
-      "last_attempt_utc": "2026-10-25T21:15:40.603888+00:00",
+      "last_attempt_utc": "2026-11-19T21:49:41.371567+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -43891,7 +43891,7 @@
         "tag": "weather-archive-2013-9"
       },
       "complete": false,
-      "last_attempt_utc": "2026-10-26T00:33:47.939916+00:00",
+      "last_attempt_utc": "2026-11-19T21:49:41.658858+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -136061,86 +136061,8 @@
     "stations_not_started": 15,
     "stations_partial": 478
   },
-  "updated_at_utc": "2026-11-19T13:40:16.242104+00:00",
+  "updated_at_utc": "2026-11-19T21:50:01.089206+00:00",
   "weather_request_ledger": [
-    {
-      "at_utc": "2026-11-18T16:35:10.131735+00:00",
-      "end": "2013-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2013-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
-    {
-      "at_utc": "2026-11-18T16:35:16.331379+00:00",
-      "end": "2014-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2014-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
-    {
-      "at_utc": "2026-11-18T16:35:24.458115+00:00",
-      "end": "2015-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2015-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
-    {
-      "at_utc": "2026-11-18T16:35:30.284779+00:00",
-      "end": "2016-12-31",
-      "estimated_weighted_calls": 130.71428571428572,
-      "start": "2016-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
-    {
-      "at_utc": "2026-11-18T16:35:37.737726+00:00",
-      "end": "2017-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2017-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
-    {
-      "at_utc": "2026-11-18T16:35:43.416690+00:00",
-      "end": "2018-12-31",
-      "estimated_weighted_calls": 130.35714285714286,
-      "start": "2018-01-01",
-      "station_ids": [
-        "C2UC20",
-        "C2UC30",
-        "C2UC40",
-        "C2V310",
-        "C2V570"
-      ]
-    },
     {
       "at_utc": "2026-11-18T23:08:37.247470+00:00",
       "end": "2013-12-31",
@@ -136468,6 +136390,15 @@
       "station_ids": [
         "C0I010",
         "C0I080"
+      ]
+    },
+    {
+      "at_utc": "2026-11-19T21:50:01.062306+00:00",
+      "end": "2025-12-31",
+      "estimated_weighted_calls": 25.357142857142858,
+      "start": "2025-01-11",
+      "station_ids": [
+        "C0M720"
       ]
     }
   ]
