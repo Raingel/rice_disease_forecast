@@ -11,7 +11,7 @@
     "http_requests": 12,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 26
+    "stations_processed": 27
   },
   "latest_run_id": "44457132815",
   "plan": {
@@ -15834,9 +15834,8 @@
       "complete": false,
       "last_attempt_utc": "2026-11-19T04:22:59.067602+00:00",
       "last_error": {
-        "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=15)",
-        "station_id": "C0AI20",
-        "time_utc": "2026-10-25T00:31:07.608383+00:00"
+        "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=30)",
+        "station_id": "C0AI20"
       },
       "years": {
         "2013": {
@@ -136193,7 +136192,7 @@
     "stations_not_started": 15,
     "stations_partial": 515
   },
-  "updated_at_utc": "2026-11-19T04:24:03.129145+00:00",
+  "updated_at_utc": "2026-11-19T04:24:06.882071+00:00",
   "weather_request_ledger": [
     {
       "at_utc": "2026-11-18T07:07:53.236393+00:00",
