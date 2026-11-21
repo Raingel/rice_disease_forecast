@@ -11,7 +11,7 @@
     "http_requests": 9,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 8
+    "stations_processed": 9
   },
   "latest_run_id": "44846612528",
   "plan": {
@@ -68689,14 +68689,14 @@
     },
     "C0U650": {
       "archive_asset": {
-        "browser_download_url": "https://github.com/Raingel/rice_disease_forecast/releases/download/weather-archive-2013-0/C0U650_f17f718f61012766cb013f604590e79fff15ac2c9b02d255c2703c76560a6093.tar.gz",
-        "id": 685219307,
-        "name": "C0U650_f17f718f61012766cb013f604590e79fff15ac2c9b02d255c2703c76560a6093.tar.gz",
-        "sha256": "f17f718f61012766cb013f604590e79fff15ac2c9b02d255c2703c76560a6093",
-        "size": 2274152,
+        "browser_download_url": "https://github.com/Raingel/rice_disease_forecast/releases/download/weather-archive-2013-0/C0U650_f3baa85d7d1879dd49e46dfb98944e881c5b92e94072e1696be83c4e37941194.tar.gz",
+        "id": 773934593,
+        "name": "C0U650_f3baa85d7d1879dd49e46dfb98944e881c5b92e94072e1696be83c4e37941194.tar.gz",
+        "sha256": "f3baa85d7d1879dd49e46dfb98944e881c5b92e94072e1696be83c4e37941194",
+        "size": 2643155,
         "tag": "weather-archive-2013-0"
       },
-      "complete": false,
+      "complete": true,
       "last_attempt_utc": "2026-11-21T00:53:21.828399+00:00",
       "last_error": null,
       "years": {
@@ -68821,23 +68821,23 @@
           "start": "2024-01-01"
         },
         "2025": {
-          "csv_blob": "7f60fdca8bc9c84302256caf7679d6119d04139f",
+          "csv_blob": "0f2886aec613e53efd3ba7431b329ee01dfd8458",
           "end": "2025-12-31",
           "expected_hours": 8760,
-          "metadata_blob": "e2e9cd671ae2cf4462ea272aafd87dd9a64b7f49",
-          "missing_cells": 42555,
-          "missing_hours": 8511,
-          "output_sha256": "b43c17fb680be65a5b68ed3dc713cea05cd813556005607c33d7f54cdcc0e1db",
+          "metadata_blob": "55ba68f13694d41daf395cdab4a5e059ac5a0eae",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "21760976e069521ce2350b751858d6a36bbd5df4931a788dc4df9d37cf1155f1",
           "start": "2025-01-01"
         },
         "2026": {
-          "csv_blob": "6ccee5b340bac5ebcbd818928d3a039bb48ee989",
+          "csv_blob": "fc19f4b22b1e38346d5210e3a3e8f66156d448e8",
           "end": "2026-10-22",
           "expected_hours": 7080,
-          "metadata_blob": "1d29d086faa81f14ae2f34de3a9172203be60620",
-          "missing_cells": 35400,
-          "missing_hours": 7080,
-          "output_sha256": "574a180e839d4ea7d856ecf9be70dc3c24c01c2252a190970261c55c5f973fa7",
+          "metadata_blob": "72f8d556033286553f2194aa7a03b4d69a3fe6b1",
+          "missing_cells": 0,
+          "missing_hours": 0,
+          "output_sha256": "e869b7a172657f9188914b010e1894e7bb28eb8e1173629dd4a9871f45b8d1b3",
           "start": "2026-01-01"
         }
       }
@@ -136059,12 +136059,12 @@
   },
   "summary": {
     "complete": false,
-    "stations_complete": 450,
+    "stations_complete": 451,
     "stations_expected": 892,
     "stations_not_started": 15,
-    "stations_partial": 427
+    "stations_partial": 426
   },
-  "updated_at_utc": "2026-11-21T00:55:06.762455+00:00",
+  "updated_at_utc": "2026-11-21T00:55:11.578083+00:00",
   "weather_request_ledger": [
     {
       "at_utc": "2026-11-20T02:58:46.201448+00:00",
