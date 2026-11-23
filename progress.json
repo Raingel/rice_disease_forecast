@@ -7,13 +7,13 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 793.0714285714286,
-    "http_requests": 11,
+    "estimated_weighted_calls": 52.142857142857146,
+    "http_requests": 1,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
-    "stations_processed": 10
+    "stations_processed": 0
   },
-  "latest_run_id": "45102867543",
+  "latest_run_id": "45172031395",
   "plan": {
     "hourly_fields": [
       "temperature_2m",
@@ -100630,7 +100630,7 @@
         "tag": "weather-archive-2013-e"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T10:04:37.124658+00:00",
+      "last_attempt_utc": "2026-11-23T12:12:26.598577+00:00",
       "last_error": {
         "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=120)",
         "station_id": "C1I450"
@@ -100788,7 +100788,7 @@
         "tag": "weather-archive-2013-a"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T10:04:37.124685+00:00",
+      "last_attempt_utc": "2026-11-23T12:12:26.936794+00:00",
       "last_error": {
         "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=120)",
         "station_id": "C1I470"
@@ -100946,7 +100946,7 @@
         "tag": "weather-archive-2013-8"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T17:43:49.740901+00:00",
+      "last_attempt_utc": "2026-11-23T12:12:27.102422+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -101101,7 +101101,7 @@
         "tag": "weather-archive-2013-2"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T17:43:49.740939+00:00",
+      "last_attempt_utc": "2026-11-23T12:12:27.325892+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -101256,7 +101256,7 @@
         "tag": "weather-archive-2013-3"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T17:43:49.740970+00:00",
+      "last_attempt_utc": "2026-11-23T12:12:27.565374+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -137544,114 +137544,8 @@
     "stations_not_started": 5,
     "stations_partial": 346
   },
-  "updated_at_utc": "2026-11-23T02:57:59.709143+00:00",
+  "updated_at_utc": "2026-11-23T12:12:43.008993+00:00",
   "weather_request_ledger": [
-    {
-      "at_utc": "2026-11-22T08:50:43.305030+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 101.42857142857143,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C1D420",
-        "C1D630",
-        "C1E451",
-        "C1E461"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:50:49.220283+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 105.35714285714286,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C1D420",
-        "C1D630",
-        "C1D640",
-        "C1E451",
-        "C1E461"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:51:33.482202+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 101.42857142857143,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C1E480",
-        "C1E511",
-        "C1E670",
-        "C1E681"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:51:40.206481+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 105.35714285714286,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C1E480",
-        "C1E511",
-        "C1E601",
-        "C1E670",
-        "C1E681"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:52:25.182895+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 101.42857142857143,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C1E691",
-        "C1E701",
-        "C1E721",
-        "C1E770"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:52:31.157582+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 105.35714285714286,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C1E691",
-        "C1E701",
-        "C1E711",
-        "C1E721",
-        "C1E770"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:53:15.755455+00:00",
-      "end": "2025-12-31",
-      "estimated_weighted_calls": 101.42857142857143,
-      "start": "2025-01-11",
-      "station_ids": [
-        "C1E890",
-        "C1E900",
-        "C1F891",
-        "C1F911"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:53:21.134836+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 42.142857142857146,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C1E890",
-        "C1E900"
-      ]
-    },
-    {
-      "at_utc": "2026-11-22T08:53:26.264574+00:00",
-      "end": "2026-10-22",
-      "estimated_weighted_calls": 21.071428571428573,
-      "start": "2026-01-01",
-      "station_ids": [
-        "C1F871"
-      ]
-    },
     {
       "at_utc": "2026-11-22T17:03:22.570148+00:00",
       "end": "2018-12-31",
@@ -138005,6 +137899,16 @@
       "station_ids": [
         "C1I330",
         "C1I340"
+      ]
+    },
+    {
+      "at_utc": "2026-11-23T12:12:42.981017+00:00",
+      "end": "2019-12-31",
+      "estimated_weighted_calls": 52.142857142857146,
+      "start": "2019-01-01",
+      "station_ids": [
+        "C1I450",
+        "C1I470"
       ]
     }
   ]
