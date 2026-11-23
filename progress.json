@@ -7,8 +7,8 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 206.78571428571428,
-    "http_requests": 2,
+    "estimated_weighted_calls": 258.92857142857144,
+    "http_requests": 3,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
     "stations_processed": 5
@@ -99855,7 +99855,7 @@
         "tag": "weather-archive-2013-4"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T02:28:31.321639+00:00",
+      "last_attempt_utc": "2026-11-23T02:56:04.106558+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -100010,7 +100010,7 @@
         "tag": "weather-archive-2013-f"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T02:28:31.321666+00:00",
+      "last_attempt_utc": "2026-11-23T02:56:04.418301+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -100165,7 +100165,7 @@
         "tag": "weather-archive-2013-e"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T10:04:37.124559+00:00",
+      "last_attempt_utc": "2026-11-23T02:56:04.720193+00:00",
       "last_error": {
         "reason": "503 Server Error: Service Unavailable for url: https://archive-api.open-meteo.com/v1/archive?latitude=24.018778&longitude=121.004456&start_date=2020-01-01&end_date=2020-12-31&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cwind_speed_10m%2Cwind_direction_10m&timezone=Asia%2FTaipei&wind_speed_unit=kmh",
         "station_id": "C1I400"
@@ -100323,7 +100323,7 @@
         "tag": "weather-archive-2013-a"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T10:04:37.124594+00:00",
+      "last_attempt_utc": "2026-11-23T02:56:05.030258+00:00",
       "last_error": {
         "reason": "503 Server Error: Service Unavailable for url: https://archive-api.open-meteo.com/v1/archive?latitude=24.191961&longitude=121.224339&start_date=2020-01-01&end_date=2020-12-31&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cwind_speed_10m%2Cwind_direction_10m&timezone=Asia%2FTaipei&wind_speed_unit=kmh",
         "station_id": "C1I430"
@@ -100481,7 +100481,7 @@
         "tag": "weather-archive-2013-0"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-03T10:04:37.124621+00:00",
+      "last_attempt_utc": "2026-11-23T02:56:05.302575+00:00",
       "last_error": {
         "reason": "HTTPSConnectionPool(host='archive-api.open-meteo.com', port=443): Read timed out. (read timeout=120)",
         "station_id": "C1I440"
@@ -137553,7 +137553,7 @@
     "stations_not_started": 5,
     "stations_partial": 348
   },
-  "updated_at_utc": "2026-11-23T02:56:00.571180+00:00",
+  "updated_at_utc": "2026-11-23T02:56:17.955138+00:00",
   "weather_request_ledger": [
     {
       "at_utc": "2026-11-22T08:50:43.305030+00:00",
@@ -137919,6 +137919,16 @@
         "C1I290",
         "C1I310",
         "C1I320"
+      ]
+    },
+    {
+      "at_utc": "2026-11-23T02:56:17.934095+00:00",
+      "end": "2019-12-31",
+      "estimated_weighted_calls": 52.142857142857146,
+      "start": "2019-01-01",
+      "station_ids": [
+        "C1I430",
+        "C1I440"
       ]
     }
   ]
