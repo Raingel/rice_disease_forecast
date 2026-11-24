@@ -7,8 +7,8 @@
   },
   "latest_batch_metrics": {
     "daily_weighted_calls": 8000.0,
-    "estimated_weighted_calls": 413.57142857142856,
-    "http_requests": 4,
+    "estimated_weighted_calls": 489.6428571428571,
+    "http_requests": 5,
     "max_weighted_calls": 800.0,
     "mode": "annual_multi_location_v1",
     "stations_processed": 10
@@ -104505,8 +104505,11 @@
         "tag": "weather-archive-2013-2"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-04T17:56:17.266975+00:00",
-      "last_error": null,
+      "last_attempt_utc": "2026-11-24T00:08:09.035560+00:00",
+      "last_error": {
+        "reason": "Checkpoint restore: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+        "station_id": "C1S870"
+      },
       "years": {
         "2013": {
           "csv_blob": "f0936f9f96be512e9494e78f3ac51c9324020450",
@@ -104660,7 +104663,7 @@
         "tag": "weather-archive-2013-7"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-04T17:56:17.267018+00:00",
+      "last_attempt_utc": "2026-11-24T00:08:09.179005+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -104815,7 +104818,7 @@
         "tag": "weather-archive-2013-c"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-04T23:33:11.128427+00:00",
+      "last_attempt_utc": "2026-11-24T00:08:09.408623+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -104970,7 +104973,7 @@
         "tag": "weather-archive-2013-e"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-04T23:33:11.128455+00:00",
+      "last_attempt_utc": "2026-11-24T00:08:09.625913+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -105125,7 +105128,7 @@
         "tag": "weather-archive-2013-5"
       },
       "complete": false,
-      "last_attempt_utc": "2026-11-04T23:33:11.128472+00:00",
+      "last_attempt_utc": "2026-11-24T00:08:09.844852+00:00",
       "last_error": null,
       "years": {
         "2013": {
@@ -137538,7 +137541,7 @@
     "stations_not_started": 5,
     "stations_partial": 326
   },
-  "updated_at_utc": "2026-11-24T00:08:04.087550+00:00",
+  "updated_at_utc": "2026-11-24T00:08:22.131732+00:00",
   "weather_request_ledger": [
     {
       "at_utc": "2026-11-23T02:55:27.552292+00:00",
@@ -137828,6 +137831,17 @@
         "C1S820",
         "C1S850",
         "C1S860"
+      ]
+    },
+    {
+      "at_utc": "2026-11-24T00:08:22.115030+00:00",
+      "end": "2025-12-31",
+      "estimated_weighted_calls": 76.07142857142857,
+      "start": "2025-01-11",
+      "station_ids": [
+        "C1S880",
+        "C1SA70",
+        "C1T800"
       ]
     }
   ]
